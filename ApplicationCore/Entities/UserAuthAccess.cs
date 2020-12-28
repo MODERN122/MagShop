@@ -7,7 +7,11 @@ namespace ApplicationCore.Entities
 {
     public class UserAuthAccess
     {
-
+        public UserAuthAccess(string userName, string password)
+        {
+            UserName = userName;
+            Password = password;
+        }
         public string UserName { get; set; }
         [DataType(DataType.Password)]
         public string Password { get; set; }
@@ -18,6 +22,5 @@ namespace ApplicationCore.Entities
         public string GoogleToken { get; set; }
         public string OauthToken { get; set; }
         public DateTime LastDatetimeAuth { get; set; } = DateTime.Now;
-
     }
 }

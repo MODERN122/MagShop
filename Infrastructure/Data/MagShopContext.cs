@@ -11,8 +11,6 @@ namespace Infrastructure.Data
     {
         public MagShopContext()
         {
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
         }
         public MagShopContext(DbContextOptions<MagShopContext> options):base(options)
         {
@@ -23,7 +21,6 @@ namespace Infrastructure.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Product> Products { get; set; }
-        //public DbSet<ProductPreview> ProductPreviews { get; set; }
         public DbSet<Store> Stores { get; set; }
         public DbSet<User> Users { get; set; }
 

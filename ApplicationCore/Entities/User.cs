@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text;
 
 namespace ApplicationCore.Entities
@@ -13,7 +14,28 @@ namespace ApplicationCore.Entities
         {
 
         }
-        [Key]
+        public User(string id,
+            string firstName,
+            string lastName,
+            string email,
+            string phoneNumber,
+            DateTimeOffset birthDate,
+            Basket basket,
+            UserAuthAccess access,
+            List<CreditCard> creditCards,
+            List<Address> addresses)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            PhoneNumber = phoneNumber;
+            _cards = creditCards;
+            _addresses = addresses;
+            Basket = basket;
+            BirthDate = birthDate;
+            UserAuthAccess = access;
+        }
         public string Id { get; set; }
         //Collection product id favorites
         public string[] FavoriteProductsId { get; set; }
@@ -30,10 +52,19 @@ namespace ApplicationCore.Entities
         public IReadOnlyCollection<Order> Orders => _orders.AsReadOnly();
         private readonly List<Address> _addresses = new List<Address>();
         public IReadOnlyCollection<Address> Addresses => _addresses.AsReadOnly();
-        public DateTime BirthDate { get; set; } = DateTime.Now;
+        public DateTimeOffset BirthDate { get; set; } = DateTime.Now;
         public Basket Basket { get; set; }
 
         public UserAuthAccess UserAuthAccess { get; set; }
+
+        public void AddCreditCard(CreditCard creditCard)
+        {
+            if (!CreditCards.Any(i => i.CreditCardId == creditCard.CreditCardId))
+            {
+                _cards.Add(creditCard);
+                return;
+            }
+        }
 
     }
 
@@ -43,7 +74,12 @@ namespace ApplicationCore.Entities
         {
 
         }
-        public string AddressId { get; set; }
+        public Address(string street, string apartment)
+        {
+            Street = street;
+            Apartment = apartment;
+        }
+        public string AddressId { get; set; } = Guid.NewGuid().ToString();
         public string City { get; set; }
         public string Street { get; set; }
         public string House { get; set; }
@@ -54,7 +90,8 @@ namespace ApplicationCore.Entities
 
     public class CreditCard
     {
-        public CreditCard() {
+        public CreditCard()
+        {
         }
         public string CreditCardId { get; set; }
         [DataType(DataType.CreditCard)]
