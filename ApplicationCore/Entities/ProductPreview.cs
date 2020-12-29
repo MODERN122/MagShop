@@ -14,14 +14,18 @@ namespace ApplicationCore.Entities
         public string ProductId { get; set; }
         public string ProductName { get; set; }
         public string ImageUri { get; set; }
-        public float PriceNew { get; set; }
-        public float PriceOld { get; set; }
+        public double PriceNew { get; set; }
+        public double PriceOld { get; set; }
         public string CategoryId { get; set; }
         public Category Category { get; set; }
         public DateTime DateEndDiscount { get; set; } = DateTime.Now;
-        //Constraint 0.0-5.0
-        public float Rating { get; set; }
-        //Constraint 0.0-1.0 - weight for ML
-        public virtual float Weight { get; set; }
+        /// <summary>
+        /// Constraint 0.0-5.0
+        /// </summary>
+        public double Rating { get; set; }
+        /// <summary>
+        /// Constraint 0.0-1.0 - weight for ML
+        /// </summary>
+        public virtual double Weight { get; set; }
     }
 }

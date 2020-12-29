@@ -11,7 +11,14 @@ namespace ApplicationCore.Entities
         {
 
         }
+        public Store(string id, string sellerId, string name)
+        {
+            Id = id;
+            SellerId = sellerId;
+            Name = name;
+        }
         public string Id { get; set; }
+        public string Name { get; set; }
         public float Rating { get; set; }
         public List<Product> StoreProducts { get; set; }
         public string SellerId { get; set; }

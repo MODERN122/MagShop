@@ -12,9 +12,30 @@ namespace ApplicationCore.Entities
         {
 
         }
+        /// <summary>
+        /// Initialize Product
+        /// </summary>
+        /// <param name="id">identifier</param>
+        /// <param name="name">name of Product</param>
+        /// <param name="price">price new of Product</param>
+        /// <param name="categoryId">identifier of Category</param>
+        /// <param name="description">description</param>
+        /// <param name="properties">collection of Properties</param>
+        /// <param name="storeId">identifier of Store</param>
+        public Product(string id, string name, double price, string categoryId, 
+            string description, List<Property> properties, string storeId) 
+        {
+            ProductId = id;
+            ProductName = name;
+            PriceNew = price;
+            CategoryId = categoryId;
+            Description = description;
+            Properties = properties;
+            StoreId = storeId;
+        }
         public string[] ImagesUri { get; set; }
         //Constraint 1.0-3.0
-        public override float Weight { get; set; }
+        public override double Weight { get; set; }
 
         public string Description { get; set; }
         //Not Added while

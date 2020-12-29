@@ -11,7 +11,15 @@ namespace ApplicationCore.Entities
         {
 
         }
-        public string OrderId { get; set; }
+        public Order(string userId, DateTime datetimeOrder, string addressId, List<OrderItem> items)
+        {
+            UserId = userId;
+            DateTimeOrder = datetimeOrder;
+            AddressId = addressId;
+            _items = items;
+        }
+        
+        public string OrderId { get; set; } = Guid.NewGuid().ToString();
         public string UserId { get; set; }
 
         private readonly List<OrderItem> _items = new List<OrderItem>();

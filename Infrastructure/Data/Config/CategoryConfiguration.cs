@@ -12,7 +12,7 @@ namespace Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.Property(b => b.ParentId)
-                .IsRequired();
+                .IsRequired(false);
             builder.HasOne(p => p.ParentCategory)
                 .WithMany(m => m.ChildrenCategories)
                 .OnDelete(DeleteBehavior.NoAction)
