@@ -1,23 +1,26 @@
 ﻿using Ardalis.GuardClauses;
+using System;
 
 namespace ApplicationCore.Entities
 {
     public class BasketItem
     {
-        public string BasketItemId { get; set; }
-        public decimal UnitPrice { get; private set; }
+        public string BasketItemId { get; set; } = Guid.NewGuid().ToString();
+        public double UnitPrice { get; private set; }
         public int Quantity { get; private set; }
         public string ProductId { get; private set; }
+        public Product Product { get; set; }
         public string BasketId { get; private set; }
 
         public BasketItem()
         {
 
         }
-        public BasketItem(string productId, int quantity, decimal unitPrice)
+        public BasketItem(int quantity, Product product)
         {
-            ProductId = productId;
-            UnitPrice = unitPrice;
+            Product = product;
+            ProductId = product.ProductId;
+            UnitPrice = product.PriceNew;
             SetQuantity(quantity);
         }
 

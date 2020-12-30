@@ -16,6 +16,11 @@ namespace Infrastructure.Data.Config
             navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
 
             builder.HasOne(o => o.ShipToAddress);
+
+            //builder.HasMany(x => x.Items)
+            //    .WithOne()
+            //    .OnDelete(DeleteBehavior.Cascade);
+
             //builder.OwnsOne(b => b.ShipToAddress, a =>
             //{
             //    a.WithOwner();

@@ -16,6 +16,9 @@ namespace Infrastructure.Data.Config
 
             builder.HasKey(p => p.Id);
 
+            builder.HasOne(ho => ho.Basket)
+                .WithOne(x=>x.User);
+
             //builder.OwnsMany(p => p.Addresses, u =>
             //{
             //    u.WithOwner();

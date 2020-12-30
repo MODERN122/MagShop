@@ -54,7 +54,7 @@ namespace ApplicationCore.Entities
         public IReadOnlyCollection<Address> Addresses => _addresses.AsReadOnly();
         public DateTimeOffset BirthDate { get; set; } = DateTime.Now;
         public Basket Basket { get; set; }
-
+        public string BasketId { get; set; }
         public UserAuthAccess UserAuthAccess { get; set; }
 
         public void AddCreditCard(CreditCard creditCard)
@@ -65,7 +65,35 @@ namespace ApplicationCore.Entities
                 return;
             }
         }
+        public void AddOrder(Order order)
+        {
+            if (!Orders.Any(i => i.OrderId == order.OrderId))
+            {
+                _orders.Add(order);
+                return;
+            }
+        }
 
+        public void AddItemsToBaket(List<BasketItem> basketItems)
+        {
+            var nowItems = Basket.Items.ToList();
+            nowItems.AddRange(basketItems);
+            List<BasketItem> resultSequence = new List<BasketItem>();
+            var groupCollection = nowItems.GroupBy(x => x.ProductId).ToList();
+            groupCollection.ForEach(x =>
+            {
+                if (x.Count() > 1)
+                {
+                    x.Skip(1).ToList().ForEach(y => x.First().AddQuantity(y.Quantity));
+                    resultSequence.Add(x.First());
+                }
+                else
+                {
+                    resultSequence.Add(x.First());
+                }
+            });
+            Basket.SetBasketItems(resultSequence);
+        }
     }
 
     public class Address

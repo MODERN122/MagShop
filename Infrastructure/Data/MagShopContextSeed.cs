@@ -11,6 +11,7 @@ namespace Infrastructure.Data
 {
     public class MagShopContextSeed
     {
+        #region Define consts
         //Users
         private const string USER_ID = "1234";
         private const string BASKET_ID = "12345";
@@ -30,12 +31,6 @@ namespace Infrastructure.Data
         private const string PRODUCT_7_ID = "product7";
         private const string PRODUCT_8_ID = "product8";
 
-        private const string PROPERTY_ID = "property1";
-        private const string PROPERTY_ITEM_1_ID = "propertyitem1";
-        private const string PROPERTY_ITEM_2_ID = "propertyitem2";
-        private const string PROPERTY_ITEM_3_ID = "propertyitem3";
-        private const string PROPERTY_ITEM_4_ID = "propertyitem4";
-        private const string PROPERTY_ITEM_5_ID = "propertyitem5";
         //Category
         public const string PARENT_ID = "mainCategory";
         private const string CATEGORY_1_ID = "category1";
@@ -44,6 +39,7 @@ namespace Infrastructure.Data
         private const string CATEGORY_4_ID = "category4";
         private const string CATEGORY_5_ID = "category5";
         private const string CATEGORY_6_ID = "category6";
+        #endregion
 
         public static async Task SeedAsync(MagShopContext context,
             ILoggerFactory loggerFactory, int? retry = 0)
@@ -53,20 +49,13 @@ namespace Infrastructure.Data
             {
                 // TODO: Only run this if using a real database
                 //context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+                //context.Database.EnsureCreated();
                 //context.Database.Migrate();
                 if (!await context.Users.AnyAsync())
                 {
                     await context.Users.AddRangeAsync(
                         GetPreconfiguredUsers());
 
-                    await context.SaveChangesAsync();
-                }
-
-                if (!await context.Orders.AnyAsync())
-                {
-                    await context.Orders.AddRangeAsync(
-                        GetPrecongifuredOrders(context));
                     await context.SaveChangesAsync();
                 }
                 if (!await context.Categories.AnyAsync())
@@ -88,6 +77,19 @@ namespace Infrastructure.Data
                         GetPrecongifuredProducts());
                     await context.SaveChangesAsync();
                 }
+
+                if (!await context.Orders.AnyAsync())
+                {
+                    AddPrecongifuredOrdersToFirstUser(context);
+                    await context.SaveChangesAsync();
+                }
+
+                if (await context.Users.Include(x => x.Basket)
+                    .ThenInclude(x=>x.Items).FirstAsync()!=null)
+                {
+                    AddPreconfiguredBasketItemsToFirstUser(context);
+                    await context.SaveChangesAsync();
+                }
             }
             catch (Exception ex)
             {
@@ -102,6 +104,18 @@ namespace Infrastructure.Data
             }
         }
 
+        private static void AddPreconfiguredBasketItemsToFirstUser(MagShopContext context)
+        {
+            var user = context.Users.Find(USER_ID);
+            var products = context.Products.Where(x => x.StoreId == STORE_ID);
+            List<BasketItem> basketItems = new List<BasketItem>();
+            foreach (var product in products)
+            {
+                basketItems.Add(new BasketItem(2, product));
+            }
+            user.AddItemsToBaket(basketItems);
+        }
+        #region Categories
         private static IEnumerable<Category> GetPreconfiguredCategories()
         {
             return new List<Category>()
@@ -116,7 +130,8 @@ namespace Infrastructure.Data
 
             };
         }
-
+        #endregion
+        #region Products
         private static IEnumerable<Product> GetPrecongifuredProducts()
         {
             return new List<Product>()
@@ -175,7 +190,7 @@ namespace Infrastructure.Data
                         new PropertyItem("43"),
                         new PropertyItem("44"),
                     })
-                }, STORE_ID),
+                }, STORE_ID+"1"),
                 new Product(PRODUCT_6_ID, "Russian shoe", 1800, CATEGORY_1_ID, "It`s nice shoe for real nice girls",
                 new List<Property>()
                 {
@@ -186,7 +201,7 @@ namespace Infrastructure.Data
                         new PropertyItem("43"),
                         new PropertyItem("44"),
                     })
-                }, STORE_ID),
+                }, STORE_ID+"1"),
                 new Product(PRODUCT_7_ID, "Best jacket", 1800, CATEGORY_4_ID, "It`s nice cardigan for real nice guys",
                 new List<Property>()
                 {
@@ -197,7 +212,7 @@ namespace Infrastructure.Data
                         new PropertyItem("43"),
                         new PropertyItem("44"),
                     })
-                }, STORE_ID),
+                }, STORE_ID+"2"),
                 new Product(PRODUCT_8_ID, "French cardigan", 18000, CATEGORY_4_ID, "It`s nice cardigan for real nice guys",
                 new List<Property>()
                 {
@@ -208,10 +223,11 @@ namespace Infrastructure.Data
                         new PropertyItem("43"),
                         new PropertyItem("44"),
                     })
-                }, STORE_ID),
+                }, STORE_ID+"2"),
             };
         }
-
+        #endregion
+        #region Stores
         private static IEnumerable<Store> GetPreconfiguredStores()
         {
             return new List<Store>()
@@ -221,13 +237,22 @@ namespace Infrastructure.Data
                 new Store(STORE_ID+"2", SELLER_ID, "BEST STORE"),
             };
         }
-
-        private static IEnumerable<Order> GetPrecongifuredOrders(MagShopContext context)
+        #endregion
+        #region Orders
+        private static void AddPrecongifuredOrdersToFirstUser(MagShopContext context)
         {
             var user = context.Users.Find(USER_ID);
-            return new List<Order>();
+            var products = context.Products.Where(x => x.StoreId == STORE_ID);
+            List<OrderItem> orderItems = new List<OrderItem>();
+            foreach (var product in products)
+            {
+                orderItems.Add(new OrderItem(2, product));
+            }
+            user.AddOrder(
+                new Order(DateTime.Now, user.Addresses.First().AddressId, orderItems));
         }
-
+        #endregion
+        #region Users
         private static IEnumerable<User> GetPreconfiguredUsers()
         {
             return new List<User>()
@@ -253,5 +278,7 @@ namespace Infrastructure.Data
                 })
             };
         }
+        #endregion
+
     }
 }

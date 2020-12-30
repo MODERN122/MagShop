@@ -11,32 +11,34 @@ namespace ApplicationCore.Entities
         {
 
         }
-        public Order(string userId, DateTime datetimeOrder, string addressId, List<OrderItem> items)
+        public Order(DateTime datetimeOrder, string addressId, List<OrderItem> items)
         {
-            UserId = userId;
             DateTimeOrder = datetimeOrder;
             AddressId = addressId;
-            _items = items;
+            AddRangeOrderItems(items);
         }
         
         public string OrderId { get; set; } = Guid.NewGuid().ToString();
-        public string UserId { get; set; }
 
         private readonly List<OrderItem> _items = new List<OrderItem>();
         public IReadOnlyCollection<OrderItem> Items => _items.AsReadOnly();
         public DateTime DateTimeOrder { get; set; } = DateTime.Now;
         public string AddressId { get; set; }
         public Address ShipToAddress { get; set; }
-        public decimal Total()
+        public double Total()
         {
-            var total = 0m;
+            var total = 0.0;
             foreach (var item in _items)
             {
-                total += item.UnitPrice * item.Quantity;
+                total +=Math.Round(item.UnitPrice * item.Quantity,2);
             }
             return total;
         }
-
+        public void AddRangeOrderItems(List<OrderItem> orderItems)
+        {
+            Guard.Against.NullOrEmpty(orderItems, nameof(_items));
+            _items.AddRange(orderItems);
+        }
     }
 
     public class OrderItem
@@ -45,26 +47,17 @@ namespace ApplicationCore.Entities
         {
 
         }
-        public string OrderItemId { get; set; }
-        public string OrderId { get; set; }
-        public decimal UnitPrice { get; private set; }
+        public OrderItem(int quantity, Product product)
+        {
+            UnitPrice = product.PriceNew;
+            ProducOrdered = product;
+            SetQuantity(quantity);
+        }
+        public string OrderItemId { get; set; } = Guid.NewGuid().ToString();
+        public double UnitPrice { get; private set; }
         public int Quantity { get; private set; }
         public string ProductId { get; set; }
         public Product ProducOrdered { get; set; }
-
-        public OrderItem(Product productPreview, int quantity, decimal unitPrice)
-        {
-            ProducOrdered = productPreview;
-            UnitPrice = unitPrice;
-            SetQuantity(quantity);
-        }
-
-        public void AddQuantity(int quantity)
-        {
-            Guard.Against.OutOfRange(quantity, nameof(quantity), 0, int.MaxValue);
-
-            Quantity += quantity;
-        }
 
         public void SetQuantity(int quantity)
         {

@@ -11,6 +11,10 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<BasketItem> builder)
         {
+            builder.Property(p => p.BasketId)
+                .IsRequired();
+            builder.Property(p => p.ProductId)
+                .IsRequired();
             builder.HasKey(p => p.BasketItemId);
             builder.Property(bi => bi.UnitPrice)
                 .IsRequired(true)
