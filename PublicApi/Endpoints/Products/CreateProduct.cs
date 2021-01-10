@@ -53,16 +53,6 @@ namespace PublicApi.Endpoints.Products
                 //}
             }
 
-            //var dto = new CatalogItemDto
-            //{
-            //    Id = newItem.Id,
-            //    CatalogBrandId = newItem.CatalogBrandId,
-            //    CatalogTypeId = newItem.CatalogTypeId,
-            //    Description = newItem.Description,
-            //    Name = newItem.Name,
-            //    PictureUri = _uriComposer.ComposePicUri(newItem.PictureUri),
-            //    Price = newItem.Price
-            //};
             response.Product = newItem;
             return response;
         }

@@ -58,7 +58,7 @@ namespace PublicApi.Endpoints.Authentication
             response.IsNotAllowed = result.IsNotAllowed;
             response.RequiresTwoFactor = result.RequiresTwoFactor;
             response.Username = request.Username;
-            response.Token = await _tokenClaimsService.GetTokenAsync(request.Username);
+            response.Token = result.Succeeded ? await _tokenClaimsService.GetTokenAsync(request.Username) : "";
 
             return response;
         }
