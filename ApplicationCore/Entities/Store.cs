@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using System.Text.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
@@ -22,6 +24,7 @@ namespace ApplicationCore.Entities
         public float Rating { get; set; }
         public List<Product> StoreProducts { get; set; }
         public string SellerId { get; set; }
+        [JsonIgnore]
         public User Seller { get; set; }
 
 

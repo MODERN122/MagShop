@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ApplicationCore.Interfaces;
+using System.Text.Json.Serialization;
 
 namespace ApplicationCore.Entities
 {
-    public class Product: ProductPreview
+    public class Product: ProductPreview, IAggregateRoot
     {
         public Product()
         {
@@ -33,6 +35,16 @@ namespace ApplicationCore.Entities
             Properties = properties;
             StoreId = storeId;
         }
+        public Product(string name, double price, string categoryId,
+            string description, List<Property> properties, string storeId)
+        {
+            ProductName = name;
+            PriceNew = price;
+            CategoryId = categoryId;
+            Description = description;
+            Properties = properties;
+            StoreId = storeId;
+        }
         public string[] ImagesUri { get; set; }
         //Constraint 1.0-3.0
         public override double Weight { get; set; }
@@ -41,6 +53,7 @@ namespace ApplicationCore.Entities
         //Not Added while
         //public List<string> Reviews { get; set; }
         public string StoreId { get; set; }
+        [JsonIgnore]
         public Store Store { get; set; }
         public List<Property> Properties { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,6 +11,8 @@ namespace ApplicationCore.Entities
     public class Basket
     {
         public string BasketId { get; set; }
+
+        [JsonIgnore]
         public User User { get; set; }
 
         private readonly List<BasketItem> _items = new List<BasketItem>();

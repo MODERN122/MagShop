@@ -8,11 +8,8 @@
   <ItemGroup>
     <PackageReference Include="MvvmCross" Version="7.1.2" />
     <PackageReference Include="MvvmCross.Forms" Version="7.1.2" />
+    <PackageReference Include="Xamarin.Auth" Version="1.7.0" />
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1269" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\MobileApp.Core\MobileApp.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

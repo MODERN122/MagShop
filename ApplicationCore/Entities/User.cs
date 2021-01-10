@@ -1,4 +1,5 @@
-﻿using Ardalis.GuardClauses;
+﻿using ApplicationCore.Interfaces;
+using Ardalis.GuardClauses;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace ApplicationCore.Entities
 {
-    public class User
+    public class User : IAggregateRoot
     {
         public User()
         {
@@ -21,7 +22,6 @@ namespace ApplicationCore.Entities
             string phoneNumber,
             DateTimeOffset birthDate,
             Basket basket,
-            UserAuthAccess access,
             List<CreditCard> creditCards,
             List<Address> addresses)
         {
@@ -34,7 +34,6 @@ namespace ApplicationCore.Entities
             _addresses = addresses;
             Basket = basket;
             BirthDate = birthDate;
-            UserAuthAccess = access;
         }
         public string Id { get; set; }
         //Collection product id favorites
@@ -55,7 +54,6 @@ namespace ApplicationCore.Entities
         public DateTimeOffset BirthDate { get; set; } = DateTime.Now;
         public Basket Basket { get; set; }
         public string BasketId { get; set; }
-        public UserAuthAccess UserAuthAccess { get; set; }
 
         public void AddCreditCard(CreditCard creditCard)
         {

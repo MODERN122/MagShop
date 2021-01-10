@@ -3,20 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ApplicationCore.Entities;
+using ApplicationCore.Interfaces;
 using AutoMapper;
 using Infrastructure.Data;
+using Infrastructure.Identity;
 using Infrastructure.UrlConfiguration;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
+using Infrastructure.Constants;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ApplicationCore;
+using Infrastructure.Services;
 
 namespace PublicApi
 {
@@ -34,39 +43,36 @@ namespace PublicApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddIdentity<ApplicationUser, IdentityRole>()
-            //           .AddEntityFrameworkStores<AppIdentityDbContext>()
-            //           .AddDefaultTokenProviders();
+            services.AddIdentity<UserAuthAccess, IdentityRole>()
+                       .AddEntityFrameworkStores<IdentityContext>()
+                       .AddDefaultTokenProviders();
 
-            //services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
-            //services.Configure<CatalogSettings>(Configuration);
-            //services.AddSingleton<IUriComposer>(new UriComposer(Configuration.Get<CatalogSettings>()));
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
+            services.Configure<CatalogSettings>(Configuration);
+            services.AddSingleton<IUriComposer>(new UriComposer(Configuration.Get<CatalogSettings>()));
             //services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
-            //services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
+            services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
 
             var baseUrlConfig = new BaseUrlConfiguration();
             Configuration.Bind(BaseUrlConfiguration.CONFIG_NAME, baseUrlConfig);
-            //services.AddScoped<IFileSystem, WebFileSystem>(x => new WebFileSystem($"{baseUrlConfig.WebBase}File"));
+            services.AddScoped<IFileSystem, WebFileSystemService>(x => new WebFileSystemService($"{baseUrlConfig.WebBase}File"));
 
             services.AddMemoryCache();
 
-            //var key = Encoding.ASCII.GetBytes(AuthorizationConstants.JWT_SECRET_KEY);
-            //services.AddAuthentication(config =>
-            //{
-            //    config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            //})
-            //.AddJwtBearer(config =>
-            //{
-            //    config.RequireHttpsMetadata = false;
-            //    config.SaveToken = true;
-            //    config.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateIssuerSigningKey = true,
-            //        IssuerSigningKey = new SymmetricSecurityKey(key),
-            //        ValidateIssuer = false,
-            //        ValidateAudience = false
-            //    };
-            //});
+            var key = Encoding.ASCII.GetBytes(ConstantsAPI.JWT_SECRET_KEY);
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(config =>
+            {
+                config.RequireHttpsMetadata = false;
+                config.SaveToken = true;
+                config.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
 
             //services.AddCors(options =>
             //{
@@ -133,13 +139,12 @@ namespace PublicApi
             // use real database
             // Requires LocalDB which can be installed with SQL Server Express 2016
             // https://www.microsoft.com/en-us/download/details.aspx?id=54284
-            var connectString = Configuration.GetConnectionString("MagShopDBConnection");
             services.AddDbContext<MagShopContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("MagShopDBConnection")));
 
             // Add Identity DbContext
-            //services.AddDbContext<AppIdentityDbContext>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+            services.AddDbContext<IdentityContext>(options =>
+                        options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
             ConfigureServices(services);
         }
@@ -157,6 +162,7 @@ namespace PublicApi
 
             app.UseCors(CORS_POLICY);
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
@@ -168,8 +174,6 @@ namespace PublicApi
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

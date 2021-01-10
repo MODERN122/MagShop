@@ -1,0 +1,67 @@
+﻿
+using ApplicationCore.Interfaces;
+using Ardalis.ApiEndpoints;
+using Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace PublicApi.Endpoints.Authentication
+{
+    /// <summary>
+    /// Base class used by API requests
+    /// </summary>
+    public abstract class BaseMessage
+    {
+        /// <summary>
+        /// Unique Identifier used by logging
+        /// </summary>
+        protected Guid _correlationId = Guid.NewGuid();
+        public Guid CorrelationId() => _correlationId;
+    }
+    public class Authentication : BaseAsyncEndpoint<AuthenticationRequest, AuthenticationResponse>
+    {
+        private readonly SignInManager<UserAuthAccess> _signInManager;
+        private readonly ITokenClaimsService _tokenClaimsService;
+
+        public Authentication(SignInManager<UserAuthAccess> signInManager,
+            ITokenClaimsService tokenClaimsService)
+        {
+            _signInManager = signInManager;
+            _tokenClaimsService = tokenClaimsService;
+        }
+
+        [HttpPost("api/authentication")]
+        [SwaggerOperation(
+            Summary = "Authenticates a user",
+            Description = "Authenticates a user",
+            OperationId = "auth.authenticate",
+            Tags = new[] { "AuthEndpoints" })
+        ]
+        public override async Task<ActionResult<AuthenticationResponse>> HandleAsync(AuthenticationRequest request, CancellationToken cancellationToken)
+        {
+            var response = new AuthenticationResponse(request.CorrelationId());
+
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+            //var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+
+            var result = await _signInManager.PasswordSignInAsync(request.Username, request.Password, false, true);
+
+            response.Result = result.Succeeded;
+            response.IsLockedOut = result.IsLockedOut;
+            response.IsNotAllowed = result.IsNotAllowed;
+            response.RequiresTwoFactor = result.RequiresTwoFactor;
+            response.Username = request.Username;
+            response.Token = await _tokenClaimsService.GetTokenAsync(request.Username);
+
+            return response;
+        }
+
+    }
+}

@@ -1,20 +1,20 @@
-﻿using System;
+﻿
+using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace ApplicationCore.Entities
+namespace Infrastructure.Identity
 {
-    public class UserAuthAccess
+    public class UserAuthAccess : IdentityUser
     {
-        public UserAuthAccess(string userName, string password)
+        public UserAuthAccess(string userName, string email)
         {
             UserName = userName;
-            Password = password;
+            Email = email;
         }
-        public string UserName { get; set; }
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public override string UserName { get; set; }
 
         public string UserId { get; set; }
         public string FirebaseToken { get; set; }

@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Infrastructure.Data;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
@@ -27,9 +29,10 @@ namespace PublicApi
                 {
                     var catalogContext = services.GetRequiredService<MagShopContext>();
                     await MagShopContextSeed.SeedAsync(catalogContext, loggerFactory);
-                    //var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-                    //var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    //await AppIdentityDbContextSeed.SeedAsync(userManager, roleManager);
+
+                    var userManager = services.GetRequiredService<UserManager<UserAuthAccess>>();
+                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    await IdentityContextSeed.SeedAsync(userManager, roleManager);
                 }
                 catch (Exception ex)
                 {

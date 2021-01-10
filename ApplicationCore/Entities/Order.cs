@@ -1,11 +1,12 @@
-﻿using Ardalis.GuardClauses;
+﻿using ApplicationCore.Interfaces;
+using Ardalis.GuardClauses;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ApplicationCore.Entities
 {
-    public class Order
+    public class Order : IAggregateRoot
     {
         public Order()
         {

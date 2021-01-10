@@ -27,16 +27,22 @@ namespace Infrastructure.Data.Config
             //    .IsRequired();
             //});
 
-            builder.OwnsOne(ot => ot.UserAuthAccess, u =>
-            {
-                u.WithOwner();
-                u.Property(p => p.Password)
-                .HasMaxLength(100)
-                .IsRequired();
-                u.Property(p => p.UserName)
-                .HasMaxLength(100)
-                .IsRequired();
-            });
+            //builder.OwnsOne(ot => ot.UserAuthAccess, u =>
+            //{
+            //    u.WithOwner();
+            //    u.Property(p => p.Password)
+            //    .HasMaxLength(100)
+            //    .IsRequired();
+            //    u.Property(p => p.UserName)
+            //    .HasMaxLength(100)
+            //    .IsRequired();
+            //    u.HasIndex(p => p.UserName);
+            //    u.HasIndex(p => p.Password).IsUnique();
+            //    u.HasIndex(p => p.GoogleToken).IsUnique();
+            //    u.HasIndex(p => p.FacebookToken).IsUnique();
+            //    u.HasIndex(p => p.FirebaseToken).IsUnique();
+            //    u.HasIndex(p => p.OauthToken).IsUnique();
+            //});
 
             builder.Property(p => p.FavoriteProductsId)
             .HasConversion(

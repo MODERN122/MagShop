@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using System.Text.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
@@ -28,8 +30,11 @@ namespace ApplicationCore.Entities
         /// Constraint 0.0-1.0
         /// </summary>
         public double Weight { get; set; }
+        [JsonIgnore]
         public Category ParentCategory { get; set; }
+        [JsonIgnore]
         public List<Category> ChildrenCategories { get; set; }
+        [JsonIgnore]
         public List<Product> Products { get; set; }
 
         public Category()

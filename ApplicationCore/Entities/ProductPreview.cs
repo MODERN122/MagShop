@@ -11,12 +11,13 @@ namespace ApplicationCore.Entities
         {
 
         }
-        public string ProductId { get; set; }
+        public string ProductId { get; set; } = Guid.NewGuid().ToString();
         public string ProductName { get; set; }
         public string ImageUri { get; set; }
         public double PriceNew { get; set; }
         public double PriceOld { get; set; }
         public string CategoryId { get; set; }
+
         public Category Category { get; set; }
         public DateTime DateEndDiscount { get; set; } = DateTime.Now;
         /// <summary>

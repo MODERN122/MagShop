@@ -49,7 +49,7 @@ namespace Infrastructure.Data
             {
                 // TODO: Only run this if using a real database
                 //context.Database.EnsureDeleted();
-                //context.Database.EnsureCreated();
+                context.Database.EnsureCreated();
                 //context.Database.Migrate();
                 if (!await context.Users.AnyAsync())
                 {
@@ -258,7 +258,7 @@ namespace Infrastructure.Data
             return new List<User>()
             {
                 new User(USER_ID,"Mikhail","Filippov", "filmih24@mail.ru", "+79954116858", DateTimeOffset.Parse("24.09.1998"),
-                new Basket(){ BasketId=BASKET_ID}, new UserAuthAccess("admin","password"),
+                new Basket(){ BasketId=BASKET_ID},
                 new List<CreditCard>(){
                     new CreditCard(){ CreditCardId=CREDIT_CARD_ID, CardNumber="12345678"}
                 },
@@ -268,7 +268,7 @@ namespace Infrastructure.Data
                 }),
 
                 new User(SELLER_ID,"Bariga","Palenkov", "bar.yaga@mail.ru", "+7988888888", DateTimeOffset.Parse("21.7.2005"),
-                new Basket(){ BasketId=BASKET_SELLER_ID}, new UserAuthAccess("admin","password"),
+                new Basket(){ BasketId=BASKET_SELLER_ID}, 
                 new List<CreditCard>(){
                     new CreditCard(){ CreditCardId=CREDIT_CARD_SELLER_ID, CardNumber="12345678"}
                 },
