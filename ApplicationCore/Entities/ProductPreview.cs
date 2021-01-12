@@ -1,11 +1,12 @@
-﻿using System;
+﻿using ApplicationCore.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace ApplicationCore.Entities
 {
-    public class ProductPreview
+    public class ProductPreview : IAggregateRoot
     {
         public ProductPreview()
         {

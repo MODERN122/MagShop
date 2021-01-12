@@ -27,12 +27,10 @@ namespace PublicApi
                 var loggerFactory = services.GetRequiredService<ILoggerFactory>();
                 try
                 {
-                    var catalogContext = services.GetRequiredService<MagShopContext>();
-                    await MagShopContextSeed.SeedAsync(catalogContext, loggerFactory);
-
                     var userManager = services.GetRequiredService<UserManager<UserAuthAccess>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    await IdentityContextSeed.SeedAsync(userManager, roleManager);
+                    var catalogContext = services.GetRequiredService<MagShopContext>();
+                    await MagShopContextSeed.SeedAsync(catalogContext, loggerFactory,userManager, roleManager);
                 }
                 catch (Exception ex)
                 {

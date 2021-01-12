@@ -4,10 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using ApplicationCore.Interfaces;
 
 namespace ApplicationCore.Entities
 {
-    public class Store
+    public class Store : IAggregateRoot
     {
         public Store()
         {

@@ -1,4 +1,6 @@
 ﻿using ApplicationCore.Entities;
+using Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +9,7 @@ using System.Text;
 
 namespace Infrastructure.Data
 {
-    public class MagShopContext : DbContext
+    public class MagShopContext : IdentityDbContext<UserAuthAccess>
     {
         public MagShopContext()
         {
@@ -27,7 +29,6 @@ namespace Infrastructure.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MagShopDB;Trusted_Connection=True;");
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {

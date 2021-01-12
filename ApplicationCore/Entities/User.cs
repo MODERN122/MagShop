@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace ApplicationCore.Entities
 {
@@ -54,6 +55,8 @@ namespace ApplicationCore.Entities
         public DateTimeOffset BirthDate { get; set; } = DateTime.Now;
         public Basket Basket { get; set; }
         public string BasketId { get; set; }
+        [JsonIgnore]
+        public List<Store> Stores { get; set; }
 
         public void AddCreditCard(CreditCard creditCard)
         {

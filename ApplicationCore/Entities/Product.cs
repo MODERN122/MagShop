@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 
 namespace ApplicationCore.Entities
 {
-    public class Product: ProductPreview, IAggregateRoot
+    public class Product: ProductPreview
     {
         public Product()
         {

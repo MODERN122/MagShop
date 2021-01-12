@@ -44,7 +44,7 @@ namespace PublicApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentity<UserAuthAccess, IdentityRole>()
-                       .AddEntityFrameworkStores<IdentityContext>()
+                       .AddEntityFrameworkStores<MagShopContext>()
                        .AddDefaultTokenProviders();
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
@@ -143,8 +143,8 @@ namespace PublicApi
                 c.UseSqlServer(Configuration.GetConnectionString("MagShopDBConnection")));
 
             // Add Identity DbContext
-            services.AddDbContext<IdentityContext>(options =>
-                        options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+            //services.AddDbContext<IdentityContext>(options =>
+            //            options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
             ConfigureServices(services);
         }

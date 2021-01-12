@@ -1,4 +1,6 @@
 ﻿using ApplicationCore.Entities;
+using Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -42,7 +44,7 @@ namespace Infrastructure.Data
         #endregion
 
         public static async Task SeedAsync(MagShopContext context,
-            ILoggerFactory loggerFactory, int? retry = 0)
+            ILoggerFactory loggerFactory, UserManager<UserAuthAccess> userManager, RoleManager<IdentityRole> roleManager, int? retry = 0)
         {
             int retryForAvailability = retry.Value;
             try
@@ -53,8 +55,24 @@ namespace Infrastructure.Data
                 //context.Database.Migrate();
                 if (!await context.Users.AnyAsync())
                 {
-                    await context.Users.AddRangeAsync(
-                        GetPreconfiguredUsers());
+                    if (!roleManager.Roles.Any() && !userManager.Users.Any())
+                    {
+                        await roleManager.CreateAsync(new IdentityRole(Constants.ConstantsAPI.ADMINISTRATORS));
+
+                        var defaultUser = new UserAuthAccess("demouser@microsoft.com", "demouser@microsoft.com");
+                        defaultUser.Id = USER_ID;
+                        await userManager.CreateAsync(defaultUser, Constants.ConstantsAPI.DEFAULT_PASSWORD);
+
+                        string adminUserName = "admin@microsoft.com";
+                        var adminUser = new UserAuthAccess(adminUserName, adminUserName);
+                        adminUser.Id = SELLER_ID;
+                        await userManager.CreateAsync(adminUser, Constants.ConstantsAPI.DEFAULT_PASSWORD);
+                        adminUser = await userManager.FindByNameAsync(adminUserName);
+                        await userManager.AddToRoleAsync(adminUser, Constants.ConstantsAPI.ADMINISTRATORS);
+                        
+                        await context.Users.AddRangeAsync(
+                            GetPreconfiguredUsers(defaultUser.Id, adminUser.Id));
+                    }
 
                     await context.SaveChangesAsync();
                 }
@@ -85,7 +103,7 @@ namespace Infrastructure.Data
                 }
 
                 if (await context.Users.Include(x => x.Basket)
-                    .ThenInclude(x=>x.Items).FirstAsync()!=null)
+                    .ThenInclude(x => x.Items).FirstAsync() != null)
                 {
                     AddPreconfiguredBasketItemsToFirstUser(context);
                     await context.SaveChangesAsync();
@@ -98,7 +116,7 @@ namespace Infrastructure.Data
                     retryForAvailability++;
                     var log = loggerFactory.CreateLogger<MagShopContextSeed>();
                     log.LogError(ex.Message);
-                    await SeedAsync(context, loggerFactory, retryForAvailability);
+                    await SeedAsync(context, loggerFactory, userManager, roleManager, retryForAvailability);
                 }
                 throw;
             }
@@ -253,11 +271,11 @@ namespace Infrastructure.Data
         }
         #endregion
         #region Users
-        private static IEnumerable<User> GetPreconfiguredUsers()
+        private static IEnumerable<User> GetPreconfiguredUsers(string id, string id1)
         {
             return new List<User>()
             {
-                new User(USER_ID,"Mikhail","Filippov", "filmih24@mail.ru", "+79954116858", DateTimeOffset.Parse("24.09.1998"),
+                new User(id,"Mikhail","Filippov", "filmih24@mail.ru", "+79954116858", DateTimeOffset.Parse("24.09.1998"),
                 new Basket(){ BasketId=BASKET_ID},
                 new List<CreditCard>(){
                     new CreditCard(){ CreditCardId=CREDIT_CARD_ID, CardNumber="12345678"}
@@ -267,8 +285,8 @@ namespace Infrastructure.Data
                     new Address("Pkorova", "23")
                 }),
 
-                new User(SELLER_ID,"Bariga","Palenkov", "bar.yaga@mail.ru", "+7988888888", DateTimeOffset.Parse("21.7.2005"),
-                new Basket(){ BasketId=BASKET_SELLER_ID}, 
+                new User(id1,"Bariga","Palenkov", "bar.yaga@mail.ru", "+7988888888", DateTimeOffset.Parse("21.7.2005"),
+                new Basket(){ BasketId=BASKET_SELLER_ID},
                 new List<CreditCard>(){
                     new CreditCard(){ CreditCardId=CREDIT_CARD_SELLER_ID, CardNumber="12345678"}
                 },
@@ -279,6 +297,5 @@ namespace Infrastructure.Data
             };
         }
         #endregion
-
     }
 }

@@ -15,8 +15,6 @@ namespace Infrastructure.Identity
             Email = email;
         }
         public override string UserName { get; set; }
-
-        public string UserId { get; set; }
         public string FirebaseToken { get; set; }
         public string FacebookToken { get; set; }
         public string GoogleToken { get; set; }
