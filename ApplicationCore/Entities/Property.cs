@@ -29,7 +29,7 @@ namespace ApplicationCore.Entities
             Caption = caption;
         }
         public string Id { get; set; } = Guid.NewGuid().ToString();
-        public string ImageUri { get; set; }
+        public byte[] Image { get; set; }
         public string Caption { get; set; }
     }
 }

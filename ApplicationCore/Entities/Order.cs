@@ -31,7 +31,7 @@ namespace ApplicationCore.Entities
             var total = 0.0;
             foreach (var item in _items)
             {
-                total +=Math.Round(item.UnitPrice * item.Quantity,2);
+                total +=Math.Round(item.UnitPrice.Value * item.Quantity,2);
             }
             return total;
         }
@@ -55,7 +55,7 @@ namespace ApplicationCore.Entities
             SetQuantity(quantity);
         }
         public string OrderItemId { get; set; } = Guid.NewGuid().ToString();
-        public double UnitPrice { get; private set; }
+        public double? UnitPrice { get; private set; }
         public int Quantity { get; private set; }
         public string ProductId { get; set; }
         public Product ProducOrdered { get; set; }

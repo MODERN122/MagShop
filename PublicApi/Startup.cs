@@ -46,7 +46,6 @@ namespace PublicApi
             services.AddIdentity<UserAuthAccess, IdentityRole>()
                        .AddEntityFrameworkStores<MagShopContext>()
                        .AddDefaultTokenProviders();
-
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
             services.Configure<CatalogSettings>(Configuration);
             services.AddSingleton<IUriComposer>(new UriComposer(Configuration.Get<CatalogSettings>()));
@@ -85,10 +84,11 @@ namespace PublicApi
             //                      });
             //});
 
+            services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddControllers();
+            
             //services.AddMediatR(typeof(User).Assembly);
 
-            services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });

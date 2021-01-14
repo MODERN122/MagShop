@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace PublicApi.Endpoints.Authentication
 {
-    public class Authentication : BaseAsyncEndpoint<AuthenticationRequest, AuthenticationResponse>
+    public class Authenticate : BaseAsyncEndpoint<AuthenticationRequest, AuthenticationResponse>
     {
         private readonly SignInManager<UserAuthAccess> _signInManager;
         private readonly ITokenClaimsService _tokenClaimsService;
 
-        public Authentication(SignInManager<UserAuthAccess> signInManager,
+        public Authenticate(SignInManager<UserAuthAccess> signInManager,
             ITokenClaimsService tokenClaimsService)
         {
             _signInManager = signInManager;

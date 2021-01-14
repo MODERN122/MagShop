@@ -6,7 +6,7 @@ namespace ApplicationCore.Entities
     public class BasketItem
     {
         public string BasketItemId { get; set; } = Guid.NewGuid().ToString();
-        public double UnitPrice { get; private set; }
+        public double? UnitPrice { get; private set; }
         public int Quantity { get; private set; }
         public string ProductId { get; private set; }
         public Product Product { get; set; }

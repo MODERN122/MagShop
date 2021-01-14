@@ -11,10 +11,9 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.Property(e => e.ImagesUri)
-            .HasConversion(
-                v => string.Join(',', v),
-                v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
+            builder.HasMany(x => x.Images)
+                .WithOne(x => x.Product)
+                .HasForeignKey(x => x.ProductId);
         }
     }
 }

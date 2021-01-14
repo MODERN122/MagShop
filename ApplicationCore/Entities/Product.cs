@@ -45,9 +45,9 @@ namespace ApplicationCore.Entities
             Properties = properties;
             StoreId = storeId;
         }
-        public string[] ImagesUri { get; set; }
+        public List<Image> Images { get; set; }
         //Constraint 1.0-3.0
-        public override double Weight { get; set; }
+        public double Weight { get; set; }
 
         public string Description { get; set; }
         //Not Added while

@@ -19,55 +19,53 @@ using Infrastructure.Constants;
 
 namespace PublicApi.Endpoints.Products
 {
-    [Authorize(Roles = ConstantsAPI.ADMINISTRATORS, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    //[Authorize(Roles = ConstantsAPI.SELLERS, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class CreateProduct : BaseAsyncEndpoint<CreateProductRequest, CreateProductResponse>
+    [Authorize(Roles = "Administrators,Sellers", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(Roles = ConstantsAPI.ADMINISTRATORS, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public class Put : BaseAsyncEndpoint<PutProductRequest, PutProductResponse>
     {
-        private readonly IAsyncRepository<Product> _itemRepository;
+        private readonly IAsyncRepository<Product> _productRepository;
         private readonly IAsyncRepository<Store> _storeRepository;
-        private readonly IUriComposer _uriComposer;
-        private readonly IFileSystem _webFileSystem;
         private readonly UserManager<UserAuthAccess> _userManager;
         private readonly IMapper _mapper;
 
-        public CreateProduct(IAsyncRepository<Product> itemRepository, IAsyncRepository<Store> storeRepository, IUriComposer uriComposer, IFileSystem webFileSystem, UserManager<UserAuthAccess> userManager,
+        public Put(IAsyncRepository<Product> productRepository, 
+            IAsyncRepository<Store> storeRepository, 
+            UserManager<UserAuthAccess> userManager,
             IMapper mapper)
         {
-            _itemRepository = itemRepository;
+            _productRepository = productRepository;
             _storeRepository = storeRepository;
-            _uriComposer = uriComposer;
-            _webFileSystem = webFileSystem;
             _userManager = userManager;
             _mapper = mapper;
         }
 
-        [HttpPost("api/products")]
+        [HttpPut("api/products")]
         [SwaggerOperation(
-            Summary = "Creates a new Product",
-            Description = "Creates a new Product",
-            OperationId = "products.create",
+            Summary = "Updates a new Product",
+            Description = "Updates a new Product",
+            OperationId = "products.update",
             Tags = new[] { "ProductsEndpoints" })
         ]
         //TODO add Photos in constructor
-        public override async Task<ActionResult<CreateProductResponse>> HandleAsync(CreateProductRequest request, CancellationToken cancellationToken = default)
+        public override async Task<ActionResult<PutProductResponse>> HandleAsync(PutProductRequest request, CancellationToken cancellationToken = default)
         {
             try
             {
-                var response = new CreateProductResponse(request.CorrelationId());
+                var response = new PutProductResponse(request.CorrelationId());
 
                 System.Security.Claims.ClaimsPrincipal currentUser = this.User;
                 var currentUserName = currentUser.FindFirst(ClaimTypes.Name).Value;
                 UserAuthAccess user = await _userManager.FindByNameAsync(currentUserName);
-                var store = await _storeRepository.GetByIdAsync(request.StoreId);
+                var oldProduct = await _productRepository.GetByIdAsync(request.ProductId);
+                var store = await _storeRepository.GetByIdAsync(oldProduct.StoreId);
 
-                if ((store != null && store.SellerId == user.Id)||currentUser.IsInRole(Infrastructure.Constants.ConstantsAPI.ADMINISTRATORS))
+                if ((store != null && store.SellerId == user.Id) || currentUser.IsInRole(Infrastructure.Constants.ConstantsAPI.ADMINISTRATORS))
                 {
-                    var product = new Product();
-                    _mapper.Map(request, product);
-                    product = await _itemRepository.AddAsync(product);
-                    var productSpec = new ProductSpecification(product.ProductId);
-                    product = await _itemRepository.FirstAsync(productSpec);
-                    if (product.ProductId != null)
+                     var newProd = _mapper.Map(request, oldProduct);
+                    await _productRepository.UpdateAsync(oldProduct);
+                    var productSpec = new ProductSpecification(oldProduct.ProductId);
+                    oldProduct = await _productRepository.FirstAsync(productSpec);
+                    if (oldProduct.ProductId != null)
                     {
                         //var picName = $"{newItem}/{Path.GetExtension(request.PictureName)}";
                         //if (await _webFileSystem.SavePicture(picName, request.PictureBase64))
@@ -77,7 +75,7 @@ namespace PublicApi.Endpoints.Products
                         //}
                     }
 
-                    response.Product = product;
+                    response.Product = oldProduct;
                     return Ok(response);
 
                 }

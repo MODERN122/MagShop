@@ -44,13 +44,14 @@ namespace Infrastructure.Data
         #endregion
 
         public static async Task SeedAsync(MagShopContext context,
-            ILoggerFactory loggerFactory, UserManager<UserAuthAccess> userManager, RoleManager<IdentityRole> roleManager, int? retry = 0)
+            ILoggerFactory loggerFactory, UserManager<UserAuthAccess> userManager, 
+            RoleManager<IdentityRole> roleManager, int? retry = 0)
         {
             int retryForAvailability = retry.Value;
             try
             {
                 // TODO: Only run this if using a real database
-                //context.Database.EnsureDeleted();
+                context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
                 //context.Database.Migrate();
                 if (!await context.Users.AnyAsync())
@@ -58,6 +59,7 @@ namespace Infrastructure.Data
                     if (!roleManager.Roles.Any() && !userManager.Users.Any())
                     {
                         await roleManager.CreateAsync(new IdentityRole(Constants.ConstantsAPI.ADMINISTRATORS));
+                        await roleManager.CreateAsync(new IdentityRole(Constants.ConstantsAPI.SELLERS));
 
                         var defaultUser = new UserAuthAccess("demouser@microsoft.com", "demouser@microsoft.com");
                         defaultUser.Id = USER_ID;
