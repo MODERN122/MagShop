@@ -61,12 +61,12 @@ namespace Infrastructure.Data
                         await roleManager.CreateAsync(new IdentityRole(Constants.ConstantsAPI.ADMINISTRATORS));
                         await roleManager.CreateAsync(new IdentityRole(Constants.ConstantsAPI.SELLERS));
 
-                        var defaultUser = new UserAuthAccess("demouser@microsoft.com", "demouser@microsoft.com");
+                        var defaultUser = new UserAuthAccess("demouser@microsoft.com");
                         defaultUser.Id = USER_ID;
                         await userManager.CreateAsync(defaultUser, Constants.ConstantsAPI.DEFAULT_PASSWORD);
 
                         string adminUserName = "admin@microsoft.com";
-                        var adminUser = new UserAuthAccess(adminUserName, adminUserName);
+                        var adminUser = new UserAuthAccess(adminUserName);
                         adminUser.Id = SELLER_ID;
                         await userManager.CreateAsync(adminUser, Constants.ConstantsAPI.DEFAULT_PASSWORD);
                         adminUser = await userManager.FindByNameAsync(adminUserName);

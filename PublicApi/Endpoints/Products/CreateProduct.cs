@@ -49,7 +49,7 @@ namespace PublicApi.Endpoints.Products
             Tags = new[] { "ProductsEndpoints" })
         ]
         //TODO add Photos in constructor
-        public override async Task<ActionResult<CreateProductResponse>> HandleAsync(CreateProductRequest request, CancellationToken cancellationToken = default)
+        public override async Task<ActionResult<CreateProductResponse>> HandleAsync(CreateProductRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace PublicApi.Endpoints.Products
                 {
                     var product = new Product();
                     _mapper.Map(request, product);
-                    product = await _itemRepository.AddAsync(product);
+                    product = await _itemRepository.AddAsync(product, cancellationToken);
                     var productSpec = new ProductSpecification(product.ProductId);
                     product = await _itemRepository.FirstAsync(productSpec);
                     if (product.ProductId != null)

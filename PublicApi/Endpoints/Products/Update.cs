@@ -21,14 +21,14 @@ namespace PublicApi.Endpoints.Products
 {
     [Authorize(Roles = "Administrators,Sellers", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     //[Authorize(Roles = ConstantsAPI.ADMINISTRATORS, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class Put : BaseAsyncEndpoint<PutProductRequest, PutProductResponse>
+    public class Update : BaseAsyncEndpoint<PutProductRequest, PutProductResponse>
     {
         private readonly IAsyncRepository<Product> _productRepository;
         private readonly IAsyncRepository<Store> _storeRepository;
         private readonly UserManager<UserAuthAccess> _userManager;
         private readonly IMapper _mapper;
 
-        public Put(IAsyncRepository<Product> productRepository, 
+        public Update(IAsyncRepository<Product> productRepository, 
             IAsyncRepository<Store> storeRepository, 
             UserManager<UserAuthAccess> userManager,
             IMapper mapper)
@@ -47,7 +47,7 @@ namespace PublicApi.Endpoints.Products
             Tags = new[] { "ProductsEndpoints" })
         ]
         //TODO add Photos in constructor
-        public override async Task<ActionResult<PutProductResponse>> HandleAsync(PutProductRequest request, CancellationToken cancellationToken = default)
+        public override async Task<ActionResult<PutProductResponse>> HandleAsync(PutProductRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -62,17 +62,12 @@ namespace PublicApi.Endpoints.Products
                 if ((store != null && store.SellerId == user.Id) || currentUser.IsInRole(Infrastructure.Constants.ConstantsAPI.ADMINISTRATORS))
                 {
                      var newProd = _mapper.Map(request, oldProduct);
-                    await _productRepository.UpdateAsync(oldProduct);
+                    await _productRepository.UpdateAsync(oldProduct, cancellationToken);
                     var productSpec = new ProductSpecification(oldProduct.ProductId);
                     oldProduct = await _productRepository.FirstAsync(productSpec);
                     if (oldProduct.ProductId != null)
                     {
-                        //var picName = $"{newItem}/{Path.GetExtension(request.PictureName)}";
-                        //if (await _webFileSystem.SavePicture(picName, request.PictureBase64))
-                        //{
-                        //    newItem.UpdatePictureUri(picName);
-                        //    await _itemRepository.UpdateAsync(newItem);
-                        //}
+
                     }
 
                     response.Product = oldProduct;

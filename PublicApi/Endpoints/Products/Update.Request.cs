@@ -19,10 +19,7 @@ namespace PublicApi.Endpoints.Products
         public string CategoryId { get; set; }
         public DateTime? DateEndDiscount { get; set; }
         public List<Image> Images { get; set; }
-
         public string Description { get; set; }
-        //Not Added while
-        //public List<string> Reviews { get; set; }
         public List<Property> Properties { get; set; }
     }
 }

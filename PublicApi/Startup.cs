@@ -73,6 +73,12 @@ namespace PublicApi
                 };
             });
 
+            //TODO Сделать политику, в которой просматривать личную информацию и прочие действия сможет только тот чья это информация
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("SelfAuthorize", policy => policy.AddRequirements(new SelfAuthorize()));
+            //});
+            
             //services.AddCors(options =>
             //{
             //    options.AddPolicy(name: CORS_POLICY,

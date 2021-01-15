@@ -36,7 +36,7 @@ namespace ApplicationCore.Entities
             Basket = basket;
             BirthDate = birthDate;
         }
-        public string Id { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
         //Collection product id favorites
         public string[] FavoriteProductsId { get; set; }
         public string FirstName { get; set; }

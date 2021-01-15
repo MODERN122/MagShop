@@ -15,11 +15,11 @@ namespace Infrastructure.Identity
             {
                 await roleManager.CreateAsync(new IdentityRole(Constants.ConstantsAPI.ADMINISTRATORS));
 
-                var defaultUser = new UserAuthAccess("demouser@microsoft.com", "demouser@microsoft.com");
+                var defaultUser = new UserAuthAccess("demouser@microsoft.com");
                 await userManager.CreateAsync(defaultUser, Constants.ConstantsAPI.DEFAULT_PASSWORD);
 
                 string adminUserName = "admin@microsoft.com";
-                var adminUser = new UserAuthAccess(adminUserName, adminUserName);
+                var adminUser = new UserAuthAccess(adminUserName);
                 await userManager.CreateAsync(adminUser, Constants.ConstantsAPI.DEFAULT_PASSWORD);
                 adminUser = await userManager.FindByNameAsync(adminUserName);
                 await userManager.AddToRoleAsync(adminUser, Constants.ConstantsAPI.ADMINISTRATORS);

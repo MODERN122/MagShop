@@ -13,7 +13,11 @@ namespace Infrastructure.Data.Config
         {
             builder.HasMany(x => x.Images)
                 .WithOne(x => x.Product)
-                .HasForeignKey(x => x.ProductId);
+                .HasForeignKey(x => x.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(x => x.Properties)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

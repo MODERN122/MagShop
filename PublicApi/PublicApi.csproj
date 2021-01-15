@@ -40,5 +40,10 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Endpoints\Basket\" />
+    <Folder Include="Endpoints\Orders\" />
+  </ItemGroup>
+
 
 </Project>

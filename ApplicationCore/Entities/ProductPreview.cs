@@ -20,7 +20,7 @@ namespace ApplicationCore.Entities
         public string CategoryId { get; set; }
 
         public Category Category { get; set; }
-        public DateTime DateEndDiscount { get; set; } = DateTime.Now;
+        public DateTime? DateEndDiscount { get; set; } = DateTime.Now;
         /// <summary>
         /// Constraint 0.0-5.0
         /// </summary>

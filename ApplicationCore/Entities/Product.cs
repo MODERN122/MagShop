@@ -48,10 +48,11 @@ namespace ApplicationCore.Entities
         public List<Image> Images { get; set; }
         //Constraint 1.0-3.0
         public double Weight { get; set; }
-
+        [Required]
         public string Description { get; set; }
         //Not Added while
         //public List<string> Reviews { get; set; }
+        [Required]
         public string StoreId { get; set; }
         [JsonIgnore]
         public Store Store { get; set; }
