@@ -1,6 +1,6 @@
-﻿using PublicApi.Base;
+﻿using ApplicationCore.Base;
 
-namespace PublicApi.Endpoints.Authentication
+namespace ApplicationCore.Endpoints.Authentication
 {
     public class AuthenticationRequest : BaseRequest
     {

@@ -13,7 +13,10 @@ namespace Infrastructure.Data.Config
         {
             builder.Property(p => p.BasketId)
                 .IsRequired();
-            builder.Property(p => p.ProductId)
+            builder.HasOne(x => x.Product)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasForeignKey(x => x.ProductId)
                 .IsRequired();
             builder.HasKey(p => p.BasketItemId);
             builder.Property(bi => bi.UnitPrice)

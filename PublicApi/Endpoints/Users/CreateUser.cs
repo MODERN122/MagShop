@@ -15,14 +15,11 @@ using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PublicApi.Endpoints.Users
+namespace ApplicationCore.Endpoints.Users
 {
     public class CreateUser : BaseAsyncEndpoint<CreateUserRequest, CreateUserResponse>
     {
         private readonly IAsyncRepository<User> _userRepository;
-        private readonly IAsyncRepository<Store> _storeRepository;
-        private readonly IUriComposer _uriComposer;
-        private readonly IFileSystem _webFileSystem;
         private readonly UserManager<UserAuthAccess> _userManager;
         private readonly IMapper _mapper;
 
@@ -56,12 +53,12 @@ namespace PublicApi.Endpoints.Users
                     user.Id = userAuth.Id;
                     var addedUser = await _userRepository.AddAsync(user, cancellationToken);
                     _mapper.Map(addedUser, response);
-                    return Ok(response);
+                    return Created(this.Url.ToString()+"/"+addedUser.Id, response);
                 }
                 else
                 {
                     response.Errors = identityResult.Errors;
-                    return NotFound(response.Errors);
+                    return BadRequest(response.Errors);
                 }
             }
             catch (Exception ex)

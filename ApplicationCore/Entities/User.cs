@@ -54,7 +54,6 @@ namespace ApplicationCore.Entities
         public IReadOnlyCollection<Address> Addresses => _addresses.AsReadOnly();
         public DateTimeOffset BirthDate { get; set; } = DateTime.Now;
         public Basket Basket { get; set; }
-        public string BasketId { get; set; }
         [JsonIgnore]
         public List<Store> Stores { get; set; }
 

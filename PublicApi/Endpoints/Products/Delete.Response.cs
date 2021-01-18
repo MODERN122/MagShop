@@ -1,6 +1,6 @@
-﻿using PublicApi.Base;
+﻿using ApplicationCore.Base;
 
-namespace PublicApi.Endpoints.Products
+namespace ApplicationCore.Endpoints.Products
 {
     public class DeleteResponse : BaseResponse
     {

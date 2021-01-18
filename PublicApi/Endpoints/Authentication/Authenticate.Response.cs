@@ -1,7 +1,7 @@
-﻿using PublicApi.Base;
+﻿using ApplicationCore.Base;
 using System;
 
-namespace PublicApi.Endpoints.Authentication
+namespace ApplicationCore.Endpoints.Authentication
 {
     public class AuthenticationResponse : BaseResponse
     {

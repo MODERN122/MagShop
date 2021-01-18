@@ -1,9 +1,9 @@
 ﻿using ApplicationCore.Entities;
-using PublicApi.Base;
+using ApplicationCore.Base;
 using System;
 using System.Collections.Generic;
 
-namespace PublicApi.Endpoints.Products
+namespace ApplicationCore.Endpoints.Products
 {
     public class GetProductsResponse : BaseResponse
     {

@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
 using Ardalis.ApiEndpoints;
+using Ardalis.GuardClauses;
 using AutoMapper;
 using Infrastructure.Constants;
 using Infrastructure.Identity;
@@ -16,7 +17,7 @@ using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PublicApi.Endpoints.Products
+namespace ApplicationCore.Endpoints.Products
 {
     [Authorize(Roles = "Administrators,Sellers", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class Delete : BaseAsyncEndpoint<string, DeleteResponse>
@@ -49,25 +50,24 @@ namespace PublicApi.Endpoints.Products
         {
             try
             {
-                System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+                ClaimsPrincipal currentUser = this.User;
                 var currentUserName = currentUser.FindFirst(ClaimTypes.Name).Value;
                 UserAuthAccess user = await _userManager.FindByNameAsync(currentUserName);
                 var product = await _productRepository.GetByIdAsync(id);
-                if (product != null)
-                {
-                    var store = await _storeRepository.GetByIdAsync(product.StoreId);
+                Guard.Against.Null(product, nameof(product));
+                var store = await _storeRepository.GetByIdAsync(product.StoreId);
 
-                    if ((store != null && store.SellerId == user.Id) || currentUser.IsInRole(Infrastructure.Constants.ConstantsAPI.ADMINISTRATORS))
-                    {
-                        await _productRepository.DeleteAsync(product, cancellationToken);
-                        return Ok(new DeleteResponse { Id = id });
-                    }
+                if ((store != null && store.SellerId == user.Id) || currentUser.IsInRole(ConstantsAPI.ADMINISTRATORS))
+                {
+                    await _productRepository.DeleteAsync(product, cancellationToken);
+                    return Ok(new DeleteResponse { Id = id });
                 }
-                return NoContent();
+                else
+                    return Forbid();
             }
             catch (Exception ex)
             {
-                return NoContent();
+                return NotFound();
             }
         }
     }

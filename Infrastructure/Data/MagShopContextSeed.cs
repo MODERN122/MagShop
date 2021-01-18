@@ -60,10 +60,13 @@ namespace Infrastructure.Data
                     {
                         await roleManager.CreateAsync(new IdentityRole(Constants.ConstantsAPI.ADMINISTRATORS));
                         await roleManager.CreateAsync(new IdentityRole(Constants.ConstantsAPI.SELLERS));
+                        await roleManager.CreateAsync(new IdentityRole(Constants.ConstantsAPI.USERS));
 
-                        var defaultUser = new UserAuthAccess("demouser@microsoft.com");
+                        var defaultUser = new UserAuthAccess("demoseller@microsoft.com");
                         defaultUser.Id = USER_ID;
                         await userManager.CreateAsync(defaultUser, Constants.ConstantsAPI.DEFAULT_PASSWORD);
+                        var user = await userManager.FindByNameAsync(defaultUser.UserName);
+                        await userManager.AddToRoleAsync(user, Constants.ConstantsAPI.USERS);
 
                         string adminUserName = "admin@microsoft.com";
                         var adminUser = new UserAuthAccess(adminUserName);
@@ -71,7 +74,8 @@ namespace Infrastructure.Data
                         await userManager.CreateAsync(adminUser, Constants.ConstantsAPI.DEFAULT_PASSWORD);
                         adminUser = await userManager.FindByNameAsync(adminUserName);
                         await userManager.AddToRoleAsync(adminUser, Constants.ConstantsAPI.ADMINISTRATORS);
-                        
+
+
                         await context.Users.AddRangeAsync(
                             GetPreconfiguredUsers(defaultUser.Id, adminUser.Id));
                     }

@@ -80,10 +80,10 @@ namespace Infrastructure.Data
             return await specificationResult.FirstOrDefaultAsync();
         }
 
-        private IQueryable<T> ApplySpecification(ISpecification<T> spec)
+        protected IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
             var evaluator = new SpecificationEvaluator<T>();
-            return evaluator.GetQuery(_dbContext.Set<T>().AsQueryable(), spec);
+            return evaluator.GetQuery(_dbContext.Set<T>().AsSplitQuery(), spec);
         }
     }
 }

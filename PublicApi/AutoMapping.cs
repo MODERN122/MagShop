@@ -1,12 +1,12 @@
 ﻿using ApplicationCore.Entities;
 using AutoMapper;
-using PublicApi.Endpoints.Products;
-using PublicApi.Endpoints.Users;
+using ApplicationCore.Endpoints.Products;
+using ApplicationCore.Endpoints.Users;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PublicApi
+namespace ApplicationCore
 {
     public class AutoMapping : Profile
     {
@@ -22,6 +22,9 @@ namespace PublicApi
 
             CreateMap<CreateUserRequest, User>();
             CreateMap<User, CreateUserResponse>();
+
+
+            CreateMap<PutProductRequest, CreateProductRequest>();
             //CreateMap<Product, PutProductResponse>();
         }
     }

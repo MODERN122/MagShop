@@ -1,8 +1,8 @@
 ﻿using ApplicationCore.Entities;
-using PublicApi.Base;
+using ApplicationCore.Base;
 using System;
 
-namespace PublicApi.Endpoints.Products
+namespace ApplicationCore.Endpoints.Products
 {
     public class PutProductResponse: BaseResponse
     {

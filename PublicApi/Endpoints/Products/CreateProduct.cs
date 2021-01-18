@@ -17,7 +17,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Infrastructure.Constants;
 
-namespace PublicApi.Endpoints.Products
+namespace ApplicationCore.Endpoints.Products
 {
     [Authorize(Roles = ConstantsAPI.ADMINISTRATORS, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     //[Authorize(Roles = ConstantsAPI.SELLERS, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -25,18 +25,16 @@ namespace PublicApi.Endpoints.Products
     {
         private readonly IAsyncRepository<Product> _itemRepository;
         private readonly IAsyncRepository<Store> _storeRepository;
-        private readonly IUriComposer _uriComposer;
-        private readonly IFileSystem _webFileSystem;
         private readonly UserManager<UserAuthAccess> _userManager;
         private readonly IMapper _mapper;
 
-        public CreateProduct(IAsyncRepository<Product> itemRepository, IAsyncRepository<Store> storeRepository, IUriComposer uriComposer, IFileSystem webFileSystem, UserManager<UserAuthAccess> userManager,
+        public CreateProduct(IAsyncRepository<Product> itemRepository, 
+            IAsyncRepository<Store> storeRepository, 
+            UserManager<UserAuthAccess> userManager,
             IMapper mapper)
         {
             _itemRepository = itemRepository;
             _storeRepository = storeRepository;
-            _uriComposer = uriComposer;
-            _webFileSystem = webFileSystem;
             _userManager = userManager;
             _mapper = mapper;
         }
@@ -60,7 +58,7 @@ namespace PublicApi.Endpoints.Products
                 UserAuthAccess user = await _userManager.FindByNameAsync(currentUserName);
                 var store = await _storeRepository.GetByIdAsync(request.StoreId);
 
-                if ((store != null && store.SellerId == user.Id)||currentUser.IsInRole(Infrastructure.Constants.ConstantsAPI.ADMINISTRATORS))
+                if ((store != null && store.SellerId == user.Id)||currentUser.IsInRole(ConstantsAPI.ADMINISTRATORS))
                 {
                     var product = new Product();
                     _mapper.Map(request, product);
@@ -78,17 +76,16 @@ namespace PublicApi.Endpoints.Products
                     }
 
                     response.Product = product;
-                    return Ok(response);
-
+                    return Created(this.Url.ToString() + "/" + product.ProductId, response);
                 }
                 else
                 {
+                    return Forbid();
                 }
-                return NoContent();
             }
             catch (Exception ex)
             {
-                return NoContent();
+                return BadRequest();
             }
         }
     }

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PublicApi.Endpoints.Products
+namespace ApplicationCore.Endpoints.Products
 {
 
     public class GetProducts : BaseAsyncEndpoint<GetProductsRequest,GetProductsResponse>

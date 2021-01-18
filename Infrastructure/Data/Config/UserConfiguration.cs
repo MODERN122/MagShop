@@ -17,7 +17,13 @@ namespace Infrastructure.Data.Config
             builder.HasKey(p => p.Id);
 
             builder.HasOne(ho => ho.Basket)
-                .WithOne(x=>x.User);
+                .WithOne()
+                .HasForeignKey<Basket>(x=>x.UserId)
+                .IsRequired();
+            builder.HasMany(x => x.Stores)
+                .WithOne(x => x.Seller)
+                .HasForeignKey(x => x.SellerId)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             //builder.OwnsMany(p => p.Addresses, u =>
             //{

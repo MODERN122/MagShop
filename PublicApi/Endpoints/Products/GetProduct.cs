@@ -17,7 +17,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Infrastructure.Constants;
 
-namespace PublicApi.Endpoints.Products
+namespace ApplicationCore.Endpoints.Products
 {
     public class GetProduct : BaseAsyncEndpoint<string, GetProductResponse>
     {

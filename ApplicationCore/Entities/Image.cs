@@ -11,6 +11,6 @@ namespace ApplicationCore.Entities
         public string ProductId { get; set; }
         [JsonIgnore]
         public Product Product { get; set; }
-        public byte[] byteImage { get; set; }
+        public byte[] ByteImage { get; set; }
     }
 }

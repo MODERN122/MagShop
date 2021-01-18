@@ -5,16 +5,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using ApplicationCore.Interfaces;
 
 namespace ApplicationCore.Entities
 {
-    public class Basket
+    public class Basket : IAggregateRoot
     {
-        public string BasketId { get; set; }
-
-        [JsonIgnore]
-        public User User { get; set; }
-
+        public string BasketId { get; set; } = Guid.NewGuid().ToString();
+        public string UserId { get; set; }
         private readonly List<BasketItem> _items = new List<BasketItem>();
         public IReadOnlyCollection<BasketItem> Items => _items.AsReadOnly();
 

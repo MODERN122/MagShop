@@ -16,8 +16,9 @@ using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using Infrastructure.Constants;
+using Ardalis.GuardClauses;
 
-namespace PublicApi.Endpoints.Products
+namespace ApplicationCore.Endpoints.Products
 {
     [Authorize(Roles = "Administrators,Sellers", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     //[Authorize(Roles = ConstantsAPI.ADMINISTRATORS, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -39,7 +40,7 @@ namespace PublicApi.Endpoints.Products
             _mapper = mapper;
         }
 
-        [HttpPut("api/products")]
+        [HttpPut("api/products/{id}")]
         [SwaggerOperation(
             Summary = "Updates a new Product",
             Description = "Updates a new Product",
@@ -53,15 +54,24 @@ namespace PublicApi.Endpoints.Products
             {
                 var response = new PutProductResponse(request.CorrelationId());
 
-                System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+                ClaimsPrincipal currentUser = this.User;
                 var currentUserName = currentUser.FindFirst(ClaimTypes.Name).Value;
                 UserAuthAccess user = await _userManager.FindByNameAsync(currentUserName);
-                var oldProduct = await _productRepository.GetByIdAsync(request.ProductId);
+                var oldProduct = await _productRepository.GetByIdAsync(request.Id);
+                Guard.Against.Null(oldProduct, nameof(oldProduct));
+                //if (oldProduct == null)
+                //{
+                //    CreateProduct createProduct = new CreateProduct(_productRepository, _storeRepository, _userManager, _mapper);
+
+                //    var s = await createProduct.HandleAsync(_mapper.Map<CreateProductRequest>(request), cancellationToken);
+                //    response.Product = s.Value.Product;
+                //    return response;
+                //}
                 var store = await _storeRepository.GetByIdAsync(oldProduct.StoreId);
 
                 if ((store != null && store.SellerId == user.Id) || currentUser.IsInRole(Infrastructure.Constants.ConstantsAPI.ADMINISTRATORS))
                 {
-                     var newProd = _mapper.Map(request, oldProduct);
+                    var newProd = _mapper.Map(request, oldProduct);
                     await _productRepository.UpdateAsync(oldProduct, cancellationToken);
                     var productSpec = new ProductSpecification(oldProduct.ProductId);
                     oldProduct = await _productRepository.FirstAsync(productSpec);
@@ -72,16 +82,13 @@ namespace PublicApi.Endpoints.Products
 
                     response.Product = oldProduct;
                     return Ok(response);
-
                 }
                 else
-                {
-                }
-                return NoContent();
+                    return Forbid();
             }
             catch (Exception ex)
             {
-                return NoContent();
+                return NotFound();
             }
         }
     }

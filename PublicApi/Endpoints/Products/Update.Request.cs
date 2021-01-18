@@ -1,17 +1,18 @@
 ﻿
 using ApplicationCore.Entities;
-using PublicApi.Base;
+using ApplicationCore.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace PublicApi.Endpoints.Products
+namespace ApplicationCore.Endpoints.Products
 {
     public class PutProductRequest : BaseRequest
     {
         [Required]
-        public string ProductId { get; set; }
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
         public string ProductName { get; set; }
         public Image PreviewImage { get; set; }
         public double? PriceNew { get; set; }

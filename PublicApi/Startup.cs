@@ -47,6 +47,7 @@ namespace PublicApi
                        .AddEntityFrameworkStores<MagShopContext>()
                        .AddDefaultTokenProviders();
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
+            services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
             services.Configure<CatalogSettings>(Configuration);
             services.AddSingleton<IUriComposer>(new UriComposer(Configuration.Get<CatalogSettings>()));
             //services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));

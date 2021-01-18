@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PublicApi.Endpoints.Authentication
+namespace ApplicationCore.Endpoints.Authentication
 {
     public class Authenticate : BaseAsyncEndpoint<AuthenticationRequest, AuthenticationResponse>
     {
@@ -43,13 +43,15 @@ namespace PublicApi.Endpoints.Authentication
             var result = await _signInManager.PasswordSignInAsync(request.Username, request.Password, false, true);
 
             response.Result = result.Succeeded;
+            if (!result.Succeeded)
+                return NotFound();
             response.IsLockedOut = result.IsLockedOut;
             response.IsNotAllowed = result.IsNotAllowed;
             response.RequiresTwoFactor = result.RequiresTwoFactor;
             response.Username = request.Username;
-            response.Token = result.Succeeded ? await _tokenClaimsService.GetTokenAsync(request.Username) : "";
+            response.Token = await _tokenClaimsService.GetTokenAsync(request.Username);
 
-            return response;
+            return Ok(response);
         }
 
     }

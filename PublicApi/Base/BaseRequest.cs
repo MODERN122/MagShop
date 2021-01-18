@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PublicApi.Base
+namespace ApplicationCore.Base
 {
     /// <summary>
     /// Base class used by API requests

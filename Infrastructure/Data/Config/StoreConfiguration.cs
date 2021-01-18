@@ -11,10 +11,10 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Store> builder)
         {
-            builder.HasOne(o => o.Seller)
-                .WithMany()
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasForeignKey(f => f.SellerId);
+            //builder.HasOne(o => o.Seller)
+            //    .WithMany()
+            //    .OnDelete(DeleteBehavior.Cascade)
+            //    .HasForeignKey(f => f.SellerId);
         }
     }
 }
