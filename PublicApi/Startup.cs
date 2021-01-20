@@ -50,7 +50,7 @@ namespace PublicApi
             services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
             services.Configure<CatalogSettings>(Configuration);
             services.AddSingleton<IUriComposer>(new UriComposer(Configuration.Get<CatalogSettings>()));
-            //services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
+            services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
             services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
 
             var baseUrlConfig = new BaseUrlConfiguration();
@@ -79,22 +79,22 @@ namespace PublicApi
             //{
             //    options.AddPolicy("SelfAuthorize", policy => policy.AddRequirements(new SelfAuthorize()));
             //});
-            
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy(name: CORS_POLICY,
-            //                      builder =>
-            //                      {
-            //                          builder.WithOrigins(baseUrlConfig.WebBase.Replace("host.docker.internal", "localhost").TrimEnd('/'));
-            //                          builder.AllowAnyMethod();
-            //                          builder.AllowAnyHeader();
-            //                      });
-            //});
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: CORS_POLICY,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins(baseUrlConfig.WebBase.Replace("host.docker.internal", "localhost").TrimEnd('/'));
+                                      builder.AllowAnyMethod();
+                                      builder.AllowAnyHeader();
+                                  });
+            });
 
             services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddControllers();
-            
-            //services.AddMediatR(typeof(User).Assembly);
+
+            services.AddMediatR(typeof(User).Assembly);
 
             services.AddSwaggerGen(c =>
             {
@@ -148,10 +148,6 @@ namespace PublicApi
             // https://www.microsoft.com/en-us/download/details.aspx?id=54284
             services.AddDbContext<MagShopContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("MagShopDBConnection")));
-
-            // Add Identity DbContext
-            //services.AddDbContext<IdentityContext>(options =>
-            //            options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
             ConfigureServices(services);
         }
