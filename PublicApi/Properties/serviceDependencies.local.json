@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "IdentityConnection",
+      "suggestion": "true",
+      "ignored": "true"
+    },
+    "mssql2": {
+      "type": "mssql.local",
+      "connectionId": "MagShopDBConnection",
+      "secretStore": "LocalSecretsFile"
+    }
+  }
+}
