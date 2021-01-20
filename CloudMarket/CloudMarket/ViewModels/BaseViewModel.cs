@@ -12,7 +12,7 @@ namespace CloudMarket.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        public DataStore DataStore => DependencyService.Get<DataStore>();
 
         bool isBusy = false;
         public bool IsBusy

@@ -21,14 +21,16 @@ namespace ApplicationCore.Endpoints.Users
     {
         private readonly IAsyncRepository<User> _userRepository;
         private readonly UserManager<UserAuthAccess> _userManager;
+        private readonly ITokenClaimsService _tokenClaimsService;
         private readonly IMapper _mapper;
 
         public CreateUser(IAsyncRepository<User> userRepository, UserManager<UserAuthAccess> userManager,
-            IMapper mapper)
+            IMapper mapper, ITokenClaimsService tokenClaimsService)
         {
             _userRepository = userRepository;
             _userManager = userManager;
             _mapper = mapper;
+            _tokenClaimsService = tokenClaimsService;
         }
 
         [HttpPost("api/users")]
@@ -53,17 +55,18 @@ namespace ApplicationCore.Endpoints.Users
                     user.Id = userAuth.Id;
                     var addedUser = await _userRepository.AddAsync(user, cancellationToken);
                     _mapper.Map(addedUser, response);
+                    response.Token = await _tokenClaimsService.GetTokenAsync(request.Email);
                     return Created(this.Url.ToString()+"/"+addedUser.Id, response);
                 }
                 else
                 {
-                    response.Errors = identityResult.Errors;
+                    response.Errors = identityResult.Errors.Select(x=>new IdentityError { Code = x.Code, Description = x.Description });
                     return BadRequest(response.Errors);
                 }
             }
             catch (Exception ex)
             {
-                return NoContent();
+                return BadRequest(ex.ToString());
             }
         }
 

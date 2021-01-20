@@ -2,7 +2,7 @@
 
 namespace ApplicationCore.Endpoints.Products
 {
-    public class DeleteResponse : BaseResponse
+    public class DeleteUserResponse : BaseResponse
     {
         public string Id { get; set; }
     }

@@ -13,7 +13,8 @@ namespace CloudMarket
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
+            DependencyService.Register<DataStore>();
+
             MainPage = new MainPage();
         }
 

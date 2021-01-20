@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 namespace ApplicationCore.Endpoints.Products
 {
     [Authorize(Roles = "Administrators,Sellers", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class Delete : BaseAsyncEndpoint<string, DeleteResponse>
+    public class Delete : BaseAsyncEndpoint<string, DeleteUserResponse>
     {
 
         private readonly IAsyncRepository<Product> _productRepository;
@@ -46,7 +46,7 @@ namespace ApplicationCore.Endpoints.Products
             OperationId = "products.delete",
             Tags = new[] { "ProductsEndpoints" })
         ]
-        public override async Task<ActionResult<DeleteResponse>> HandleAsync(string id, CancellationToken cancellationToken)
+        public override async Task<ActionResult<DeleteUserResponse>> HandleAsync(string id, CancellationToken cancellationToken)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace ApplicationCore.Endpoints.Products
                 if ((store != null && store.SellerId == user.Id) || currentUser.IsInRole(ConstantsAPI.ADMINISTRATORS))
                 {
                     await _productRepository.DeleteAsync(product, cancellationToken);
-                    return Ok(new DeleteResponse { Id = id });
+                    return Ok(new DeleteUserResponse { Id = id });
                 }
                 else
                     return Forbid();
