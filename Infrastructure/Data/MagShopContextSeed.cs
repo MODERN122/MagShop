@@ -15,7 +15,7 @@ namespace Infrastructure.Data
     {
         #region Define consts
         //Users
-        private const string USER_ID = "1234";
+        private const string USER_ID = "demoseller@microsoft.com";
         private const string BASKET_ID = "12345";
         private const string CREDIT_CARD_ID = "123";
         //Stores

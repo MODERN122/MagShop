@@ -33,8 +33,8 @@ namespace CloudMarket.Views
                     case (int)MenuItemType.Browse:
                         MenuPages.Add(id, new NavigationPage(new ItemsPage()));
                         break;
-                    case (int)MenuItemType.About:
-                        MenuPages.Add(id, new NavigationPage(new AboutPage()));
+                    case (int)MenuItemType.Basket:
+                        MenuPages.Add(id, new NavigationPage(new BasketPage()));
                         break;
                 }
             }

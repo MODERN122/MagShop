@@ -52,11 +52,6 @@ namespace ApplicationCore.Entities
         public string Description { get; set; }
         //Not Added while
         //public List<string> Reviews { get; set; }
-        [Required]
-        public string StoreId { get; set; }
-        [JsonIgnore]
-        public Store Store { get; set; }
-        public List<Property> Properties { get; set; }
 
     }
 }

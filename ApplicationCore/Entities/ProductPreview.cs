@@ -1,8 +1,10 @@
 ﻿using ApplicationCore.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace ApplicationCore.Entities
 {
@@ -25,5 +27,10 @@ namespace ApplicationCore.Entities
         /// Constraint 0.0-5.0
         /// </summary>
         public double Rating { get; set; }
+        public List<Property> Properties { get; set; }
+        [Required]
+        public string StoreId { get; set; }
+        [JsonIgnore]
+        public Store Store { get; set; }
     }
 }

@@ -26,6 +26,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ApplicationCore;
 using Infrastructure.Services;
+using Infrastructure.Logging;
 
 namespace PublicApi
 {

@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Endpoints.Authentication;
+using ApplicationCore.Endpoints.Baskets;
 using ApplicationCore.Endpoints.Products;
 using ApplicationCore.Endpoints.Users;
 using ApplicationCore.Entities;
@@ -29,7 +30,7 @@ namespace CloudMarket.Services
         public DataStore()
         {
             httpClient = new HttpClient(new AuthenticatedHttpClientHandler(GetToken));
-            httpClient.BaseAddress = new Uri("https://24907bb60321.ngrok.io");
+            httpClient.BaseAddress = new Uri("https://b36982c0c677.ngrok.io");
             _magShopApi = RestService.For<IMagShopApi>(httpClient);
         }
         public async Task<bool> LoginUsernameAsync(string username, string password, CancellationToken cancellationToken)
@@ -78,6 +79,19 @@ namespace CloudMarket.Services
             }
         }
 
+        public async Task<List<BasketItemResponse>> GetBasketItems(CancellationToken cancellationToken)
+        {
+            try
+            {
+                var response = await MakeRequest(ctx => _magShopApi.GetUserBasketAsync(_username, ctx), cancellationToken);
+                Guard.Against.Null(response, nameof(response));
+                return response.BasketItems;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
 
         class AuthenticatedHttpClientHandler : HttpClientHandler

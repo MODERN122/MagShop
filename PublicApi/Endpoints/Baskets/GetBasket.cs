@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 namespace ApplicationCore.Endpoints.Baskets
 {
     [Authorize(Roles = ConstantsAPI.USERS, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class GetBasket : BaseAsyncEndpoint<GetBasketRequest, GetBasketResponse>
+    public class GetBasket : BaseAsyncEndpoint<string, GetBasketResponse>
     {
         private readonly IBasketRepository _basketRepository;
         private readonly IAsyncRepository<User> _userRepository;
@@ -42,12 +42,12 @@ namespace ApplicationCore.Endpoints.Baskets
                OperationId = "baskets.get",
                Tags = new[] { "BasketsEndpoints" })
            ]
-        public override async Task<ActionResult<GetBasketResponse>> HandleAsync(GetBasketRequest request, CancellationToken cancellationToken)
+        public override async Task<ActionResult<GetBasketResponse>> HandleAsync(string id, CancellationToken cancellationToken)
         {
             try
             {
-                var response = new GetBasketResponse(request.CorrelationId());
-                var basket = await _basketRepository.FirstAsync(request.UserId, new BasketSpecification(request.UserId), cancellationToken);
+                var response = new GetBasketResponse(Guid.NewGuid());
+                var basket = await _basketRepository.FirstAsync(id, new BasketSpecification(id), cancellationToken);
                 Guard.Against.Null(basket, nameof(basket));
                 response.BasketId = basket.BasketId;
                 response.BasketItems = basket.Items

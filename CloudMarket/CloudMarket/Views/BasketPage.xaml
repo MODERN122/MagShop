@@ -1,0 +1,38 @@
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="CloudMarket.Views.BasketPage"
+             xmlns:vm="clr-namespace:CloudMarket.ViewModels"
+             Title="{Binding Title}">
+    <ContentPage.BindingContext>
+        <vm:BasketViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <RefreshView Command="{Binding LoadBasketItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                <CollectionView ItemsSource="{Binding BasketItems}" SelectionMode="Single">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame HeightRequest="50">
+                                <Grid ColumnDefinitions="*,20,40,20">
+                                    <Label Text="{Binding Product.ProductName}" Grid.Column="0" ></Label>
+                                    <Label Text="{Binding Quantity,Mode=TwoWay}" HorizontalOptions="End" WidthRequest="40"
+                                           Grid.Column="2"></Label>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

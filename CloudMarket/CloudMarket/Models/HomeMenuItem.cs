@@ -7,7 +7,7 @@ namespace CloudMarket.Models
     public enum MenuItemType
     {
         Browse,
-        About
+        Basket
     }
     public class HomeMenuItem
     {
