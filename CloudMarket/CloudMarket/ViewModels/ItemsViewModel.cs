@@ -16,6 +16,8 @@ using Polly;
 using System.Net;
 using ApplicationCore.Entities;
 using System.Linq;
+using Xamarin.Forms.Internals;
+using System.Collections.Generic;
 
 namespace CloudMarket.ViewModels
 {
@@ -29,11 +31,12 @@ namespace CloudMarket.ViewModels
             set => SetProperty(ref _itemSelectedIndex, value);
         }
         public ObservableCollection<ProductPreview> Items { get; set; }
-        public ObservableCollection<Property> Properties { get; set; } = new ObservableCollection<Property>();
+        public ObservableCollection<Property> UnfilteredProperties { get; set; } = new ObservableCollection<Property>();
         public ObservableCollection<Property> FilteredProperties { get; set; } = new ObservableCollection<Property>();
         public ObservableCollection<Category> Categories { get; set; } = new ObservableCollection<Category>();
         public Command LoadItemsCommand { get; set; }
         public Command AddPropertyFilterCommand { get; set; }
+        public Command RemovePropertyFilterCommand { get; }
 
         private Category _defaultCategory = new Category { CategoryId = "", Name = "Нет" };
 
@@ -43,12 +46,22 @@ namespace CloudMarket.ViewModels
             Items = new ObservableCollection<ProductPreview>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             AddPropertyFilterCommand = new Command(AddPropertyFilter);
+            RemovePropertyFilterCommand = new Command(RemovePropertyFilter);
             cancellationToken = new CancellationToken();
         }
 
-        private void AddPropertyFilter()
+        private void RemovePropertyFilter(object obj)
         {
+            var property = FilteredProperties.First(x=>x==(Property)obj);
+            FilteredProperties.Remove(property);
+            UnfilteredProperties.Add(property);
+        }
 
+        private void AddPropertyFilter(object obj)
+        {
+            var property = UnfilteredProperties.First(x => x == (Property)obj);
+            UnfilteredProperties.Remove(property);
+            FilteredProperties.Add(property);
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -63,12 +76,15 @@ namespace CloudMarket.ViewModels
                     {
                         CategoryId = ItemSelectedIndex!=-1
                                         ? Categories[ItemSelectedIndex].CategoryId : "",
-                        PropertiesId = Properties.Select(x=>x.Id).ToList(),
-                        PageSize = 6,
+                        PropertiesId = FilteredProperties.Count!=0 
+                            ? FilteredProperties.Select(x=>x.PropertyName).ToList() 
+                            : null,
+                        PageSize = 20,
                         PageIndex = 0
                     },
                     cancellationToken);
                 Categories.Clear();
+                UnfilteredProperties.Clear();
                 Categories.Add(_defaultCategory);
                 res3.ForEach(x =>
                 {
@@ -78,9 +94,9 @@ namespace CloudMarket.ViewModels
                     }
                     x.Properties.ForEach(z =>
                     {
-                        if (!Properties.Select(r => r.Id).Contains(z.Id))
+                        if (!UnfilteredProperties.Select(r => r.PropertyName).Contains(z.PropertyName))
                         {
-                            Properties.Add(z);
+                            UnfilteredProperties.Add(z);
                         }
                     });
                 });

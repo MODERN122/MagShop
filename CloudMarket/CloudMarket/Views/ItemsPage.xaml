@@ -2,39 +2,47 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:vm="clr-namespace:CloudMarket.ViewModels"
              mc:Ignorable="d"
              x:Class="CloudMarket.Views.ItemsPage"
-             Title="{Binding Title}"
-             x:Name="BrowseItemsPage">
+             Title="{Binding Title}">
 
+    <ContentPage.BindingContext>
+        <vm:ItemsViewModel x:Name="vm"/>
+    </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
         <Grid RowDefinitions="40,40,*">
             <StackLayout Orientation="Horizontal">
-                <Picker SelectedIndex="{Binding ItemSelectedIndex, Mode=TwoWay}" ItemsSource="{Binding Categories}" ItemDisplayBinding="{Binding Name}" 
-                        WidthRequest="150" Title="Выбор категории"/>
+                <Picker SelectedIndex="{Binding ItemSelectedIndex, Mode=TwoWay}" ItemsSource="{Binding Categories}" ItemDisplayBinding="{Binding Name}" Title="Выбор категории"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal"  Grid.Row="1">
-                <StackLayout Orientation="Horizontal" BindableLayout.ItemsSource="{Binding FilteredProperties}">
-                    <BindableLayout.ItemTemplate>
+                <CollectionView ItemsSource="{Binding FilteredProperties}" ItemsLayout="HorizontalList">
+                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame CornerRadius="10" BackgroundColor="Red">
-                                <Label Text="{Binding PropertyName}" WidthRequest="80"/>
-                            </Frame>
+                                <Grid ColumnDefinitions="40,35">
+                                    <Label Text="{Binding PropertyName}"/>
+                                    <Button Text="X" Grid.Column="1" 
+                                            CommandParameter="{Binding .}"
+                                            Command="{Binding Source={Reference vm}, Path=RemovePropertyFilterCommand}"/>
+                                </Grid>
                         </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </StackLayout>
-                    <Grid>
-                        
-                        <Label Text="+"/>
-                <Picker ItemsSource="{Binding Properties}" ItemDisplayBinding="{Binding PropertyName}" Opacity="0" WidthRequest="100"/>
-                    </Grid>
-                    <!--<Frame.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding AddPropertyFilterCommand}"/>
-                    </Frame.GestureRecognizers>-->
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <CollectionView ItemsSource="{Binding UnfilteredProperties}" ItemsLayout="HorizontalList">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                                <Grid ColumnDefinitions="40,35">
+                                    <Label Text="{Binding PropertyName}" WidthRequest="80"/>
+                                    <Button Text="+" Command="{Binding Source={Reference vm}, Path=AddPropertyFilterCommand}"
+                                            CommandParameter="{Binding .}"
+                                            Grid.Column="1"/>
+                                </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </StackLayout>
             <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Command="{Binding LoadItemsCommand}"
                          Grid.Row="2">

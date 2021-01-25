@@ -25,9 +25,9 @@ namespace ApplicationCore.Specifications
         {
             Query
                 .Where(p => (string.IsNullOrWhiteSpace(categoryId) || p.CategoryId == categoryId) && (string.IsNullOrWhiteSpace(storeId) || p.StoreId == storeId));
-            if (properties != null && properties.Count==0)
+            if (properties != null && properties.Count!=0)
             {
-                Query.Where(p => p.Properties.Any(a => properties.Contains(a.Id)));
+                Query.Where(p => p.Properties.Any(a =>properties.Any(z=>z==a.PropertyName)));
             }
             Query
                 .Skip(pageSize * pageIndex)

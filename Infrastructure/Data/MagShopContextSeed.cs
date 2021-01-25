@@ -207,7 +207,7 @@ namespace Infrastructure.Data
                 new Product(PRODUCT_5_ID, "Belorussian pack", 1800, CATEGORY_3_ID, "It`s nice backpack for real nice guys",
                 new List<Property>()
                 {
-                    new Property("Size",
+                    new Property("Length",
                     new List<PropertyItem>(){
                         new PropertyItem("41"),
                         new PropertyItem("42"),
@@ -218,7 +218,7 @@ namespace Infrastructure.Data
                 new Product(PRODUCT_6_ID, "Russian shoe", 1800, CATEGORY_1_ID, "It`s nice shoe for real nice girls",
                 new List<Property>()
                 {
-                    new Property("Size",
+                    new Property("Length",
                     new List<PropertyItem>(){
                         new PropertyItem("41"),
                         new PropertyItem("42"),
@@ -229,7 +229,7 @@ namespace Infrastructure.Data
                 new Product(PRODUCT_7_ID, "Best jacket", 1800, CATEGORY_4_ID, "It`s nice cardigan for real nice guys",
                 new List<Property>()
                 {
-                    new Property("Size",
+                    new Property("Length",
                     new List<PropertyItem>(){
                         new PropertyItem("41"),
                         new PropertyItem("42"),
@@ -240,7 +240,7 @@ namespace Infrastructure.Data
                 new Product(PRODUCT_8_ID, "French cardigan", 18000, CATEGORY_4_ID, "It`s nice cardigan for real nice guys",
                 new List<Property>()
                 {
-                    new Property("Size",
+                    new Property("Amount",
                     new List<PropertyItem>(){
                         new PropertyItem("41"),
                         new PropertyItem("42"),
