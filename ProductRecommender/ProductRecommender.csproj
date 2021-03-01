@@ -6,4 +6,18 @@
     <StartupObject>ProductRecommender.Program</StartupObject>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ML" Version="1.5.4" />
+    <PackageReference Include="Microsoft.ML.Recommender" Version="0.17.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Data\recommendation-ratings-test.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\recommendation-ratings-train.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
