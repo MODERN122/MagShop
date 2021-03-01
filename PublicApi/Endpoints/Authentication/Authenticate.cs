@@ -24,8 +24,8 @@ namespace ApplicationCore.Endpoints.Authentication
             _signInManager = signInManager;
             _tokenClaimsService = tokenClaimsService;
         }
-
-        [HttpPost("api/authentication")]
+        
+        [HttpPost(EndpointUrlConstants.AUTHENTICATION_URL)]
         [SwaggerOperation(
             Summary = "Authenticates a user",
             Description = "Authenticates a user",

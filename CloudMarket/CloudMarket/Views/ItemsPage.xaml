@@ -11,6 +11,7 @@
         <vm:ItemsViewModel x:Name="vm"/>
     </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Login" Command="{Binding AuthByMicrosoftCommand}"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>

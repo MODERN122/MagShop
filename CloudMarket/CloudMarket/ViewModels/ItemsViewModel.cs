@@ -37,6 +37,7 @@ namespace CloudMarket.ViewModels
         public Command LoadItemsCommand { get; set; }
         public Command AddPropertyFilterCommand { get; set; }
         public Command RemovePropertyFilterCommand { get; }
+        public Command AuthByMicrosoftCommand { get; }
 
         private Category _defaultCategory = new Category { CategoryId = "", Name = "Нет" };
 
@@ -47,7 +48,13 @@ namespace CloudMarket.ViewModels
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             AddPropertyFilterCommand = new Command(AddPropertyFilter);
             RemovePropertyFilterCommand = new Command(RemovePropertyFilter);
+            AuthByMicrosoftCommand = new Command(AuthByMicrosoft);
             cancellationToken = new CancellationToken();
+        }
+
+        private async void AuthByMicrosoft(object obj)
+        {
+            await AuthService.Login();
         }
 
         private void RemovePropertyFilter(object obj)

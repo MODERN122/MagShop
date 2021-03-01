@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Endpoints.Authentication;
+﻿using ApplicationCore.Endpoints;
+using ApplicationCore.Endpoints.Authentication;
 using ApplicationCore.Endpoints.Baskets;
 using ApplicationCore.Endpoints.Products;
 using ApplicationCore.Endpoints.Users;
@@ -15,25 +16,25 @@ namespace CloudMarket.Interfaces
 {
     public interface IMagShopApi
     {
-        [Get("/api/products")]
+        [Get(EndpointUrlConstants.PRODUCTS_URL)]
         Task<GetProductsResponse> GetProductsAsync([Query(CollectionFormat.Multi)] GetProductsRequest request, CancellationToken ctx);
-        [Get("/api/products/{id}")]
+        [Get(EndpointUrlConstants.PRODUCT_URL)]
         Task<GetProductResponse> GetProductAsync(string id, CancellationToken ctx);
-        [Post("/api/authentication")]
+        [Post(EndpointUrlConstants.AUTHENTICATION_URL)]
         Task<AuthenticationResponse> AuthenticateAsync([Body] AuthenticationRequest request, CancellationToken ctx);
-        [Post("/api/users/")]
+        [Post(EndpointUrlConstants.USERS_URL)]
         Task<CreateUserResponse> CreateUserAsync([Body] CreateUserRequest request, CancellationToken ctx);
-        [Post("/api/products")]
+        [Post(EndpointUrlConstants.PRODUCTS_URL)]
         [Headers("Authorization: Bearer")]
         Task<CreateProductResponse> CreateProductAsync([Body] CreateProductRequest request, CancellationToken ctx);
-        [Put("/api/products/{id}")]
+        [Put(EndpointUrlConstants.PRODUCT_URL)]
         [Headers("Authorization: Bearer")]
         Task<PutProductResponse> UpdateProductAsync(string id, [Body] PutProductRequest request, CancellationToken ctx);
-        [Get("/api/users/{id}/basket")]
+        [Get(EndpointUrlConstants.BASKET_URL)]
         [Headers("Authorization: Bearer")]
         Task<GetBasketResponse> GetUserBasketAsync(string id, CancellationToken ctx);
-        [Delete("/api/products/{id}")]
+        [Delete(EndpointUrlConstants.PRODUCT_URL)]
         [Headers("Authorization: Bearer")]
-        Task<DeleteUserResponse> DeleteUserAsync(string id, CancellationToken ctx);
+        Task<DeleteUserResponse> DeleteProductAsync(string id, CancellationToken ctx);
     }
 }

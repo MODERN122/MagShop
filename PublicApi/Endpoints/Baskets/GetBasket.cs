@@ -35,7 +35,7 @@ namespace ApplicationCore.Endpoints.Baskets
             _userManager = userManager;
             _mapper = mapper;
         }
-        [HttpGet(EndpointRoutingUrl.BASKET_URL)]
+        [HttpGet(EndpointUrlConstants.BASKET_URL)]
         [SwaggerOperation(
                Summary = "Get a Basket by userId",
                Description = "Get a Basket by userId",

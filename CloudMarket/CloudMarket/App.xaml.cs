@@ -14,6 +14,7 @@ namespace CloudMarket
             InitializeComponent();
 
             DependencyService.Register<DataStore>();
+            DependencyService.Register<AuthService>();
 
             MainPage = new MainPage();
         }
