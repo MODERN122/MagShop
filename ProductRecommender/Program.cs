@@ -13,6 +13,8 @@ namespace ProductRecommender
             (IDataView trainDataView, IDataView testDataView) = LoadData(mlContext);
             ITransformer model = BuildAndTrainModel(mlContext, trainDataView: trainDataView); 
             EvaluateModel(mlContext, testDataView, model);
+            UseModelForSinglePrediction(mlContext, model); 
+            SaveModel(mlContext, trainDataView.Schema, model);
 
         }
         public static (IDataView training, IDataView test) LoadData (MLContext mlContext)
@@ -61,6 +63,37 @@ namespace ProductRecommender
                 .Evaluate(prediction, labelColumnName: "Label", scoreColumnName: "Score");
             Console.WriteLine("Root Mean Squared Error : " + metrics.RootMeanSquaredError.ToString());
             Console.WriteLine("RSquared: " + metrics.RSquared.ToString());
+        }
+        public static void UseModelForSinglePrediction(MLContext mlContext, ITransformer model)
+        {
+            Console.WriteLine("=========================== Making a prediction =============================");
+            var predictionEngine = mlContext
+                .Model
+                .CreatePredictionEngine<MovieRating, MovieRatingPrediction>(model);
+            for (int i = 0; i < 10; i++)
+            {
+                var testInput = new MovieRating { userId = 6, movieId = i};
+                var movieRatingPrediction = predictionEngine.Predict(testInput);
+                if (Math.Round(movieRatingPrediction.Score, 1) > 3.5)
+                {
+                    Console.WriteLine("Movie " + testInput.movieId + " is recommended for user " + testInput.userId + ". Score=" + movieRatingPrediction.Score);
+                }
+                else
+                {
+                    Console.WriteLine("Movie " + testInput.movieId + " is not recommended for user " + testInput.userId + ". Score=" + movieRatingPrediction.Score);
+                }
+            }
+        }
+        public static void SaveModel(MLContext mlContext, DataViewSchema trainDataViewSchema, ITransformer model)
+        {
+            var modelPath = Path.Combine(Environment
+                .CurrentDirectory, "Data", "MovieRecommenderModel.zip");
+
+            Console.WriteLine("========================== Saving the model to a file ==================================");
+            mlContext
+                .Model
+                .Save(model, trainDataViewSchema, modelPath);
+
         }
     }
 }
