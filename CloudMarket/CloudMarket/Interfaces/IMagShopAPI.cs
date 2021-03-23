@@ -16,24 +16,24 @@ namespace CloudMarket.Interfaces
 {
     public interface IMagShopApi
     {
-        [Get(EndpointUrlConstants.PRODUCTS_URL)]
+        [Get("/api/products")]
         Task<GetProductsResponse> GetProductsAsync([Query(CollectionFormat.Multi)] GetProductsRequest request, CancellationToken ctx);
-        [Get(EndpointUrlConstants.PRODUCT_URL)]
+        [Get("/api/products/{id}")]
         Task<GetProductResponse> GetProductAsync(string id, CancellationToken ctx);
-        [Post(EndpointUrlConstants.AUTHENTICATION_URL)]
+        [Post("/api/authentication")]
         Task<AuthenticationResponse> AuthenticateAsync([Body] AuthenticationRequest request, CancellationToken ctx);
-        [Post(EndpointUrlConstants.USERS_URL)]
+        [Post("/api/users")]
         Task<CreateUserResponse> CreateUserAsync([Body] CreateUserRequest request, CancellationToken ctx);
-        [Post(EndpointUrlConstants.PRODUCTS_URL)]
+        [Post("/api/products")]
         [Headers("Authorization: Bearer")]
         Task<CreateProductResponse> CreateProductAsync([Body] CreateProductRequest request, CancellationToken ctx);
-        [Put(EndpointUrlConstants.PRODUCT_URL)]
+        [Put("/api/products/{id}")]
         [Headers("Authorization: Bearer")]
         Task<PutProductResponse> UpdateProductAsync(string id, [Body] PutProductRequest request, CancellationToken ctx);
-        [Get(EndpointUrlConstants.BASKET_URL)]
+        [Get("/api/users/{id}/basket")]
         [Headers("Authorization: Bearer")]
         Task<GetBasketResponse> GetUserBasketAsync(string id, CancellationToken ctx);
-        [Delete(EndpointUrlConstants.PRODUCT_URL)]
+        [Delete("/api/products/{id}")]
         [Headers("Authorization: Bearer")]
         Task<DeleteUserResponse> DeleteProductAsync(string id, CancellationToken ctx);
     }

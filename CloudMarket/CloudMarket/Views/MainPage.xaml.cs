@@ -74,22 +74,29 @@ namespace CloudMarket.Views
 
         private void Authenticator_Completed(object sender, AuthenticatorCompletedEventArgs e)
         {
-            var username = e.Account.Username;
-            if (sender is OAuth2Authenticator oAuth2)
+            try
             {
-                var url = oAuth2.AuthorizeUrl;
-            }
-            var token = e.Account.Properties["access_token"];
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            HttpResponseMessage response = new HttpResponseMessage();
-            Task.Run(async () => {
-                response = await client.GetAsync("https://graph.microsoft.com/v1.0/me");
-                if (response.IsSuccessStatusCode)
+                var username = e.Account.Username;
+                if (sender is OAuth2Authenticator oAuth2)
                 {
-
+                    var url = oAuth2.AuthorizeUrl;
                 }
-            }); 
+                var token = e.Account.Properties["access_token"];
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage response = new HttpResponseMessage();
+                Task.Run(async () => {
+                    response = await client.GetAsync("https://graph.microsoft.com/v1.0/me");
+                    if (response.IsSuccessStatusCode)
+                    {
+
+                    }
+                });
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
     }
 }
