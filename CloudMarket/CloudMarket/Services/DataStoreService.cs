@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace CloudMarket.Services
 {
-    public class DataStore
+    public class DataStoreService
     {
         private string _token;
         private HttpClient httpClient;
@@ -27,7 +27,7 @@ namespace CloudMarket.Services
         private User _currentUser { get; set; }
         private IMagShopApi _magShopApi;
 
-        public DataStore()
+        public DataStoreService()
         {
             httpClient = new HttpClient(new AuthenticatedHttpClientHandler(GetToken));
             httpClient.BaseAddress = new Uri("https://c390277467c7.ngrok.io/");

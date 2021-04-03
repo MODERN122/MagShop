@@ -11,12 +11,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie" Version="4.0.9" />
     <PackageReference Include="Polly" Version="7.2.1" />
+    <PackageReference Include="Prism.DryIoc.Forms" Version="8.0.0.1909" />
+    <PackageReference Include="Prism.Forms" Version="8.0.0.1909" />
     <PackageReference Include="Refit" Version="5.2.4" />
     <PackageReference Include="Xamarin.Auth" Version="1.7.0" />
     <PackageReference Include="Xamarin.Auth.XamarinForms" Version="1.7.0" />
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1821" />  
-    <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />  
+    <PackageReference Include="XamEffects" Version="1.6.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +29,9 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Views\BasketPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SelectedItemPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

@@ -4,11 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="CloudMarket.Views.BasketPage"
-             xmlns:vm="clr-namespace:CloudMarket.ViewModels"
              Title="{Binding Title}">
-    <ContentPage.BindingContext>
-        <vm:BasketViewModel />
-    </ContentPage.BindingContext>
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>

@@ -8,20 +8,19 @@
             x:Class="CloudMarket.Views.MainPage">
 
     <MasterDetailPage.Master>
-        <views:MenuPage />
+        <ContentPage Title="Menu"
+            Padding="0,40,0,0"
+            IconImageSource="{OnPlatform iOS='hamburger.png'}">
+            <StackLayout>
+                <Button Text="Главная страница"
+                Command="{Binding NavigateCommand}"
+                CommandParameter="ItemsPage" />
+                <Button Text="Корзина"
+                Command="{Binding NavigateCommand}"
+                CommandParameter="BasketPage" />
+                <Button Text="Аутентификация"
+                Command="{Binding OAuthCommand}" />
+            </StackLayout>
+        </ContentPage>
     </MasterDetailPage.Master>
-
-    <MasterDetailPage.Detail>
-        <NavigationPage>
-            <NavigationPage.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="iOS" Value="tab_feed.png"/>
-                </OnPlatform>
-            </NavigationPage.Icon>
-            <x:Arguments>
-                <views:ItemsPage />
-            </x:Arguments>
-        </NavigationPage>
-    </MasterDetailPage.Detail>
-    
 </MasterDetailPage>

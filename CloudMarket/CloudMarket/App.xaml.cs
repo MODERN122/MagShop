@@ -3,20 +3,38 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using CloudMarket.Services;
 using CloudMarket.Views;
+using Prism.DryIoc;
+using Prism.Ioc;
+using CloudMarket.ViewModels;
+using System.Diagnostics;
 
 namespace CloudMarket
 {
-    public partial class App : Application
+    public partial class App : PrismApplication
     {
 
         public App()
         {
+        }
+        protected async override void OnInitialized()
+        {
             InitializeComponent();
+            var result = await NavigationService.NavigateAsync("MainPage/NavigationPage/BasketPage");
+            if (!result.Success)
+            {
+                Debugger.Break();
+            }
+        }
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<ItemsPage, ItemsPageViewModel>();
+            containerRegistry.RegisterForNavigation<SelectedItemPage, SelectedItemPageViewModel>();
+            containerRegistry.RegisterForNavigation<BasketPage, BasketPageViewModel>();
 
-            DependencyService.Register<DataStore>();
-            DependencyService.Register<AuthService>();
-
-            MainPage = new MainPage();
+            containerRegistry.RegisterScoped<DataStoreService>();
+            containerRegistry.RegisterScoped<AuthService>();
         }
 
         protected override void OnStart()

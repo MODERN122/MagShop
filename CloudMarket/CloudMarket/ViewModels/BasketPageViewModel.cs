@@ -1,6 +1,9 @@
 ﻿using ApplicationCore.Endpoints.Baskets;
 using ApplicationCore.Entities;
 using Ardalis.GuardClauses;
+using CloudMarket.Services;
+using Prism.Mvvm;
+using Prism.Navigation;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading;
@@ -11,12 +14,17 @@ using Xamarin.Forms;
 
 namespace CloudMarket.ViewModels
 {
-    public class BasketViewModel : BaseViewModel
+    public class BasketPageViewModel : BindableBase
     {
         private CancellationToken cancellationToken;
-        public BasketViewModel()
+
+        public BasketPageViewModel(
+            INavigationService navigationService,
+            DataStoreService dataStoreService)
         {
-            Title = "Basket";
+            _navigationService = navigationService;
+            _dataStoreService = dataStoreService;
+
             BasketItems = new ObservableCollection<BasketItemResponse>();
             LoadBasketItemsCommand = new Command(async () => await ExecuteLoadBasketItemsCommand());
             cancellationToken = new CancellationToken();
@@ -27,7 +35,7 @@ namespace CloudMarket.ViewModels
             IsBusy = true;
             try
             {
-                var basketItems = await DataStore.GetBasketItems(cancellationToken);
+                var basketItems = await _dataStoreService.GetBasketItems(cancellationToken);
                 Guard.Against.Null(basketItems, nameof(basketItems));
                 BasketItems.Clear();
                 basketItems.ForEach(x => BasketItems.Add(x));
@@ -39,7 +47,11 @@ namespace CloudMarket.ViewModels
             IsBusy = false;
         }
 
+        private INavigationService _navigationService;
+        private DataStoreService _dataStoreService;
+
         public ObservableCollection<BasketItemResponse> BasketItems { get; private set; }
         public Command LoadBasketItemsCommand { get; }
+        public bool IsBusy { get; private set; }
     }
 }
