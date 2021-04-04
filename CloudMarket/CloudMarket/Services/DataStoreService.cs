@@ -30,7 +30,7 @@ namespace CloudMarket.Services
         public DataStoreService()
         {
             httpClient = new HttpClient(new AuthenticatedHttpClientHandler(GetToken));
-            httpClient.BaseAddress = new Uri("https://c390277467c7.ngrok.io/");
+            httpClient.BaseAddress = new Uri("https://localhost:50745");
             _magShopApi = RestService.For<IMagShopApi>(httpClient);
         }
         public async Task<bool> LoginUsernameAsync(string username, string password, CancellationToken cancellationToken)
