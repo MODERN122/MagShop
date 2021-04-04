@@ -30,7 +30,7 @@ namespace CloudMarket.Services
         public DataStoreService()
         {
             httpClient = new HttpClient(new AuthenticatedHttpClientHandler(GetToken));
-            httpClient.BaseAddress = new Uri("https://localhost:50745");
+            httpClient.BaseAddress = new Uri("https://localhost:5099");
             _magShopApi = RestService.For<IMagShopApi>(httpClient);
         }
         public async Task<bool> LoginUsernameAsync(string username, string password, CancellationToken cancellationToken)

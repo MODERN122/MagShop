@@ -36,9 +36,9 @@ namespace CloudMarket.Services
                 )
                 )
             {
-                AllowCancel = true
+                AllowCancel = true                
             });
-            Application.Current.MainPage.Navigation.PushModalAsync(authpage);
+            await Application.Current.MainPage.Navigation.PushModalAsync(authpage);
         }
 
         private void AuthOnError(object arg1, AuthenticatorErrorEventArgs arg2)
