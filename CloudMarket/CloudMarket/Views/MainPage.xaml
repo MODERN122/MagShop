@@ -18,6 +18,9 @@
                 <Button Text="Корзина"
                 Command="{Binding NavigateCommand}"
                 CommandParameter="BasketPage" />
+                <Button Text="Личный кабинет"
+                Command="{Binding NavigateCommand}"
+                CommandParameter="ProfilePage" />
                 <Button Text="Аутентификация"
                 Command="{Binding OAuthCommand}" />
             </StackLayout>

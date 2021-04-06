@@ -17,6 +17,11 @@ namespace CloudMarket.ViewModels
     public class BasketPageViewModel : BindableBase
     {
         private CancellationToken cancellationToken;
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set => SetProperty(ref _isBusy, value);
+        }
 
         public BasketPageViewModel(
             INavigationService navigationService,
@@ -49,9 +54,9 @@ namespace CloudMarket.ViewModels
 
         private INavigationService _navigationService;
         private DataStoreService _dataStoreService;
+        private bool _isBusy;
 
         public ObservableCollection<BasketItemResponse> BasketItems { get; private set; }
         public Command LoadBasketItemsCommand { get; }
-        public bool IsBusy { get; private set; }
     }
 }

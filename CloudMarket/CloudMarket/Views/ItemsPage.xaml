@@ -7,7 +7,7 @@
              xmlns:prism="http://prismlibrary.com"
              mc:Ignorable="d"
              x:Class="CloudMarket.Views.ItemsPage"
-             Title="{Binding Title}">
+             Title="Главная">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Login" Command="{Binding AuthByMicrosoftCommand}"/>
     </ContentPage.ToolbarItems>
@@ -35,7 +35,7 @@
                         <DataTemplate>
                                 <Grid ColumnDefinitions="40,35">
                                     <Label Text="{Binding PropertyName}" WidthRequest="80"/>
-                                    <Button Text="+" Command="{Binding Source={Reference vm}, Path=AddPropertyFilterCommand}"
+                                    <Button Text="+" Command="{Binding AddPropertyFilterCommand}"
                                             CommandParameter="{Binding .}"
                                             Grid.Column="1"/>
                                 </Grid>

@@ -281,7 +281,7 @@ namespace Infrastructure.Data
         {
             return new List<User>()
             {
-                new User(id,"Mikhail","Filippov", "filmih24@mail.ru", "+79954116858", DateTimeOffset.Parse("09/24/1998"),
+                new User(id,"Mikhail","Filippov", "filmih24@mail.ru", "+79954116858", new DateTime(1998,9,24),
                 new Basket(){ BasketId=BASKET_ID},
                 new List<CreditCard>(){
                     new CreditCard(){ CreditCardId=CREDIT_CARD_ID, CardNumber="12345678"}
@@ -291,7 +291,7 @@ namespace Infrastructure.Data
                     new Address("Pkorova", "23")
                 }),
 
-                new User(id1,"Bariga","Palenkov", "bar.yaga@mail.ru", "+7988888888", DateTimeOffset.Parse("7/21/2005"),
+                new User(id1,"Bariga","Palenkov", "bar.yaga@mail.ru", "+7988888888", new DateTime(2005,4,27),
                 new Basket(){ BasketId=BASKET_SELLER_ID},
                 new List<CreditCard>(){
                     new CreditCard(){ CreditCardId=CREDIT_CARD_SELLER_ID, CardNumber="12345678"}

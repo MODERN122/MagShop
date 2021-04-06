@@ -37,6 +37,11 @@ namespace CloudMarket.ViewModels
         private INavigationService _navigationService;
         private AuthService _authService;
         private DataStoreService _dataStoreService;
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set => SetProperty(ref _isBusy, value);
+        }
 
         public ObservableCollection<ProductPreview> Items
         {
@@ -50,7 +55,6 @@ namespace CloudMarket.ViewModels
         public Command AddPropertyFilterCommand { get; set; }
         public Command RemovePropertyFilterCommand { get; }
         public Command AuthByMicrosoftCommand { get; }
-        public bool IsBusy { get; private set; }
 
         private Category _defaultCategory = new Category { CategoryId = "", Name = "Нет" };
         private ObservableCollection<ProductPreview> _items = new ObservableCollection<ProductPreview>()
@@ -62,6 +66,7 @@ namespace CloudMarket.ViewModels
                 PriceNew = 1000.0,
             }
         };
+        private bool _isBusy;
 
         public ItemsPageViewModel(
             INavigationService navigationService,
@@ -104,7 +109,10 @@ namespace CloudMarket.ViewModels
             try
             {
                 var res1 = await _dataStoreService.LoginUsernameAsync("demoseller@microsoft.com", "p@SSw0rd", cancellationToken);
+                if (res1)
+                {
 
+                }
                 var res3 = await _dataStoreService.GetListProductsAsync(
                     new ApplicationCore.Endpoints.Products.GetProductsRequest()
                     {
@@ -120,22 +128,25 @@ namespace CloudMarket.ViewModels
                 Categories.Clear();
                 UnfilteredProperties.Clear();
                 Categories.Add(_defaultCategory);
-                res3.ForEach(x =>
+                if (res3 != null)
                 {
-                    if (!Categories.Any(y => y.CategoryId == x.CategoryId))
+                    res3.ForEach(x =>
                     {
-                        Categories.Add(x.Category);
-                    }
-                    x.Properties.ForEach(z =>
-                    {
-                        if (!UnfilteredProperties.Select(r => r.PropertyName).Contains(z.PropertyName))
+                        if (!Categories.Any(y => y.CategoryId == x.CategoryId))
                         {
-                            UnfilteredProperties.Add(z);
+                            Categories.Add(x.Category);
                         }
+                        x.Properties.ForEach(z =>
+                        {
+                            if (!UnfilteredProperties.Select(r => r.PropertyName).Contains(z.PropertyName))
+                            {
+                                UnfilteredProperties.Add(z);
+                            }
+                        });
                     });
-                });
-                Items.Clear();
-                res3.ForEach(x => Items.Add(x));
+                    Items.Clear();
+                    res3.ForEach(x => Items.Add(x));
+                }
                 Items.Add(new ProductPreview()
                 {
                     ProductId = "dasdadad",

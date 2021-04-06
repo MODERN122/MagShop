@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="CloudMarket.Views.BasketPage"
-             Title="{Binding Title}">
+             Title="Корзина">
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>

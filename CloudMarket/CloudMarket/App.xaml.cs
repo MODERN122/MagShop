@@ -7,6 +7,7 @@ using Prism.DryIoc;
 using Prism.Ioc;
 using CloudMarket.ViewModels;
 using System.Diagnostics;
+using CloudMarket.Interfaces;
 
 namespace CloudMarket
 {
@@ -19,7 +20,7 @@ namespace CloudMarket
         protected async override void OnInitialized()
         {
             InitializeComponent();
-            var result = await NavigationService.NavigateAsync("MainPage/NavigationPage/BasketPage");
+            var result = await NavigationService.NavigateAsync("MainPage/NavigationPage/ProfilePage");
             if (!result.Success)
             {
                 Debugger.Break();
@@ -32,9 +33,11 @@ namespace CloudMarket
             containerRegistry.RegisterForNavigation<ItemsPage, ItemsPageViewModel>();
             containerRegistry.RegisterForNavigation<SelectedItemPage, SelectedItemPageViewModel>();
             containerRegistry.RegisterForNavigation<BasketPage, BasketPageViewModel>();
+            containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
 
             containerRegistry.RegisterScoped<DataStoreService>();
             containerRegistry.RegisterScoped<AuthService>();
+            containerRegistry.RegisterScoped<IProfileService, ProfileService>();
         }
 
         protected override void OnStart()
