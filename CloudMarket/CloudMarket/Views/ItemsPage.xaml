@@ -25,7 +25,7 @@
                                     <Label Text="{Binding PropertyName}"/>
                                     <Button Text="X" Grid.Column="1" 
                                             CommandParameter="{Binding .}"
-                                            Command="{Binding Source={Reference vm}, Path=RemovePropertyFilterCommand}"/>
+                                            Command="{Binding RemovePropertyFilterCommand}"/>
                                 </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

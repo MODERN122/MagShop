@@ -35,9 +35,9 @@ namespace CloudMarket
             containerRegistry.RegisterForNavigation<BasketPage, BasketPageViewModel>();
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
 
-            containerRegistry.RegisterScoped<DataStoreService>();
-            containerRegistry.RegisterScoped<AuthService>();
-            containerRegistry.RegisterScoped<IProfileService, ProfileService>();
+            containerRegistry.RegisterSingleton<DataStoreService>();
+            containerRegistry.RegisterSingleton<AuthService>();
+            containerRegistry.RegisterSingleton<ProfileService>();
         }
 
         protected override void OnStart()

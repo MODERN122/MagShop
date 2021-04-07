@@ -10,8 +10,11 @@ namespace CloudMarket.Interfaces
 {
     public interface IProfileService
     {
-        [Get("/api/user/{id}")]
+        [Get("/api/users/{id}")]
         [Headers("Authorization: Bearer")]
-        Task<GetUserResponse> GetUserAsync(string id, CancellationToken ctx);
+        Task<GetUserResponse> GetUserByIdAsync(string id, CancellationToken ctx);
+        [Get("/api/users")]
+        [Headers("Authorization: Bearer")]
+        Task<GetUserResponse> GetUserAsync(CancellationToken ctx);
     }
 }

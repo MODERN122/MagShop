@@ -3,10 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CloudMarket.Views.ProfilePage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout BindingContext="{Binding User}" VerticalOptions="Center" HorizontalOptions="Center">
+            <Label Text="{Binding FirstName}"/>
+            <Label Text="{Binding LastName}"/>
+            <Label Text="{Binding Email}"/>
+            <Label Text="{Binding PhoneNumber}"/>
+            <Label Text="{Binding BirthDate}"/>
+            <Label Text="{Binding Basket.Items.Count}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
