@@ -13,5 +13,8 @@ namespace ProductRecommender
         public float movieId;
         [LoadColumn(2)]
         public float Label;
+        [LoadColumn(3)]
+        public long Time;
     }
+
 }
