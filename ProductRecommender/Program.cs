@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.IO;
 using Microsoft.ML;
 using Microsoft.ML.Trainers;
+using Microsoft.ML.Data;
 
 namespace ProductRecommender
 {
@@ -24,6 +26,7 @@ namespace ProductRecommender
 
             IDataView trainDataView = mlContext.Data.LoadFromTextFile<MovieRating>(trainDataPath, hasHeader: true, separatorChar: ',');
             IDataView testDataView = mlContext.Data.LoadFromTextFile<MovieRating>(testDataPath, hasHeader: true, separatorChar: ',');
+            var products =  mlContext.Data.CreateEnumerable<MovieRating>(trainDataView, reuseRowObject: true);
             return (trainDataView, testDataView);
         }
         public static ITransformer BuildAndTrainModel(MLContext mlContext, IDataView trainDataView)
@@ -93,6 +96,9 @@ namespace ProductRecommender
             mlContext
                 .Model
                 .Save(model, trainDataViewSchema, modelPath);
+            MLContext mLContext = new MLContext();
+            DataViewSchema schema;
+            var model1 = mlContext.Model.Load(modelPath, out schema);
 
         }
     }
