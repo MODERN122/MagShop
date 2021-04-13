@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,7 +46,7 @@ namespace Infrastructure.Data
         #endregion
 
         public static async Task SeedAsync(MagShopContext context,
-            ILoggerFactory loggerFactory, UserManager<UserAuthAccess> userManager, 
+            ILoggerFactory loggerFactory, UserManager<UserAuthAccess> userManager,
             RoleManager<IdentityRole> roleManager, int? retry = 0)
         {
             int retryForAvailability = retry.Value;
@@ -158,30 +160,64 @@ namespace Infrastructure.Data
         #region Products
         private static IEnumerable<Product> GetPrecongifuredProducts()
         {
+            var assembly = Assembly.GetExecutingAssembly();
+            Stream resource = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "1.jpg");
+            Stream resource1 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "2.jpg");
+            MemoryStream ms = new MemoryStream();
+            if (resource != null)
+            {
+                resource.CopyTo(ms);
+            }
+            var image1 = ms.ToArray();
+            if (image1.Length > 0)
+            {
+
+            }
+            if (resource != null)
+            {
+                resource.CopyTo(ms);
+            }
+            var image2 = ms.ToArray();
+            if (image2.Length > 0)
+            {
+
+            }
+
             return new List<Product>()
             {
                 new Product(PRODUCT_1_ID, "Russian backpack", 1800, CATEGORY_3_ID, "It`s nice backpack for real nice guys",
-                new List<Property>()
+                    new List<Property>()
+                    {
+                        new Property("Size",
+                        new List<PropertyItem>(){
+                            new PropertyItem("41"){Image = image1 },
+                            new PropertyItem("42"),
+                            new PropertyItem("43"),
+                            new PropertyItem("44"),
+                        })
+                    },
+                    STORE_ID)
                 {
-                    new Property("Size",
-                    new List<PropertyItem>(){
-                        new PropertyItem("41"),
-                        new PropertyItem("42"),
-                        new PropertyItem("43"),
-                        new PropertyItem("44"),
-                    })
-                }, STORE_ID),
+                    PreviewImage = image2,
+                    Images = new List<Image>()
+                    {
+                        new Image{ByteImage = image2}
+                    }
+                },
                 new Product(PRODUCT_2_ID, "Jeans Versache", 1800, CATEGORY_6_ID, "It`s nice Versache for all",
                 new List<Property>()
                 {
                     new Property("Size",
                     new List<PropertyItem>(){
-                        new PropertyItem("41"),
-                        new PropertyItem("42"),
-                        new PropertyItem("43"),
-                        new PropertyItem("44"),
+                        new PropertyItem("41"){Image = image1 },
+                        new PropertyItem("42"){Image = image2 },
+                        new PropertyItem("43"){Image = image1 },
+                        new PropertyItem("44"){Image = image2 },
                     })
-                }, STORE_ID),
+                }, STORE_ID)
+                {
+                    PreviewImage = image1
+                },
                 new Product(PRODUCT_3_ID, "Crunch backpack", 1800, CATEGORY_3_ID, "It`s nice backpack for real nice guys",
                 new List<Property>()
                 {
@@ -192,7 +228,10 @@ namespace Infrastructure.Data
                         new PropertyItem("43"),
                         new PropertyItem("44"),
                     })
-                }, STORE_ID),
+                }, STORE_ID)
+                {
+                    PreviewImage = image1
+                },
                 new Product(PRODUCT_4_ID, "French backpack", 1800, CATEGORY_3_ID, "It`s nice backpack for real nice guys",
                 new List<Property>()
                 {
@@ -203,7 +242,10 @@ namespace Infrastructure.Data
                         new PropertyItem("43"),
                         new PropertyItem("44"),
                     })
-                }, STORE_ID),
+                }, STORE_ID)
+                {
+                    PreviewImage = image2
+                },
                 new Product(PRODUCT_5_ID, "Belorussian pack", 1800, CATEGORY_3_ID, "It`s nice backpack for real nice guys",
                 new List<Property>()
                 {
@@ -214,7 +256,9 @@ namespace Infrastructure.Data
                         new PropertyItem("43"),
                         new PropertyItem("44"),
                     })
-                }, STORE_ID+"1"),
+                }, STORE_ID+"1")
+                {
+                },
                 new Product(PRODUCT_6_ID, "Russian shoe", 1800, CATEGORY_1_ID, "It`s nice shoe for real nice girls",
                 new List<Property>()
                 {
@@ -225,7 +269,9 @@ namespace Infrastructure.Data
                         new PropertyItem("43"),
                         new PropertyItem("44"),
                     })
-                }, STORE_ID+"1"),
+                }, STORE_ID+"1")
+                {
+                },
                 new Product(PRODUCT_7_ID, "Best jacket", 1800, CATEGORY_4_ID, "It`s nice cardigan for real nice guys",
                 new List<Property>()
                 {
@@ -236,7 +282,9 @@ namespace Infrastructure.Data
                         new PropertyItem("43"),
                         new PropertyItem("44"),
                     })
-                }, STORE_ID+"2"),
+                }, STORE_ID+"2")
+                {
+                },
                 new Product(PRODUCT_8_ID, "French cardigan", 18000, CATEGORY_4_ID, "It`s nice cardigan for real nice guys",
                 new List<Property>()
                 {
@@ -247,7 +295,9 @@ namespace Infrastructure.Data
                         new PropertyItem("43"),
                         new PropertyItem("44"),
                     })
-                }, STORE_ID+"2"),
+                }, STORE_ID+"2")
+                {
+                },
             };
         }
         #endregion

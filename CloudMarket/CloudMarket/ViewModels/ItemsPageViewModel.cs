@@ -143,6 +143,10 @@ namespace CloudMarket.ViewModels
                                 UnfilteredProperties.Add(z);
                             }
                         });
+                        if (x.Properties[0]?.PropertyItems[2]?.Image != null && x.PreviewImage==null)
+                        {
+                            x.PreviewImage = x.Properties[0]?.PropertyItems[2]?.Image;
+                        }
                     });
                     Items.Clear();
                     res3.ForEach(x => Items.Add(x));

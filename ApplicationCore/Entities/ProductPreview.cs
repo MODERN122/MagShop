@@ -16,7 +16,7 @@ namespace ApplicationCore.Entities
         }
         public string ProductId { get; set; } = Guid.NewGuid().ToString();
         public string ProductName { get; set; }
-        public Image PreviewImage { get; set; }
+        public byte[] PreviewImage { get; set; }
         public double? PriceNew { get; set; }
         public double? PriceOld { get; set; }
         public string CategoryId { get; set; }

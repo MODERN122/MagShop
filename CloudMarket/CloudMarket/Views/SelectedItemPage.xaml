@@ -1,12 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects"
+             xmlns:prism="http://prismlibrary.com" xmlns:c="clr-namespace:CloudMarket"
              x:Class="CloudMarket.Views.SelectedItemPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <c:ByteToImageConverter x:Key="ByteToImageConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <CarouselView ItemsSource="{Binding Product.Images}" EmptyView="No images">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding ByteImage, Converter={x:StaticResource ByteToImageConverter}}"/>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <Frame BindingContext="{Binding Product}" CornerRadius="10" HasShadow="True">
+                <Grid RowDefinitions="Auto,20,20, 20,Auto" ColumnDefinitions="Auto">
+                    <Label Text="{Binding ProductName}"  Grid.Row="1"/>
+                    <Label Text="{Binding PriceNew}"  Grid.Row="2"/>
+                    <Label Text="{Binding Rating}" Grid.Row="3"/>
+                    <Label Text="{Binding Description}" Grid.Row="4"/>
+                </Grid>
+            </Frame>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

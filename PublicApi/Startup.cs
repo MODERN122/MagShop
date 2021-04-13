@@ -147,11 +147,12 @@ namespace PublicApi
             // use real database
             // Requires LocalDB which can be installed with SQL Server Express 2016
             // https://www.microsoft.com/en-us/download/details.aspx?id=54284
+            string str = Configuration.GetConnectionString("MagShopDBConnection");
             services.AddDbContext<MagShopContext>(c =>
 #if RELEASE
             c.UseSqlServer(Configuration.GetConnectionString("MagShopDBConnectionDocker")));
 #else
-            c.UseSqlServer(Configuration.GetConnectionString("MagShopDBConnection")));
+            c.UseSqlServer(str));
 #endif
 
             ConfigureServices(services);
