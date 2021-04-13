@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\Images\1.jpg" />
+    <None Remove="Data\Images\2.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Data\Images\1.jpg" />
+    <EmbeddedResource Include="Data\Images\2.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Ardalis.Specification" Version="4.1.0" />
     <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="4.1.0" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />

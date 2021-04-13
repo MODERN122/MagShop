@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,7 +46,7 @@ namespace Infrastructure.Data
         #endregion
 
         public static async Task SeedAsync(MagShopContext context,
-            ILoggerFactory loggerFactory, UserManager<UserAuthAccess> userManager, 
+            ILoggerFactory loggerFactory, UserManager<UserAuthAccess> userManager,
             RoleManager<IdentityRole> roleManager, int? retry = 0)
         {
             int retryForAvailability = retry.Value;
@@ -158,41 +160,65 @@ namespace Infrastructure.Data
         #region Products
         private static IEnumerable<Product> GetPrecongifuredProducts()
         {
+            var assembly = Assembly.GetExecutingAssembly();
+            Stream resource = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "1.jpg");
+            Stream resource1 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "2.jpg");
+            MemoryStream ms = new MemoryStream();
+            if (resource != null)
+            {
+                resource.CopyTo(ms);
+            }
+            var image1 = ms.ToArray();
+            if (image1.Length > 0)
+            {
+
+            }
+            if (resource != null)
+            {
+                resource.CopyTo(ms);
+            }
+            var image2 = ms.ToArray();
+            if (image2.Length > 0)
+            {
+
+            }
+
             return new List<Product>()
             {
-                new Product(PRODUCT_1_ID, "Русский язык", 180, CATEGORY_2_ID, "Очень интересный для изучения язык",
+                new Product(PRODUCT_1_ID, "Russian backpack", 1800, CATEGORY_3_ID, "It`s nice backpack for real nice guys",
+                    new List<Property>()
+                    {
+                        new Property("Size",
+                        new List<PropertyItem>(){
+                            new PropertyItem("41"){Image = image1 },
+                            new PropertyItem("42"),
+                            new PropertyItem("43"),
+                            new PropertyItem("44"),
+                        })
+                    },
+                    STORE_ID)
+                {
+                    PreviewImage = image2,
+                    Images = new List<Image>()
+                    {
+                        new Image{ByteImage = image2}
+                    }
+                },
+                new Product(PRODUCT_2_ID, "Jeans Versache", 1800, CATEGORY_6_ID, "It`s nice Versache for all",
                 new List<Property>()
                 {
                     new Property("Классы",
                     new List<PropertyItem>(){
-                        new PropertyItem("1"),
-                        new PropertyItem("2"),
-                        new PropertyItem("3"),
-                        new PropertyItem("4"),
-                        new PropertyItem("5"),
-                        new PropertyItem("6"),
-                        new PropertyItem("7"),
-                        new PropertyItem("8"),
-                        new PropertyItem("9"),
+                        new PropertyItem("41"){Image = image1 },
+                        new PropertyItem("42"){Image = image2 },
+                        new PropertyItem("43"){Image = image1 },
+                        new PropertyItem("44"){Image = image2 },
                     })
-                }, STORE_ID),
-                new Product(PRODUCT_2_ID, "Алгебра", 100, CATEGORY_1_ID, "Вас научат складывать цифры",
-                new List<Property>()
+                }, STORE_ID)
                 {
-                    new Property("Классы",
-                    new List<PropertyItem>(){
-                        new PropertyItem("1"),
-                        new PropertyItem("2"),
-                        new PropertyItem("3"),
-                        new PropertyItem("4"),
-                        new PropertyItem("5"),
-                        new PropertyItem("6"),
-                        new PropertyItem("7"),
-                        new PropertyItem("8"),
-                        new PropertyItem("9"),
-                    })
-                }, STORE_ID),
-                new Product(PRODUCT_3_ID, "Кормушка", 10, CATEGORY_6_ID, "Помогите окружающей природе",
+                    PreviewImage = image1
+                },
+                new Product(PRODUCT_3_ID, "Crunch backpack", 1800, CATEGORY_3_ID, "It`s nice backpack for real nice guys",
                 new List<Property>()
                 {
                     new Property("Типы",
@@ -202,8 +228,11 @@ namespace Infrastructure.Data
                         new PropertyItem("Для белок"),
                         new PropertyItem("Для кошек"),
                     })
-                }, STORE_ID+"2"),
-                new Product(PRODUCT_4_ID, "Биология", 1800, CATEGORY_3_ID, "Очень позновательные открытия",
+                }, STORE_ID)
+                {
+                    PreviewImage = image1
+                },
+                new Product(PRODUCT_4_ID, "French backpack", 1800, CATEGORY_3_ID, "It`s nice backpack for real nice guys",
                 new List<Property>()
                 {
                     new Property("Классы",
@@ -218,8 +247,11 @@ namespace Infrastructure.Data
                         new PropertyItem("8"),
                         new PropertyItem("9"),
                     })
-                }, STORE_ID),
-                new Product(PRODUCT_5_ID, "Python", 256, CATEGORY_5_ID, "Очение языку програмирования python",
+                }, STORE_ID)
+                {
+                    PreviewImage = image2
+                },
+                new Product(PRODUCT_5_ID, "Belorussian pack", 1800, CATEGORY_3_ID, "It`s nice backpack for real nice guys",
                 new List<Property>()
                 {
                     new Property("Уровень знаний",
@@ -229,8 +261,10 @@ namespace Infrastructure.Data
                         new PropertyItem("Высокий"),
                         new PropertyItem("Проффесиональный"),
                     })
-                }, STORE_ID+"1"),
-                new Product(PRODUCT_6_ID, "Физика", 314, CATEGORY_4_ID, "Очение основ физики",
+                }, STORE_ID+"1")
+                {
+                },
+                new Product(PRODUCT_6_ID, "Russian shoe", 1800, CATEGORY_1_ID, "It`s nice shoe for real nice girls",
                 new List<Property>()
                 {
                     new Property("Классы",
@@ -245,8 +279,10 @@ namespace Infrastructure.Data
                         new PropertyItem("8"),
                         new PropertyItem("9"),
                     })
-                }, STORE_ID+"1"),
-                new Product(PRODUCT_7_ID, "География", 50, CATEGORY_4_ID, "Обучетесь ориентироваться на картах",
+                }, STORE_ID+"1")
+                {
+                },
+                new Product(PRODUCT_7_ID, "Best jacket", 1800, CATEGORY_4_ID, "It`s nice cardigan for real nice guys",
                 new List<Property>()
                 {
                     new Property("Классы",
@@ -261,8 +297,10 @@ namespace Infrastructure.Data
                         new PropertyItem("8"),
                         new PropertyItem("9"),
                     })
-                }, STORE_ID+"2"),
-                new Product(PRODUCT_8_ID, "Французкий язык", 18000, CATEGORY_2_ID, "Поможет для переезда во Францию",
+                }, STORE_ID+"2")
+                {
+                },
+                new Product(PRODUCT_8_ID, "French cardigan", 18000, CATEGORY_4_ID, "It`s nice cardigan for real nice guys",
                 new List<Property>()
                 {
                     new Property("Классы",
@@ -277,7 +315,9 @@ namespace Infrastructure.Data
                         new PropertyItem("8"),
                         new PropertyItem("9"),
                     })
-                }, STORE_ID+"2"),
+                }, STORE_ID+"2")
+                {
+                },
             };
         }
         #endregion

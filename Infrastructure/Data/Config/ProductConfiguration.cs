@@ -12,8 +12,7 @@ namespace Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.HasMany(x => x.Images)
-                .WithOne(x => x.Product)
-                .HasForeignKey(x => x.ProductId)
+                .WithOne()
                 .OnDelete(DeleteBehavior.Cascade);
             builder.HasMany(x => x.Properties)
                 .WithOne()

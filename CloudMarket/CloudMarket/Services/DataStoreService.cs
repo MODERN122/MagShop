@@ -79,6 +79,20 @@ namespace CloudMarket.Services
                 return null;
             }
         }
+        public async Task<Product> GetProductAsync(string id, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var response = await MakeRequest(ctx => _magShopApi.GetProductAsync(id, ctx), cancellationToken);
+                Guard.Against.Null(response, nameof(response));
+
+                return response.Product;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
         public async Task<List<BasketItemResponse>> GetBasketItems(CancellationToken cancellationToken)
         {
