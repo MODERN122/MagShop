@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CloudMarket.Services
-{
+namespace CloudMarket.Interfaces
+{ 
     public interface IDataStore<T>
     {
         Task<bool> AddItemAsync(T item);

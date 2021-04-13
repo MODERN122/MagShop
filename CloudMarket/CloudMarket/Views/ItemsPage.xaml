@@ -2,14 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:vm="clr-namespace:CloudMarket.ViewModels"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects"
+             xmlns:prism="http://prismlibrary.com"
              mc:Ignorable="d"
              x:Class="CloudMarket.Views.ItemsPage"
-             Title="{Binding Title}">
-
-    <ContentPage.BindingContext>
-        <vm:ItemsViewModel x:Name="vm"/>
-    </ContentPage.BindingContext>
+             Title="Главная">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Login" Command="{Binding AuthByMicrosoftCommand}"/>
     </ContentPage.ToolbarItems>
@@ -27,7 +25,7 @@
                                     <Label Text="{Binding PropertyName}"/>
                                     <Button Text="X" Grid.Column="1" 
                                             CommandParameter="{Binding .}"
-                                            Command="{Binding Source={Reference vm}, Path=RemovePropertyFilterCommand}"/>
+                                            Command="{Binding RemovePropertyFilterCommand}"/>
                                 </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -37,7 +35,7 @@
                         <DataTemplate>
                                 <Grid ColumnDefinitions="40,35">
                                     <Label Text="{Binding PropertyName}" WidthRequest="80"/>
-                                    <Button Text="+" Command="{Binding Source={Reference vm}, Path=AddPropertyFilterCommand}"
+                                    <Button Text="+" Command="{Binding AddPropertyFilterCommand}"
                                             CommandParameter="{Binding .}"
                                             Grid.Column="1"/>
                                 </Grid>
@@ -48,13 +46,14 @@
             <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Command="{Binding LoadItemsCommand}"
                          Grid.Row="2">
                 <CollectionView x:Name="ItemsCollectionView"
-                ItemsSource="{Binding Items}" Margin="10">
+                                ItemsSource="{Binding Items}" Margin="10">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="10" HorizontalItemSpacing="10"/>
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame CornerRadius="10" HasShadow="True">
+                            <Frame CornerRadius="10" HasShadow="True" xe:Commands.Tap="{prism:NavigateTo 'SelectedItemPage'}" 
+                                   xe:Commands.TapParameter="{Binding .}">
                                 <Grid RowDefinitions="Auto,20,20, 20" ColumnDefinitions="Auto">
                                     <Image Source="test_product" Grid.Row="0"/>
                                     <Label Text="{Binding ProductName}"  Grid.Row="1"/>

@@ -18,10 +18,13 @@ using ApplicationCore.Entities;
 using System.Linq;
 using Xamarin.Forms.Internals;
 using System.Collections.Generic;
+using Prism.Mvvm;
+using CloudMarket.Services;
+using Prism.Navigation;
 
 namespace CloudMarket.ViewModels
 {
-    public class ItemsViewModel : BaseViewModel
+    public class ItemsPageViewModel : BindableBase
     {
         private CancellationToken cancellationToken;
         private int _itemSelectedIndex = -1;
@@ -30,7 +33,21 @@ namespace CloudMarket.ViewModels
             get => _itemSelectedIndex;
             set => SetProperty(ref _itemSelectedIndex, value);
         }
-        public ObservableCollection<ProductPreview> Items { get; set; }
+
+        private INavigationService _navigationService;
+        private AuthService _authService;
+        private DataStoreService _dataStoreService;
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set => SetProperty(ref _isBusy, value);
+        }
+
+        public ObservableCollection<ProductPreview> Items
+        {
+            get => _items;
+            set => SetProperty(ref _items, value);
+        }
         public ObservableCollection<Property> UnfilteredProperties { get; set; } = new ObservableCollection<Property>();
         public ObservableCollection<Property> FilteredProperties { get; set; } = new ObservableCollection<Property>();
         public ObservableCollection<Category> Categories { get; set; } = new ObservableCollection<Category>();
@@ -40,11 +57,26 @@ namespace CloudMarket.ViewModels
         public Command AuthByMicrosoftCommand { get; }
 
         private Category _defaultCategory = new Category { CategoryId = "", Name = "Нет" };
-
-        public ItemsViewModel()
+        private ObservableCollection<ProductPreview> _items = new ObservableCollection<ProductPreview>()
         {
-            Title = "Main";
-            Items = new ObservableCollection<ProductPreview>();
+            new ProductPreview()
+            {
+                ProductId = "dasdadad",
+                ProductName = "productName",
+                PriceNew = 1000.0,
+            }
+        };
+        private bool _isBusy;
+
+        public ItemsPageViewModel(
+            INavigationService navigationService,
+            AuthService authService,
+            DataStoreService dataStoreService)
+        {
+            _navigationService = navigationService;
+            _authService = authService;
+            _dataStoreService = dataStoreService;
+
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             AddPropertyFilterCommand = new Command(AddPropertyFilter);
             RemovePropertyFilterCommand = new Command(RemovePropertyFilter);
@@ -54,12 +86,12 @@ namespace CloudMarket.ViewModels
 
         private async void AuthByMicrosoft(object obj)
         {
-            await AuthService.Login();
+            await _authService.Login();
         }
 
         private void RemovePropertyFilter(object obj)
         {
-            var property = FilteredProperties.First(x=>x==(Property)obj);
+            var property = FilteredProperties.First(x => x == (Property)obj);
             FilteredProperties.Remove(property);
             UnfilteredProperties.Add(property);
         }
@@ -76,15 +108,18 @@ namespace CloudMarket.ViewModels
             IsBusy = true;
             try
             {
-                var res1 = await DataStore.LoginUsernameAsync("demoseller@microsoft.com", "p@SSw0rd", cancellationToken);
+                var res1 = await _dataStoreService.LoginUsernameAsync("demoseller@microsoft.com", "p@SSw0rd", cancellationToken);
+                if (res1)
+                {
 
-                var res3 = await DataStore.GetListProductsAsync(
+                }
+                var res3 = await _dataStoreService.GetListProductsAsync(
                     new ApplicationCore.Endpoints.Products.GetProductsRequest()
                     {
-                        CategoryId = ItemSelectedIndex!=-1
+                        CategoryId = ItemSelectedIndex != -1
                                         ? Categories[ItemSelectedIndex].CategoryId : "",
-                        PropertiesId = FilteredProperties.Count!=0 
-                            ? FilteredProperties.Select(x=>x.PropertyName).ToList() 
+                        PropertiesId = FilteredProperties.Count != 0
+                            ? FilteredProperties.Select(x => x.PropertyName).ToList()
                             : null,
                         PageSize = 20,
                         PageIndex = 0
@@ -93,22 +128,31 @@ namespace CloudMarket.ViewModels
                 Categories.Clear();
                 UnfilteredProperties.Clear();
                 Categories.Add(_defaultCategory);
-                res3.ForEach(x =>
+                if (res3 != null)
                 {
-                    if (!Categories.Any(y => y.CategoryId == x.CategoryId))
+                    res3.ForEach(x =>
                     {
-                        Categories.Add(x.Category);
-                    }
-                    x.Properties.ForEach(z =>
-                    {
-                        if (!UnfilteredProperties.Select(r => r.PropertyName).Contains(z.PropertyName))
+                        if (!Categories.Any(y => y.CategoryId == x.CategoryId))
                         {
-                            UnfilteredProperties.Add(z);
+                            Categories.Add(x.Category);
                         }
+                        x.Properties.ForEach(z =>
+                        {
+                            if (!UnfilteredProperties.Select(r => r.PropertyName).Contains(z.PropertyName))
+                            {
+                                UnfilteredProperties.Add(z);
+                            }
+                        });
                     });
+                    Items.Clear();
+                    res3.ForEach(x => Items.Add(x));
+                }
+                Items.Add(new ProductPreview()
+                {
+                    ProductId = "dasdadad",
+                    ProductName = "productName",
+                    PriceNew = 1000.0,
                 });
-                Items.Clear();
-                res3.ForEach(x => Items.Add(x));
             }
             catch (Exception ex)
             {

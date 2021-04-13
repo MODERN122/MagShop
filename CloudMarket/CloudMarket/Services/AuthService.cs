@@ -1,5 +1,7 @@
 ﻿using CloudMarket.Interfaces;
 using CloudMarket.Views;
+using Prism.Navigation;
+using Prism.Navigation.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,8 +14,14 @@ namespace CloudMarket.Services
 {
     public class AuthService
     {
-        MainPage RootPage { get => Application.Current.MainPage as MainPage; }
+        public AuthService(INavigationService navigationService)
+        {
+            _navigationService = navigationService;
+        }
+
         TaskCompletionSource<LoginResult> _completionSource;
+        private INavigationService _navigationService;
+
         public async Task Login()
         {
             _completionSource = new TaskCompletionSource<LoginResult>();
@@ -28,9 +36,9 @@ namespace CloudMarket.Services
                 )
                 )
             {
-                AllowCancel = true
+                AllowCancel = true                
             });
-            await RootPage.Navigation.PushAsync(authpage);
+            await Application.Current.MainPage.Navigation.PushModalAsync(authpage);
         }
 
         private void AuthOnError(object arg1, AuthenticatorErrorEventArgs arg2)
