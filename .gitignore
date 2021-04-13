@@ -355,3 +355,5 @@ ngrok_default.txt
 *.csv
 *.gz
 *.zip
+ngrok.exe
+ngrok.txt

@@ -145,12 +145,12 @@ namespace Infrastructure.Data
             return new List<Category>()
             {
                 new Category(PARENT_ID, null, "MAIN_CATEGORY", 0),
-                new Category(CATEGORY_1_ID, PARENT_ID, "Shoes", 0.2),
-                new Category(CATEGORY_2_ID, PARENT_ID, "Clothes", 0.2),
-                new Category(CATEGORY_3_ID, PARENT_ID, "Backpacks", 0.1),
-                new Category(CATEGORY_4_ID, CATEGORY_2_ID, "Jackets", 0.2 ),
-                new Category(CATEGORY_5_ID, CATEGORY_2_ID, "T-shirts", 0.25),
-                new Category(CATEGORY_6_ID, CATEGORY_2_ID, "Pants", 0.311233223)
+                new Category(CATEGORY_1_ID, PARENT_ID, "Технические предметы", 0.2),
+                new Category(CATEGORY_2_ID, PARENT_ID, "Лингвестические предметы", 0.2),
+                new Category(CATEGORY_3_ID, PARENT_ID, "Биологическое направение", 0.1),
+                new Category(CATEGORY_4_ID, PARENT_ID, "Естественные науки", 0.2 ),
+                new Category(CATEGORY_5_ID, PARENT_ID, "Программирование", 0.25),
+                new Category(CATEGORY_6_ID, PARENT_ID, "Очумелые ручки", 0.311233223)
 
             };
         }
@@ -160,92 +160,122 @@ namespace Infrastructure.Data
         {
             return new List<Product>()
             {
-                new Product(PRODUCT_1_ID, "Russian backpack", 1800, CATEGORY_3_ID, "It`s nice backpack for real nice guys",
+                new Product(PRODUCT_1_ID, "Русский язык", 180, CATEGORY_2_ID, "Очень интересный для изучения язык",
                 new List<Property>()
                 {
-                    new Property("Size",
+                    new Property("Классы",
                     new List<PropertyItem>(){
-                        new PropertyItem("41"),
-                        new PropertyItem("42"),
-                        new PropertyItem("43"),
-                        new PropertyItem("44"),
+                        new PropertyItem("1"),
+                        new PropertyItem("2"),
+                        new PropertyItem("3"),
+                        new PropertyItem("4"),
+                        new PropertyItem("5"),
+                        new PropertyItem("6"),
+                        new PropertyItem("7"),
+                        new PropertyItem("8"),
+                        new PropertyItem("9"),
                     })
                 }, STORE_ID),
-                new Product(PRODUCT_2_ID, "Jeans Versache", 1800, CATEGORY_6_ID, "It`s nice Versache for all",
+                new Product(PRODUCT_2_ID, "Алгебра", 100, CATEGORY_1_ID, "Вас научат складывать цифры",
                 new List<Property>()
                 {
-                    new Property("Size",
+                    new Property("Классы",
                     new List<PropertyItem>(){
-                        new PropertyItem("41"),
-                        new PropertyItem("42"),
-                        new PropertyItem("43"),
-                        new PropertyItem("44"),
+                        new PropertyItem("1"),
+                        new PropertyItem("2"),
+                        new PropertyItem("3"),
+                        new PropertyItem("4"),
+                        new PropertyItem("5"),
+                        new PropertyItem("6"),
+                        new PropertyItem("7"),
+                        new PropertyItem("8"),
+                        new PropertyItem("9"),
                     })
                 }, STORE_ID),
-                new Product(PRODUCT_3_ID, "Crunch backpack", 1800, CATEGORY_3_ID, "It`s nice backpack for real nice guys",
+                new Product(PRODUCT_3_ID, "Кормушка", 10, CATEGORY_6_ID, "Помогите окружающей природе",
                 new List<Property>()
                 {
-                    new Property("Size",
+                    new Property("Типы",
                     new List<PropertyItem>(){
-                        new PropertyItem("41"),
-                        new PropertyItem("42"),
-                        new PropertyItem("43"),
-                        new PropertyItem("44"),
-                    })
-                }, STORE_ID),
-                new Product(PRODUCT_4_ID, "French backpack", 1800, CATEGORY_3_ID, "It`s nice backpack for real nice guys",
-                new List<Property>()
-                {
-                    new Property("Size",
-                    new List<PropertyItem>(){
-                        new PropertyItem("41"),
-                        new PropertyItem("42"),
-                        new PropertyItem("43"),
-                        new PropertyItem("44"),
-                    })
-                }, STORE_ID),
-                new Product(PRODUCT_5_ID, "Belorussian pack", 1800, CATEGORY_3_ID, "It`s nice backpack for real nice guys",
-                new List<Property>()
-                {
-                    new Property("Length",
-                    new List<PropertyItem>(){
-                        new PropertyItem("41"),
-                        new PropertyItem("42"),
-                        new PropertyItem("43"),
-                        new PropertyItem("44"),
-                    })
-                }, STORE_ID+"1"),
-                new Product(PRODUCT_6_ID, "Russian shoe", 1800, CATEGORY_1_ID, "It`s nice shoe for real nice girls",
-                new List<Property>()
-                {
-                    new Property("Length",
-                    new List<PropertyItem>(){
-                        new PropertyItem("41"),
-                        new PropertyItem("42"),
-                        new PropertyItem("43"),
-                        new PropertyItem("44"),
-                    })
-                }, STORE_ID+"1"),
-                new Product(PRODUCT_7_ID, "Best jacket", 1800, CATEGORY_4_ID, "It`s nice cardigan for real nice guys",
-                new List<Property>()
-                {
-                    new Property("Length",
-                    new List<PropertyItem>(){
-                        new PropertyItem("41"),
-                        new PropertyItem("42"),
-                        new PropertyItem("43"),
-                        new PropertyItem("44"),
+                        new PropertyItem("Для голубей"),
+                        new PropertyItem("Для воробьев"),
+                        new PropertyItem("Для белок"),
+                        new PropertyItem("Для кошек"),
                     })
                 }, STORE_ID+"2"),
-                new Product(PRODUCT_8_ID, "French cardigan", 18000, CATEGORY_4_ID, "It`s nice cardigan for real nice guys",
+                new Product(PRODUCT_4_ID, "Биология", 1800, CATEGORY_3_ID, "Очень позновательные открытия",
                 new List<Property>()
                 {
-                    new Property("Amount",
+                    new Property("Классы",
                     new List<PropertyItem>(){
-                        new PropertyItem("41"),
-                        new PropertyItem("42"),
-                        new PropertyItem("43"),
-                        new PropertyItem("44"),
+                       new PropertyItem("1"),
+                        new PropertyItem("2"),
+                        new PropertyItem("3"),
+                        new PropertyItem("4"),
+                        new PropertyItem("5"),
+                        new PropertyItem("6"),
+                        new PropertyItem("7"),
+                        new PropertyItem("8"),
+                        new PropertyItem("9"),
+                    })
+                }, STORE_ID),
+                new Product(PRODUCT_5_ID, "Python", 256, CATEGORY_5_ID, "Очение языку програмирования python",
+                new List<Property>()
+                {
+                    new Property("Уровень знаний",
+                    new List<PropertyItem>(){
+                        new PropertyItem("Низкий"),
+                        new PropertyItem("Стандартный"),
+                        new PropertyItem("Высокий"),
+                        new PropertyItem("Проффесиональный"),
+                    })
+                }, STORE_ID+"1"),
+                new Product(PRODUCT_6_ID, "Физика", 314, CATEGORY_4_ID, "Очение основ физики",
+                new List<Property>()
+                {
+                    new Property("Классы",
+                    new List<PropertyItem>(){
+                        new PropertyItem("1"),
+                        new PropertyItem("2"),
+                        new PropertyItem("3"),
+                        new PropertyItem("4"),
+                        new PropertyItem("5"),
+                        new PropertyItem("6"),
+                        new PropertyItem("7"),
+                        new PropertyItem("8"),
+                        new PropertyItem("9"),
+                    })
+                }, STORE_ID+"1"),
+                new Product(PRODUCT_7_ID, "География", 50, CATEGORY_4_ID, "Обучетесь ориентироваться на картах",
+                new List<Property>()
+                {
+                    new Property("Классы",
+                    new List<PropertyItem>(){
+                        new PropertyItem("1"),
+                        new PropertyItem("2"),
+                        new PropertyItem("3"),
+                        new PropertyItem("4"),
+                        new PropertyItem("5"),
+                        new PropertyItem("6"),
+                        new PropertyItem("7"),
+                        new PropertyItem("8"),
+                        new PropertyItem("9"),
+                    })
+                }, STORE_ID+"2"),
+                new Product(PRODUCT_8_ID, "Французкий язык", 18000, CATEGORY_2_ID, "Поможет для переезда во Францию",
+                new List<Property>()
+                {
+                    new Property("Классы",
+                    new List<PropertyItem>(){
+                        new PropertyItem("1"),
+                        new PropertyItem("2"),
+                        new PropertyItem("3"),
+                        new PropertyItem("4"),
+                        new PropertyItem("5"),
+                        new PropertyItem("6"),
+                        new PropertyItem("7"),
+                        new PropertyItem("8"),
+                        new PropertyItem("9"),
                     })
                 }, STORE_ID+"2"),
             };
@@ -256,9 +286,9 @@ namespace Infrastructure.Data
         {
             return new List<Store>()
             {
-                new Store(STORE_ID, SELLER_ID, "NICE STORE"),
-                new Store(STORE_ID+"1", SELLER_ID, "GOOD STORE"),
-                new Store(STORE_ID+"2", SELLER_ID, "BEST STORE"),
+                new Store(STORE_ID, SELLER_ID, "Хорошие курсы"),
+                new Store(STORE_ID+"1", SELLER_ID, "Великолепные курсы"),
+                new Store(STORE_ID+"2", SELLER_ID, "Лучшие курсы"),
             };
         }
         #endregion
@@ -281,7 +311,7 @@ namespace Infrastructure.Data
         {
             return new List<User>()
             {
-                new User(id,"Mikhail","Filippov", "filmih24@mail.ru", "+79954116858", new DateTime(1998,9,24),
+                new User(id,"Дмитрий","Очеретный", "philipskryt2@gmail.ru", "+79026536953", new DateTime(1998,9,24),
                 new Basket(){ BasketId=BASKET_ID},
                 new List<CreditCard>(){
                     new CreditCard(){ CreditCardId=CREDIT_CARD_ID, CardNumber="12345678"}
