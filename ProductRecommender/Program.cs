@@ -4,6 +4,9 @@ using System.IO;
 using Microsoft.ML;
 using Microsoft.ML.Trainers;
 using Microsoft.ML.Data;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.Json;
 
 namespace ProductRecommender
 {
@@ -11,22 +14,28 @@ namespace ProductRecommender
     {
         static void Main(string[] args)
         {
-            MLContext mlContext = new MLContext();
-            (IDataView trainDataView, IDataView testDataView) = LoadData(mlContext);
-            ITransformer model = BuildAndTrainModel(mlContext, trainDataView: trainDataView); 
-            EvaluateModel(mlContext, testDataView, model);
-            UseModelForSinglePrediction(mlContext, model); 
-            SaveModel(mlContext, trainDataView.Schema, model);
+            //var trainDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "Clothing_Shoes_and_Jewelry_5.json");
+            var fileName = @"C:\Users\Mikhail\Documents\GitHub\MagShop\ProductRecommender\Data\Clothing_Shoes_and_Jewelry_5.json";
+            var jsonString = File.ReadAllText(fileName);
+            jsonString = jsonString.Replace('\n', ',');
+            var reviews = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ReviewModel>>("["+jsonString+"]");
+            //MLContext mlContext = new MLContext();
+            //(IDataView trainDataView, IDataView testDataView) = LoadData(mlContext);
+            //ITransformer model = BuildAndTrainModel(mlContext, trainDataView: trainDataView); 
+            //EvaluateModel(mlContext, testDataView, model);
+            //UseModelForSinglePrediction(mlContext, model); 
+            //SaveModel(mlContext, trainDataView.Schema, model);
 
         }
         public static (IDataView training, IDataView test) LoadData (MLContext mlContext)
         {
             var trainDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "recommendation-ratings-train.csv");
             var testDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "recommendation-ratings-test.csv");
-
+            //var data = mlContext.Data.LoadFromEnumerable(new List<MLContext>());
             IDataView trainDataView = mlContext.Data.LoadFromTextFile<MovieRating>(trainDataPath, hasHeader: true, separatorChar: ',');
             IDataView testDataView = mlContext.Data.LoadFromTextFile<MovieRating>(testDataPath, hasHeader: true, separatorChar: ',');
             var products =  mlContext.Data.CreateEnumerable<MovieRating>(trainDataView, reuseRowObject: true);
+            
             return (trainDataView, testDataView);
         }
         public static ITransformer BuildAndTrainModel(MLContext mlContext, IDataView trainDataView)
