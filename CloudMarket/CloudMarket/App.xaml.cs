@@ -34,6 +34,7 @@ namespace CloudMarket
             containerRegistry.RegisterForNavigation<SelectedItemPage, SelectedItemPageViewModel>();
             containerRegistry.RegisterForNavigation<BasketPage, BasketPageViewModel>();
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
+            containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
 
             containerRegistry.RegisterSingleton<DataStoreService>();
             containerRegistry.RegisterSingleton<AuthService>();

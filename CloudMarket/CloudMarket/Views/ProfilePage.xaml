@@ -9,7 +9,6 @@
             <Label Text="{Binding Email}"/>
             <Label Text="{Binding PhoneNumber}"/>
             <Label Text="{Binding BirthDate}"/>
-            <Label Text="{Binding Basket.Items.Count}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

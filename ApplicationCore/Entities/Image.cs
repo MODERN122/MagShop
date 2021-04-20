@@ -7,10 +7,8 @@ namespace ApplicationCore.Entities
 {
     public class Image
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string ProductId { get; set; }
-        [JsonIgnore]
-        public Product Product { get; set; }
         public byte[] ByteImage { get; set; }
     }
 }

@@ -4,14 +4,18 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects"
-             xmlns:prism="http://prismlibrary.com"
+             xmlns:prism="http://prismlibrary.com" xmlns:c="clr-namespace:CloudMarket"
              mc:Ignorable="d"
              x:Class="CloudMarket.Views.ItemsPage"
              Title="Главная">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Login" Command="{Binding AuthByMicrosoftCommand}"/>
     </ContentPage.ToolbarItems>
-
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <c:ByteToImageConverter x:Key="ByteToImageConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <Grid RowDefinitions="40,40,*">
             <StackLayout Orientation="Horizontal">
@@ -52,11 +56,13 @@
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame CornerRadius="10" HasShadow="True" xe:Commands.Tap="{prism:NavigateTo 'SelectedItemPage'}" 
-                                   xe:Commands.TapParameter="{Binding .}">
+                            <Frame CornerRadius="10" HasShadow="True" xe:Commands.Tap="{prism:NavigateTo 'SelectedItemPage'}">
+                                <xe:Commands.TapParameter>
+                                    <prism:NavigationParameter Key="id" Value="{Binding ProductId}" />
+                                </xe:Commands.TapParameter>
                                 <Grid RowDefinitions="Auto,20,20, 20" ColumnDefinitions="Auto">
-                                    <Image Source="test_product" Grid.Row="0"/>
-                                    <Label Text="{Binding ProductName}"  Grid.Row="1"/>
+                                    <Image Source="{Binding PreviewImage, Converter={x:StaticResource ByteToImageConverter}}" Grid.Row="0"/>
+                                    <Label  Text="{Binding ProductName}"  Grid.Row="1"/>
                                     <Label Text="{Binding PriceNew}"  Grid.Row="2"/>
                                     <Label Text="{Binding Rating}" Grid.Row="3"/>
                                 </Grid>
