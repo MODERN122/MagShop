@@ -7,11 +7,24 @@
   <ItemGroup>
     <None Remove="Data\Images\1.jpg" />
     <None Remove="Data\Images\2.jpg" />
+    <None Remove="Data\Images\3.jpg" />
+    <None Remove="Data\Images\4.jpg" />
+    <None Remove="Data\Images\5.jpg" />
+    <None Remove="Data\Images\6.jpg" />
+    <None Remove="Data\Images\7.jpg" />
+    <None Remove="Data\Images\8.jpg" />
+    <None Remove="Data\Images\и.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Data\Images\1.jpg" />
     <EmbeddedResource Include="Data\Images\2.jpg" />
+    <EmbeddedResource Include="Data\Images\4.jpg" />
+    <EmbeddedResource Include="Data\Images\5.jpg" />
+    <EmbeddedResource Include="Data\Images\6.jpg" />
+    <EmbeddedResource Include="Data\Images\7.jpg" />
+    <EmbeddedResource Include="Data\Images\8.jpg" />
+    <EmbeddedResource Include="Data\Images\и.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +43,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ApplicationCore\ApplicationCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Data\Images\3.jpg" />
   </ItemGroup>
 
 </Project>

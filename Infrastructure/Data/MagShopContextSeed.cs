@@ -163,6 +163,14 @@ namespace Infrastructure.Data
             var assembly = Assembly.GetExecutingAssembly();
             Stream resource = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "1.jpg");
             Stream resource1 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "2.jpg");
+            Stream resource2 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "3.jpg");
+            Stream resource3 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "4.jpg");
+            Stream resource4 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "5.jpg");
+            Stream resource5 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "6.jpg");
+            Stream resource6 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "7.jpg");
+            Stream resource7 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "8.jpg");
+            
+            
             MemoryStream ms = new MemoryStream();
             if (resource != null)
             {
@@ -183,106 +191,148 @@ namespace Infrastructure.Data
 
             }
 
+            var image3 = ms.ToArray();
+            if (image3.Length > 0)
+            {
+
+            }
+
+            var image4 = ms.ToArray();
+            if (image4.Length > 0)
+            {
+
+            }
+
+            var image5 = ms.ToArray();
+            if (image5.Length > 0)
+            {
+
+            }
+            var image6 = ms.ToArray();
+            if (image6.Length > 0)
+            {
+
+            }
+
+            var image7 = ms.ToArray();
+            if (image7.Length > 0)
+            {
+
+            }
+            var image8 = ms.ToArray();
+            if (image8.Length > 0)
+            {
+
+            }
             return new List<Product>()
             {
-                new Product(PRODUCT_1_ID, "Russian backpack", 1800, CATEGORY_3_ID, "It`s nice backpack for real nice guys",
+                new Product(PRODUCT_1_ID, "Биология", 180, CATEGORY_3_ID, "Обучит науке о живых организмах",
                     new List<Property>()
                     {
-                        new Property("Size",
+                        new Property("Классы",
                         new List<PropertyItem>(){
-                            new PropertyItem("41"){Image = image1 },
-                            new PropertyItem("42"),
-                            new PropertyItem("43"),
-                            new PropertyItem("44"),
+                           new PropertyItem("1"){Image = image1 },
+                        new PropertyItem("2"){Image = image1 },
+                        new PropertyItem("3"){Image = image1 },
+                        new PropertyItem("4"){Image = image1 },
+                        new PropertyItem("5"){Image = image1 },
+                        new PropertyItem("6"){Image = image1 },
+                        new PropertyItem("7"){Image = image1 },
+                        new PropertyItem("8"){Image = image1 },
+                        new PropertyItem("9"){Image = image1 },
                         })
                     },
                     STORE_ID)
-                {
-                    PreviewImage = image2,
-                    Images = new List<Image>()
-                    {
-                        new Image{ByteImage = image2}
-                    }
-                },
-                new Product(PRODUCT_2_ID, "Jeans Versache", 1800, CATEGORY_6_ID, "It`s nice Versache for all",
-                new List<Property>()
-                {
-                    new Property("Классы",
-                    new List<PropertyItem>(){
-                        new PropertyItem("41"){Image = image1 },
-                        new PropertyItem("42"){Image = image2 },
-                        new PropertyItem("43"){Image = image1 },
-                        new PropertyItem("44"){Image = image2 },
-                    })
-                }, STORE_ID)
-                {
+                 {
                     PreviewImage = image1
                 },
-                new Product(PRODUCT_3_ID, "Crunch backpack", 1800, CATEGORY_3_ID, "It`s nice backpack for real nice guys",
+
+                new Product(PRODUCT_2_ID, "Корушка", 10, CATEGORY_6_ID, "Сдлайте все своими руками",
                 new List<Property>()
                 {
                     new Property("Типы",
                     new List<PropertyItem>(){
-                        new PropertyItem("Для голубей"),
-                        new PropertyItem("Для воробьев"),
-                        new PropertyItem("Для белок"),
-                        new PropertyItem("Для кошек"),
-                    })
-                }, STORE_ID)
-                {
-                    PreviewImage = image1
-                },
-                new Product(PRODUCT_4_ID, "French backpack", 1800, CATEGORY_3_ID, "It`s nice backpack for real nice guys",
-                new List<Property>()
-                {
-                    new Property("Классы",
-                    new List<PropertyItem>(){
-                       new PropertyItem("1"),
-                        new PropertyItem("2"),
-                        new PropertyItem("3"),
-                        new PropertyItem("4"),
-                        new PropertyItem("5"),
-                        new PropertyItem("6"),
-                        new PropertyItem("7"),
-                        new PropertyItem("8"),
-                        new PropertyItem("9"),
+                        new PropertyItem("Для голубей"){Image = image2 },
+                        new PropertyItem("Для воробьев"){Image = image2 },
+                        new PropertyItem("Для белок"){Image = image2 },
+                        new PropertyItem("Для кошек"){Image = image2 },
                     })
                 }, STORE_ID)
                 {
                     PreviewImage = image2
                 },
-                new Product(PRODUCT_5_ID, "Belorussian pack", 1800, CATEGORY_3_ID, "It`s nice backpack for real nice guys",
+                new Product(PRODUCT_3_ID, "1с", 18000, CATEGORY_5_ID, "Обучитесь программированию на 1с",
                 new List<Property>()
                 {
-                    new Property("Уровень знаний",
+                    new Property("Уровень сложности",
                     new List<PropertyItem>(){
-                        new PropertyItem("Низкий"),
-                        new PropertyItem("Стандартный"),
-                        new PropertyItem("Высокий"),
-                        new PropertyItem("Проффесиональный"),
+                        new PropertyItem("Минимальный"){Image = image3},
+                        new PropertyItem("Нормальный"){Image = image3},
+                        new PropertyItem("Продвинутый"){Image = image3},
+                        new PropertyItem("Экспертный"){Image = image3},
                     })
-                }, STORE_ID+"1")
+                }, STORE_ID)
                 {
+                    PreviewImage = image3
                 },
-                new Product(PRODUCT_6_ID, "Russian shoe", 1800, CATEGORY_1_ID, "It`s nice shoe for real nice girls",
+                new Product(PRODUCT_4_ID, "Физика", 1800, CATEGORY_4_ID, "Обучение основам физики",
                 new List<Property>()
                 {
                     new Property("Классы",
                     new List<PropertyItem>(){
-                        new PropertyItem("1"),
-                        new PropertyItem("2"),
-                        new PropertyItem("3"),
-                        new PropertyItem("4"),
-                        new PropertyItem("5"),
-                        new PropertyItem("6"),
-                        new PropertyItem("7"),
-                        new PropertyItem("8"),
-                        new PropertyItem("9"),
+                       new PropertyItem("1"){Image = image4},
+                        new PropertyItem("2"){Image = image4},
+                        new PropertyItem("3"){Image = image4},
+                        new PropertyItem("4"){Image = image4},
+                        new PropertyItem("5"){Image = image4},
+                        new PropertyItem("6"){Image = image4},
+                        new PropertyItem("7"){Image = image4},
+                        new PropertyItem("8"){Image = image4},
+                        new PropertyItem("9"){Image = image4},
+                    })
+                }, STORE_ID)
+                {
+                    PreviewImage = image4
+                },
+                new Product(PRODUCT_5_ID, "Французкий язык", 1800, CATEGORY_2_ID, "Научитесь говорить как истинный француз",
+                new List<Property>()
+                {
+                     new Property("Классы",
+                    new List<PropertyItem>(){
+                       new PropertyItem("1"){Image = image5},
+                        new PropertyItem("2"){Image = image5},
+                        new PropertyItem("3"){Image = image5},
+                        new PropertyItem("4"){Image = image5},
+                        new PropertyItem("5"){Image = image5},
+                        new PropertyItem("6"){Image = image5},
+                        new PropertyItem("7"){Image = image5},
+                        new PropertyItem("8"){Image = image5},
+                        new PropertyItem("9"){Image = image5},
                     })
                 }, STORE_ID+"1")
                 {
+                    PreviewImage = image5
                 },
-                new Product(PRODUCT_7_ID, "Best jacket", 1800, CATEGORY_4_ID, "It`s nice cardigan for real nice guys",
+                new Product(PRODUCT_6_ID, "Математика", 1800, CATEGORY_1_ID, "Научитесть складывать цифры и не только",
+                new List<Property>()
+                {
+                    new Property("Классы",
+                    new List<PropertyItem>(){
+                        new PropertyItem("1"){Image = image6},
+                        new PropertyItem("2"){Image = image6},
+                        new PropertyItem("3"){Image = image6},
+                        new PropertyItem("4"){Image = image6},
+                        new PropertyItem("5"){Image = image6},
+                        new PropertyItem("6"){Image = image6},
+                        new PropertyItem("7"){Image = image6},
+                        new PropertyItem("8"){Image = image6},
+                        new PropertyItem("9"){Image = image6},
+                    })
+                }, STORE_ID+"1")
+                {
+                    PreviewImage = image6
+                },
+                new Product(PRODUCT_7_ID, "Русский язык", 1800, CATEGORY_2_ID, "Обучат грамматике",
                 new List<Property>()
                 {
                     new Property("Классы",
@@ -299,8 +349,9 @@ namespace Infrastructure.Data
                     })
                 }, STORE_ID+"2")
                 {
+                    PreviewImage = image7
                 },
-                new Product(PRODUCT_8_ID, "French cardigan", 18000, CATEGORY_4_ID, "It`s nice cardigan for real nice guys",
+                new Product(PRODUCT_8_ID, "География", 7000, CATEGORY_4_ID, "Научат ориентироваться в картах",
                 new List<Property>()
                 {
                     new Property("Классы",
@@ -317,6 +368,7 @@ namespace Infrastructure.Data
                     })
                 }, STORE_ID+"2")
                 {
+                    PreviewImage = image8
                 },
             };
         }
