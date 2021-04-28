@@ -14,18 +14,50 @@ namespace ProductRecommender
     {
         static void Main(string[] args)
         {
-            //var trainDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "Clothing_Shoes_and_Jewelry_5.json");
-            var fileName = @"C:\Users\Mikhail\Documents\GitHub\MagShop\ProductRecommender\Data\Clothing_Shoes_and_Jewelry_5.json";
+            var fileName = @"C:\Users\Mikhail\Documents\GitHub\MagShop\ProductRecommender/Data/Clothing_Shoes_and_Jewelry_5.json";
             var jsonString = File.ReadAllText(fileName);
             jsonString = jsonString.Replace('\n', ',');
-            var reviews = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ReviewModel>>("["+jsonString+"]");
-            //MLContext mlContext = new MLContext();
-            //(IDataView trainDataView, IDataView testDataView) = LoadData(mlContext);
-            //ITransformer model = BuildAndTrainModel(mlContext, trainDataView: trainDataView); 
-            //EvaluateModel(mlContext, testDataView, model);
-            //UseModelForSinglePrediction(mlContext, model); 
-            //SaveModel(mlContext, trainDataView.Schema, model);
-
+            var reviewsSrc = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ReviewModel>>("[" + jsonString + "]");
+            MLContext mlContext = new MLContext();
+            //reviewsSrc = reviewsSrc.Take(1000).ToList();
+            int countTest = reviewsSrc.Count() / 5;
+            var trainDataView = mlContext.Data.LoadFromEnumerable<ReviewModel>(reviewsSrc.Skip(countTest));
+            var testDataView = mlContext.Data.LoadFromEnumerable<ReviewModel>(reviewsSrc.Take(countTest));
+            IEstimator<ITransformer> estimator = mlContext
+    .Transforms
+    .Conversion
+    .MapValueToKey(outputColumnName: "ReviewerIdEncoded", inputColumnName: $"{nameof(ReviewModel.reviewerID)}")
+    .Append(mlContext
+        .Transforms
+        .Conversion
+        .MapValueToKey(outputColumnName: "ProductIdEncoded", inputColumnName: $"{nameof(ReviewModel.asin)}"));
+            var options = new MatrixFactorizationTrainer.Options
+            {
+                MatrixColumnIndexColumnName = "ReviewerIdEncoded",
+                MatrixRowIndexColumnName = "ProductIdEncoded",
+                LabelColumnName = $"{nameof(ReviewModel.overall)}",
+                NumberOfIterations = 20,
+                ApproximationRank = 100
+            };
+            var trainerEstimator = estimator
+                .Append(mlContext
+                    .Recommendation()
+                    .Trainers
+                    .MatrixFactorization(options));
+            Console.WriteLine("========================== Training the model =============================");
+            ITransformer model = trainerEstimator.Fit(trainDataView);
+            Console.WriteLine("========================== Evaluating the model =============================");
+            var prediction = model.Transform(testDataView);
+            var metrics = mlContext
+                .Regression
+                .Evaluate(prediction, labelColumnName: $"{nameof(ReviewModel.overall)}", scoreColumnName: $"{nameof(ProductPrediction.Score)}");
+            Console.WriteLine("Root Mean Squared Error : " + metrics.RootMeanSquaredError.ToString());
+            Console.WriteLine("RSquared: " + metrics.RSquared.ToString());
+        }
+        public class ProductPrediction
+        {
+            public string asin;
+            public float Score;
         }
         public static (IDataView training, IDataView test) LoadData (MLContext mlContext)
         {
