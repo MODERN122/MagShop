@@ -74,7 +74,7 @@ namespace ApplicationCore.Entities
             }
         }
 
-        public void AddItemsToBaket(List<BasketItem> basketItems)
+        public void AddItemsToBasket(List<BasketItem> basketItems)
         {
             var nowItems = Basket.Items.ToList();
             nowItems.AddRange(basketItems);

@@ -6,7 +6,7 @@ namespace CloudMarket.Helpers
 {
     public static class ApiEndpointUrls
     {
-        private const string ngrok = "https://cc57c0590682.ngrok.io";
+        private const string ngrok = "https://264ac4ddfa08.ngrok.io";
         public static string MagShopUrl
         {
             get => ngrok;
