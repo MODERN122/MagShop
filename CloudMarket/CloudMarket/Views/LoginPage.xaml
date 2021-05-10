@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CloudMarket.Views.LoginPage"
+             Title="Логин">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" VerticalOptions="Center" Margin="20">
+            <Label Text="Войти в личный кабинет" FontSize="Large" TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center"/>
+            <Entry IsPassword="False" Placeholder="Почта / Телефон"/>
+            <Entry IsPassword="True" Placeholder="Пароль"/>
+            <Label >
+                <Label.FormattedText>
+                    <FormattedString>
+                        <FormattedString.Spans>
+                            <Span Text="Не удаётся войти? Попробуйте "/>
+                            <Span Text="восстановить пароль" TextColor="Blue" TextDecorations="Underline">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding RecoverPasswordCommand}"/>
+                                </Span.GestureRecognizers>
+                            </Span>
+                        </FormattedString.Spans>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Button Text="Войти" TextColor="White" Command="{Binding LoginCommand}" BackgroundColor="LightCoral"/>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Войти с помощью" VerticalOptions="Center" FontSize="Body"/>
+                <Button Text="Microsoft" TextColor="Black" Command="{Binding LoginByMicrosoftCommand}" BackgroundColor="LightCoral"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

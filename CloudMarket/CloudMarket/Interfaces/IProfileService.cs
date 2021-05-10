@@ -8,13 +8,12 @@ using System.Threading.Tasks;
 
 namespace CloudMarket.Interfaces
 {
+    [Headers("Authorization: Bearer")]
     public interface IProfileService
     {
         [Get("/api/users/{id}")]
-        [Headers("Authorization: Bearer")]
         Task<GetUserResponse> GetUserByIdAsync(string id, CancellationToken ctx);
         [Get("/api/users")]
-        [Headers("Authorization: Bearer")]
         Task<GetUserResponse> GetUserAsync(CancellationToken ctx);
     }
 }

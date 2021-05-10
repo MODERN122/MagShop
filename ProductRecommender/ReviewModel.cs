@@ -11,6 +11,9 @@ namespace ProductRecommender
         public string reviewerName { get; set; }
         public int[] helpful { get; set; }
         public string reviewText { get; set; }
+        /// <summary>
+        /// Оценка
+        /// </summary>
         public float overall { get; set; }
         public string summary { get; set; }
         public int unixReviewTime { get; set; }

@@ -4,6 +4,9 @@ using System.IO;
 using Microsoft.ML;
 using Microsoft.ML.Trainers;
 using Microsoft.ML.Data;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.Json;
 
 namespace ProductRecommender
 {
@@ -11,22 +14,60 @@ namespace ProductRecommender
     {
         static void Main(string[] args)
         {
+            var fileName = @"C:\Users\Mikhail\Documents\GitHub\MagShop\ProductRecommender/Data/Clothing_Shoes_and_Jewelry_5.json";
+            var jsonString = File.ReadAllText(fileName);
+            jsonString = jsonString.Replace('\n', ',');
+            var reviewsSrc = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ReviewModel>>("[" + jsonString + "]");
             MLContext mlContext = new MLContext();
-            (IDataView trainDataView, IDataView testDataView) = LoadData(mlContext);
-            ITransformer model = BuildAndTrainModel(mlContext, trainDataView: trainDataView); 
-            EvaluateModel(mlContext, testDataView, model);
-            UseModelForSinglePrediction(mlContext, model); 
-            SaveModel(mlContext, trainDataView.Schema, model);
-
+            //reviewsSrc = reviewsSrc.Take(1000).ToList();
+            int countTest = reviewsSrc.Count() / 5;
+            var trainDataView = mlContext.Data.LoadFromEnumerable<ReviewModel>(reviewsSrc.Skip(countTest));
+            var testDataView = mlContext.Data.LoadFromEnumerable<ReviewModel>(reviewsSrc.Take(countTest));
+            IEstimator<ITransformer> estimator = mlContext
+    .Transforms
+    .Conversion
+    .MapValueToKey(outputColumnName: "ReviewerIdEncoded", inputColumnName: $"{nameof(ReviewModel.reviewerID)}")
+    .Append(mlContext
+        .Transforms
+        .Conversion
+        .MapValueToKey(outputColumnName: "ProductIdEncoded", inputColumnName: $"{nameof(ReviewModel.asin)}"));
+            var options = new MatrixFactorizationTrainer.Options
+            {
+                MatrixColumnIndexColumnName = "ReviewerIdEncoded",
+                MatrixRowIndexColumnName = "ProductIdEncoded",
+                LabelColumnName = $"{nameof(ReviewModel.overall)}",
+                NumberOfIterations = 20,
+                ApproximationRank = 100
+            };
+            var trainerEstimator = estimator
+                .Append(mlContext
+                    .Recommendation()
+                    .Trainers
+                    .MatrixFactorization(options));
+            Console.WriteLine("========================== Training the model =============================");
+            ITransformer model = trainerEstimator.Fit(trainDataView);
+            Console.WriteLine("========================== Evaluating the model =============================");
+            var prediction = model.Transform(testDataView);
+            var metrics = mlContext
+                .Regression
+                .Evaluate(prediction, labelColumnName: $"{nameof(ReviewModel.overall)}", scoreColumnName: $"{nameof(ProductPrediction.Score)}");
+            Console.WriteLine("Root Mean Squared Error : " + metrics.RootMeanSquaredError.ToString());
+            Console.WriteLine("RSquared: " + metrics.RSquared.ToString());
+        }
+        public class ProductPrediction
+        {
+            public string asin;
+            public float Score;
         }
         public static (IDataView training, IDataView test) LoadData (MLContext mlContext)
         {
             var trainDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "recommendation-ratings-train.csv");
             var testDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "recommendation-ratings-test.csv");
-
+            //var data = mlContext.Data.LoadFromEnumerable(new List<MLContext>());
             IDataView trainDataView = mlContext.Data.LoadFromTextFile<MovieRating>(trainDataPath, hasHeader: true, separatorChar: ',');
             IDataView testDataView = mlContext.Data.LoadFromTextFile<MovieRating>(testDataPath, hasHeader: true, separatorChar: ',');
             var products =  mlContext.Data.CreateEnumerable<MovieRating>(trainDataView, reuseRowObject: true);
+            
             return (trainDataView, testDataView);
         }
         public static ITransformer BuildAndTrainModel(MLContext mlContext, IDataView trainDataView)

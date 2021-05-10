@@ -21,6 +21,9 @@
                 <Button Text="Личный кабинет"
                 Command="{Binding NavigateCommand}"
                 CommandParameter="ProfilePage" />
+                <Button Text="Логин"
+                Command="{Binding NavigateCommand}"
+                CommandParameter="LoginPage" />
                 <Button Text="Аутентификация"
                 Command="{Binding OAuthCommand}" />
             </StackLayout>

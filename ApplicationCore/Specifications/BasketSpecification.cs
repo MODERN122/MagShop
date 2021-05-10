@@ -12,8 +12,7 @@ namespace ApplicationCore.Specifications
         {
             Query.Where(x => x.UserId == id)
                 .Include(x => x.Items)
-                .ThenInclude(x=>x.Product)
-                .ThenInclude(x=>x.PreviewImage);
+                .ThenInclude(x => x.Product);
         }
     }
 }

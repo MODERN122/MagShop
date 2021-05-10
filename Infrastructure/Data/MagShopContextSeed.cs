@@ -139,7 +139,7 @@ namespace Infrastructure.Data
             {
                 basketItems.Add(new BasketItem(2, product));
             }
-            user.AddItemsToBaket(basketItems);
+            user.AddItemsToBasket(basketItems);
         }
         #region Categories
         private static IEnumerable<Category> GetPreconfiguredCategories()

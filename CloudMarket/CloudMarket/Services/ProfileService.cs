@@ -38,7 +38,7 @@ namespace CloudMarket.Services
             }
             catch (Exception ex)
             {
-                Debugger.Break();
+                //Debugger.Break();
                 return null;
             }
         }
