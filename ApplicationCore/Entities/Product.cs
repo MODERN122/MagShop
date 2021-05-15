@@ -50,6 +50,8 @@ namespace ApplicationCore.Entities
         public double Weight { get; set; }
         [Required]
         public string Description { get; set; }
+        [Required]
+        public string Url { get; set; }
         //Not Added while
         //public List<string> Reviews { get; set; }
 
