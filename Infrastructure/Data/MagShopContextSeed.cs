@@ -244,7 +244,8 @@ namespace Infrastructure.Data
                     },
                     STORE_ID)
                  {
-                    PreviewImage = image1
+                    PreviewImage = image1,
+                    Url = "ewqeqe"
                 },
 
                 new Product(PRODUCT_2_ID, "Корушка", 10, CATEGORY_6_ID, "Сдлайте все своими руками",
@@ -259,7 +260,8 @@ namespace Infrastructure.Data
                     })
                 }, STORE_ID)
                 {
-                    PreviewImage = image2
+                    PreviewImage = image2,
+                    Url = "ewqeqe"
                 },
                 new Product(PRODUCT_3_ID, "1с", 18000, CATEGORY_5_ID, "Обучитесь программированию на 1с",
                 new List<Property>()
@@ -273,7 +275,8 @@ namespace Infrastructure.Data
                     })
                 }, STORE_ID)
                 {
-                    PreviewImage = image3
+                    PreviewImage = image3,
+                    Url = "ewqeqe"
                 },
                 new Product(PRODUCT_4_ID, "Физика", 1800, CATEGORY_4_ID, "Обучение основам физики",
                 new List<Property>()
@@ -292,7 +295,8 @@ namespace Infrastructure.Data
                     })
                 }, STORE_ID)
                 {
-                    PreviewImage = image4
+                    PreviewImage = image4,
+                    Url = "ewqeqe"
                 },
                 new Product(PRODUCT_5_ID, "Французкий язык", 1800, CATEGORY_2_ID, "Научитесь говорить как истинный француз",
                 new List<Property>()
@@ -311,7 +315,8 @@ namespace Infrastructure.Data
                     })
                 }, STORE_ID+"1")
                 {
-                    PreviewImage = image5
+                    PreviewImage = image5,
+                    Url = "ewqeqe"
                 },
                 new Product(PRODUCT_6_ID, "Математика", 1800, CATEGORY_1_ID, "Научитесть складывать цифры и не только",
                 new List<Property>()
@@ -330,7 +335,8 @@ namespace Infrastructure.Data
                     })
                 }, STORE_ID+"1")
                 {
-                    PreviewImage = image6
+                    PreviewImage = image6,
+                    Url = "ewqeqe"
                 },
                 new Product(PRODUCT_7_ID, "Русский язык", 1800, CATEGORY_2_ID, "Обучат грамматике",
                 new List<Property>()
@@ -349,7 +355,8 @@ namespace Infrastructure.Data
                     })
                 }, STORE_ID+"2")
                 {
-                    PreviewImage = image7
+                    PreviewImage = image7,
+                    Url = "ewqeqe"
                 },
                 new Product(PRODUCT_8_ID, "География", 7000, CATEGORY_4_ID, "Научат ориентироваться в картах",
                 new List<Property>()
@@ -368,7 +375,8 @@ namespace Infrastructure.Data
                     })
                 }, STORE_ID+"2")
                 {
-                    PreviewImage = image8
+                    PreviewImage = image8,
+                    Url = "ewqeqe"
                 },
             };
         }

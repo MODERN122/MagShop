@@ -24,7 +24,6 @@
     <EmbeddedResource Include="Data\Images\6.jpg" />
     <EmbeddedResource Include="Data\Images\7.jpg" />
     <EmbeddedResource Include="Data\Images\8.jpg" />
-    <EmbeddedResource Include="Data\Images\и.jpg" />
   </ItemGroup>
 
   <ItemGroup>
