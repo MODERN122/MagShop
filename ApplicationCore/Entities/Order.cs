@@ -2,6 +2,7 @@
 using Ardalis.GuardClauses;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ApplicationCore.Entities
@@ -48,9 +49,9 @@ namespace ApplicationCore.Entities
         {
 
         }
-        public OrderItem(int quantity, Product product)
+        public OrderItem(int quantity, Product product, List<PropertyItem> propertyItems)
         {
-            UnitPrice = product.PriceNew;
+            UnitPrice = propertyItems.First(x=>x.PriceNew!=null).PriceNew;
             ProducOrdered = product;
             SetQuantity(quantity);
         }

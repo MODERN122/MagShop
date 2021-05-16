@@ -24,12 +24,11 @@ namespace ApplicationCore.Entities
         /// <param name="description">description</param>
         /// <param name="properties">collection of Properties</param>
         /// <param name="storeId">identifier of Store</param>
-        public Product(string id, string name, double price, string categoryId, 
+        public Product(string id, string name, string categoryId, 
             string description, List<Property> properties, string storeId) 
         {
             ProductId = id;
             ProductName = name;
-            PriceNew = price;
             CategoryId = categoryId;
             Description = description;
             Properties = properties;
@@ -39,7 +38,6 @@ namespace ApplicationCore.Entities
             string description, List<Property> properties, string storeId)
         {
             ProductName = name;
-            PriceNew = price;
             CategoryId = categoryId;
             Description = description;
             Properties = properties;

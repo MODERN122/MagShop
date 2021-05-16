@@ -6,7 +6,6 @@ namespace ApplicationCore.Entities
     public class BasketItem
     {
         public string BasketItemId { get; set; } = Guid.NewGuid().ToString();
-        public double? UnitPrice { get; private set; }
         public int Quantity { get; private set; }
         public string ProductId { get; private set; }
         public Product Product { get; set; }
@@ -20,21 +19,18 @@ namespace ApplicationCore.Entities
         {
             Product = product;
             ProductId = product.ProductId;
-            UnitPrice = product.PriceNew;
             SetQuantity(quantity);
         }
 
         public void AddQuantity(int quantity)
         {
             Guard.Against.OutOfRange(quantity, nameof(quantity), 0, int.MaxValue);
-
             Quantity += quantity;
         }
 
         public void SetQuantity(int quantity)
         {
             Guard.Against.OutOfRange(quantity, nameof(quantity), 0, int.MaxValue);
-
             Quantity = quantity;
         }
     }

@@ -155,7 +155,6 @@ namespace CloudMarket.ViewModels
                 {
                     ProductId = "dasdadad",
                     ProductName = "productName",
-                    PriceNew = 1000.0,
                 });
             }
             catch (Exception ex)

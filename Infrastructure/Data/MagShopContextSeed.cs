@@ -169,8 +169,8 @@ namespace Infrastructure.Data
             Stream resource5 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "6.jpg");
             Stream resource6 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "7.jpg");
             Stream resource7 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "8.jpg");
-            
-            
+
+
             MemoryStream ms = new MemoryStream();
             if (resource != null)
             {
@@ -224,22 +224,23 @@ namespace Infrastructure.Data
             {
 
             }
+            Random random = new Random();
             return new List<Product>()
             {
-                new Product(PRODUCT_1_ID, "Биология", 180, CATEGORY_3_ID, "Обучит науке о живых организмах",
+                new Product(PRODUCT_1_ID, "Биология", CATEGORY_3_ID, "Обучит науке о живых организмах",
                     new List<Property>()
                     {
                         new Property("Классы",
                         new List<PropertyItem>(){
-                           new PropertyItem("1"){Image = image1 },
-                        new PropertyItem("2"){Image = image1 },
-                        new PropertyItem("3"){Image = image1 },
-                        new PropertyItem("4"){Image = image1 },
-                        new PropertyItem("5"){Image = image1 },
-                        new PropertyItem("6"){Image = image1 },
-                        new PropertyItem("7"){Image = image1 },
-                        new PropertyItem("8"){Image = image1 },
-                        new PropertyItem("9"){Image = image1 },
+                           new PropertyItem("1", random.Next(1000,10000)){Image = image1 },
+                        new PropertyItem("2" , random.Next(1000,10000)){Image = image1 },
+                        new PropertyItem("3", random.Next(1000,10000)){Image = image1 },
+                        new PropertyItem("4", random.Next(1000,10000)){Image = image1 },
+                        new PropertyItem("5", random.Next(1000,10000)){Image = image1 },
+                        new PropertyItem("6", random.Next(1000,10000)){Image = image1 },
+                        new PropertyItem("7", random.Next(1000,10000)){Image = image1 },
+                        new PropertyItem("8", random.Next(1000,10000)){Image = image1 },
+                        new PropertyItem("9", random.Next(1000,10000)){Image = image1 },
                         })
                     },
                     STORE_ID)
@@ -248,37 +249,37 @@ namespace Infrastructure.Data
                     Url = "ewqeqe"
                 },
 
-                new Product(PRODUCT_2_ID, "Корушка", 10, CATEGORY_6_ID, "Сдлайте все своими руками",
+                new Product(PRODUCT_2_ID, "Корушка", CATEGORY_6_ID, "Сдлайте все своими руками",
                 new List<Property>()
                 {
                     new Property("Типы",
                     new List<PropertyItem>(){
-                        new PropertyItem("Для голубей"){Image = image2 },
-                        new PropertyItem("Для воробьев"){Image = image2 },
-                        new PropertyItem("Для белок"){Image = image2 },
-                        new PropertyItem("Для кошек"){Image = image2 },
+                        new PropertyItem("Для голубей", random.Next(1000,10000)){Image = image2 },
+                        new PropertyItem("Для воробьев", random.Next(1000,10000)){Image = image2 },
+                        new PropertyItem("Для белок", random.Next(1000,10000)){Image = image2 },
+                        new PropertyItem("Для кошек", random.Next(1000,10000)){Image = image2 },
                     })
                 }, STORE_ID)
                 {
                     PreviewImage = image2,
                     Url = "ewqeqe"
                 },
-                new Product(PRODUCT_3_ID, "1с", 18000, CATEGORY_5_ID, "Обучитесь программированию на 1с",
+                new Product(PRODUCT_3_ID, "1с", CATEGORY_5_ID, "Обучитесь программированию на 1с",
                 new List<Property>()
                 {
                     new Property("Уровень сложности",
                     new List<PropertyItem>(){
-                        new PropertyItem("Минимальный"){Image = image3},
-                        new PropertyItem("Нормальный"){Image = image3},
-                        new PropertyItem("Продвинутый"){Image = image3},
-                        new PropertyItem("Экспертный"){Image = image3},
+                        new PropertyItem("Минимальный", random.Next(1000,10000)){Image = image3},
+                        new PropertyItem("Нормальный", random.Next(1000,10000)){Image = image3},
+                        new PropertyItem("Продвинутый", random.Next(1000,10000)){Image = image3},
+                        new PropertyItem("Экспертный", random.Next(1000,10000)){Image = image3},
                     })
                 }, STORE_ID)
                 {
                     PreviewImage = image3,
                     Url = "ewqeqe"
                 },
-                new Product(PRODUCT_4_ID, "Физика", 1800, CATEGORY_4_ID, "Обучение основам физики",
+                new Product(PRODUCT_4_ID, "Физика", CATEGORY_4_ID, "Обучение основам физики",
                 new List<Property>()
                 {
                     new Property("Классы",
@@ -298,7 +299,7 @@ namespace Infrastructure.Data
                     PreviewImage = image4,
                     Url = "ewqeqe"
                 },
-                new Product(PRODUCT_5_ID, "Французкий язык", 1800, CATEGORY_2_ID, "Научитесь говорить как истинный француз",
+                new Product(PRODUCT_5_ID, "Французкий язык", CATEGORY_2_ID, "Научитесь говорить как истинный француз",
                 new List<Property>()
                 {
                      new Property("Классы",
@@ -318,7 +319,7 @@ namespace Infrastructure.Data
                     PreviewImage = image5,
                     Url = "ewqeqe"
                 },
-                new Product(PRODUCT_6_ID, "Математика", 1800, CATEGORY_1_ID, "Научитесть складывать цифры и не только",
+                new Product(PRODUCT_6_ID, "Математика", CATEGORY_1_ID, "Научитесть складывать цифры и не только",
                 new List<Property>()
                 {
                     new Property("Классы",
@@ -338,7 +339,7 @@ namespace Infrastructure.Data
                     PreviewImage = image6,
                     Url = "ewqeqe"
                 },
-                new Product(PRODUCT_7_ID, "Русский язык", 1800, CATEGORY_2_ID, "Обучат грамматике",
+                new Product(PRODUCT_7_ID, "Русский язык", CATEGORY_2_ID, "Обучат грамматике",
                 new List<Property>()
                 {
                     new Property("Классы",
@@ -358,7 +359,7 @@ namespace Infrastructure.Data
                     PreviewImage = image7,
                     Url = "ewqeqe"
                 },
-                new Product(PRODUCT_8_ID, "География", 7000, CATEGORY_4_ID, "Научат ориентироваться в картах",
+                new Product(PRODUCT_8_ID, "География", CATEGORY_4_ID, "Научат ориентироваться в картах",
                 new List<Property>()
                 {
                     new Property("Классы",
@@ -400,7 +401,7 @@ namespace Infrastructure.Data
             List<OrderItem> orderItems = new List<OrderItem>();
             foreach (var product in products)
             {
-                orderItems.Add(new OrderItem(2, product));
+                orderItems.Add(new OrderItem(2, product, product.Properties.Select(x=>x.PropertyItems.First()).ToList()));
             }
             user.AddOrder(
                 new Order(DateTime.Now, user.Addresses.First().AddressId, orderItems));

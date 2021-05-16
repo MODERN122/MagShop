@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Entities;
+﻿using ApplicationCore.Endpoints.Products;
+using ApplicationCore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -147,22 +148,27 @@ namespace kursfinderparser
                     }
                 }
             }
-            List<Product> products = new List<Product>();
             foreach (var course in courses)
             {
-                Product product = new Product()
+                CreateProductRequest product = new CreateProductRequest()
                 {
                     ProductName = course.Name,
                     Description = course.Description,
                     PreviewImage = course.Image,
-                    PriceNew = double.Parse(new String(course.Price.Where(Char.IsDigit).ToArray())),
+                    Properties = new List<Property>()
+                    {
+                        new Property("Продолжительность", new List<PropertyItem>()
+                        {
+                            new PropertyItem(course.Duration, double.Parse(new String(course.Price.Where(Char.IsDigit).ToArray())))
+                        })
+                    },
                     Url = course.OuterUrl
                 };
-                products.Add(product);
+                //Добавить отправку этих товаров по АПИ, метод апи должен предоставить Миша
+                //
+
             }
 
-            //Добавить отправку этих товаров по АПИ, метод апи должен предоставить Миша
-            //
 
         }
         private async void OnCourseClicked(object sender, RoutedEventArgs e)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApplicationCore.Endpoints.Products;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

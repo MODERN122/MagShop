@@ -21,7 +21,7 @@ using Xamarin.Essentials;
 
 namespace CloudMarket.Services
 {
-    public class DataStoreService: BaseRefitService
+    public class DataStoreService : BaseRefitService
     {
         private HttpClient httpClient;
         private IMagShopApi _magShopApi;
@@ -34,10 +34,10 @@ namespace CloudMarket.Services
         }
         public async Task<bool> LoginUsernameAsync(string username, string password, CancellationToken cancellationToken)
         {
-            var response = await MakeRequest(ctx => _magShopApi.AuthenticateAsync(new AuthenticationRequest() 
-                { Username = username, Password = password }, ctx), cancellationToken);
+            var response = await MakeRequest(ctx => _magShopApi.AuthenticateAsync(new AuthenticationRequest()
+            { Username = username, Password = password }, ctx), cancellationToken);
 
-            if (response!=null && response.Result)
+            if (response != null && response.Result)
             {
                 _token = response.Token;
                 await SecureStorage.SetAsync("token", response.Token);
@@ -71,7 +71,7 @@ namespace CloudMarket.Services
             {
                 var response = await MakeRequest(ctx => _magShopApi.GetProductsAsync(request, ctx), cancellationToken);
                 Guard.Against.Null(response, nameof(response));
-                
+
                 return response.Products;
             }
             catch (Exception)

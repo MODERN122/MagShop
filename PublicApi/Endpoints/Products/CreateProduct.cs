@@ -19,8 +19,8 @@ using Infrastructure.Constants;
 
 namespace ApplicationCore.Endpoints.Products
 {
-    [Authorize(Roles = ConstantsAPI.ADMINISTRATORS, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    //[Authorize(Roles = ConstantsAPI.SELLERS, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(Roles = ConstantsAPI.ADMINISTRATORS, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(Roles = ConstantsAPI.SELLERS, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CreateProduct : BaseAsyncEndpoint<CreateProductRequest, CreateProductResponse>
     {
         private readonly IAsyncRepository<Product> _itemRepository;

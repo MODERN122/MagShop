@@ -11,6 +11,8 @@ namespace ApplicationCore.Endpoints.Products
         public string CategoryId { get; set; }
         public string Description { get; set; }
         public string StoreId { get; set; }
+        public string Url { get; set; }
+        public byte[] PreviewImage { get; set; }
         public List<Property> Properties { get; set; }
     }
 }

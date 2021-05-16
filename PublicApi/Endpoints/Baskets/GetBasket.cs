@@ -55,7 +55,6 @@ namespace ApplicationCore.Endpoints.Baskets
                     {
                         Product = x.Product,
                         Quantity = x.Quantity,
-                        UnitPrice = x.UnitPrice.Value
                     })
                     .ToList();
                 return Ok(response);
