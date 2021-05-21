@@ -4,9 +4,9 @@ using System.Text;
 
 namespace ProductRecommender
 {
-    public class MovieRatingPrediction
+    public class ProductPrediction
     {
-        public float Label;
+        public string asin;
         public float Score;
     }
 }
