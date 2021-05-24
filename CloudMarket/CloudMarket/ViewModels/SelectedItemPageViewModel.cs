@@ -42,6 +42,10 @@ namespace CloudMarket.ViewModels
             if (parameters.ContainsKey("id"))
             {
                 Product = await _dataStoreService.GetProductAsync((string)parameters["id"], cancellationToken.Token);
+                if (Product != null)
+                {
+                    Product.Images.Add(new Image() { ByteImage = Product.PreviewImage, ProductId = Product.ProductId });
+                }
             }
         }
     }

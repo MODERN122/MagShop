@@ -95,42 +95,50 @@ namespace kursfinderparser
         {
             using (var context = await _browsingContext.OpenAsync(course.InnerUrl))
             {
-                course.Price = context.QuerySelector(".course-page__price").TextContent.Replace("\n", "").Trim();
-                course.Description = context.QuerySelector(".course-page__desc").TextContent.Replace("\n", "").Trim();
-                course.OuterUrl = _url + context.QuerySelector(".course-page__foot a").Attributes.First(x => x.Name == "href").Value;
-                course.Company = context.QuerySelector(".course-page__platform>a").TextContent;
-                var imgUrl = _url + context.QuerySelector(".course-page__img>img").Attributes.First(x => x.Name == "src").Value;
-                course.Image = GetImageByUrl(imgUrl);
-                var filters = context.QuerySelectorAll(".course-page__stats-item");
-                foreach (var item in filters)
+                try
                 {
-                    if (item.TextContent == course.Duration)
+                    course.Price = context?.QuerySelector(".course-page__price")?.TextContent?.Replace("\n", "")?.Trim();
+                    course.Description = context.QuerySelector(".course-page__desc").TextContent.Replace("\n", "").Trim();
+                    course.OuterUrl = _url + context.QuerySelector(".course-page__foot a").Attributes.First(x => x.Name == "href").Value;
+                    course.Company = context.QuerySelector(".course-page__platform>a").TextContent;
+                    var imgUrl = _url + context.QuerySelector(".course-page__img>img").Attributes.First(x => x.Name == "src").Value;
+                    course.Image = GetImageByUrl(imgUrl);
+                    var filters = context.QuerySelectorAll(".course-page__stats-item");
+                    foreach (var item in filters)
                     {
-                        continue;
-                    }
-                    if (!string.IsNullOrEmpty(course.Filters))
-                    {
-                        course.Filters += ". ";
-                    }
-                    var content = item.TextContent.Replace("\n", "");
+                        if (item.TextContent == course.Duration)
+                        {
+                            continue;
+                        }
+                        if (!string.IsNullOrEmpty(course.Filters))
+                        {
+                            course.Filters += ". ";
+                        }
+                        var content = item.TextContent.Replace("\n", "");
 
-                    // Регулярное выражение для удаления повторных пробелов (больше одного подряд)
-                    course.Filters += Regex.Replace(content, @"\s+", " ");
+                        // Регулярное выражение для удаления повторных пробелов (больше одного подряд)
+                        course.Filters += Regex.Replace(content, @"\s+", " ");
+                    }
+                    var tags = context.QuerySelectorAll(".course-page__tag");
+                    foreach (var item in tags)
+                    {
+                        if (!string.IsNullOrEmpty(course.Tags))
+                        {
+                            course.Tags += ", ";
+                        }
+                        course.Tags += item.TextContent;
+                    }
+
+                    course.IsLoaded = true;
+
+
+                    return course;
                 }
-                var tags = context.QuerySelectorAll(".course-page__tag");
-                foreach (var item in tags)
+                catch (Exception ex)
                 {
-                    if (!string.IsNullOrEmpty(course.Tags))
-                    {
-                        course.Tags += ", ";
-                    }
-                    course.Tags += item.TextContent;
+                    return new Course();
                 }
-
-                course.IsLoaded = true;
             }
-
-            return course;
         }
 
         private static byte[] GetImageByUrl(string url)

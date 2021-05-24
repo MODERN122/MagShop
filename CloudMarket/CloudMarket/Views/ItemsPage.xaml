@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects"
-             xmlns:prism="http://prismlibrary.com" xmlns:c="clr-namespace:CloudMarket"
+             xmlns:prism="http://prismlibrary.com" xmlns:c="clr-namespace:CloudMarket.Converters"
              mc:Ignorable="d"
              x:Class="CloudMarket.Views.ItemsPage"
              Title="Главная">
@@ -13,6 +13,7 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <ResourceDictionary>
+            <c:ProductToPriceConverter x:Key="ProductToPriceConverter"/>
             <c:ByteToImageConverter x:Key="ByteToImageConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -63,7 +64,7 @@
                                 <Grid RowDefinitions="Auto,20,20, 20" ColumnDefinitions="Auto">
                                     <Image Source="{Binding PreviewImage, Converter={x:StaticResource ByteToImageConverter}}" Grid.Row="0"/>
                                     <Label  Text="{Binding ProductName}"  Grid.Row="1"/>
-                                    <Label Text="{Binding PriceNew}"  Grid.Row="2"/>
+                                    <Label Text="{Binding ., Converter={StaticResource ProductToPriceConverter}}"  Grid.Row="2"/>
                                     <Label Text="{Binding Rating}" Grid.Row="3"/>
                                 </Grid>
                             </Frame>

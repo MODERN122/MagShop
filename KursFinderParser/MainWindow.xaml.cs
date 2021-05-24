@@ -1,10 +1,12 @@
 ﻿using ApplicationCore.Endpoints.Products;
 using ApplicationCore.Entities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -133,6 +135,8 @@ namespace kursfinderparser
         {
             // Ищем курс в нужным url по всем категориям и всем темам
             List<Course> courses = new List<Course>();
+            if (_courseLibrary == null)
+                return;
             foreach (var category in _courseLibrary.Categories.Take(2))
             {
                 var topics = await Parser.GetTopicsByCategory(category);
@@ -150,10 +154,14 @@ namespace kursfinderparser
             }
             foreach (var course in courses)
             {
+                double price;
                 CreateProductRequest product = new CreateProductRequest()
                 {
                     ProductName = course.Name,
                     Description = course.Description,
+                    StoreId = "12346",
+                    CategoryId = "category5",                    
+                    Price = double.TryParse(course.Price, out price)? price : 0,
                     PreviewImage = course.Image,
                     Properties = new List<Property>()
                     {
@@ -164,6 +172,18 @@ namespace kursfinderparser
                     },
                     Url = course.OuterUrl
                 };
+                var json = JsonConvert.SerializeObject(product);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluQG1pY3Jvc29mdC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvcnMiLCJuYmYiOjE2MjE4Njc1NjMsImV4cCI6MTYyMjQ3MjM2MywiaWF0IjoxNjIxODY3NTYzfQ.S21duqFTQPtq8dUxLwAPgGMWVJdBWBalDQPMvKjs84Y";
+                HttpClient httpClient = new HttpClient();
+                httpClient.BaseAddress = new Uri("https://7a18206a8842.ngrok.io");
+                httpClient.DefaultRequestHeaders.Add("Authorization",
+                    "Bearer " + authToken);
+                var result = await httpClient.PostAsync("/api/products", content);
+                if (!result.IsSuccessStatusCode)
+                {
+                    Debugger.Break();
+                }
                 //Добавить отправку этих товаров по АПИ, метод апи должен предоставить Миша
                 //
 

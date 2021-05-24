@@ -42,7 +42,7 @@ namespace ApplicationCore.Entities
         }
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public byte[] Image { get; set; }
-        public double? PriceNew { get; set; }
+        public double PriceNew { get; set; } = -1;
         public double? PriceOld { get; set; }
         public string Caption { get; set; }
     }

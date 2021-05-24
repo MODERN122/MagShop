@@ -46,9 +46,7 @@ namespace ApplicationCore.Entities
         public List<Image> Images { get; set; }
         //Constraint 1.0-3.0
         public double Weight { get; set; }
-        [Required]
         public string Description { get; set; }
-        [Required]
         public string Url { get; set; }
         //Not Added while
         //public List<string> Reviews { get; set; }

@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using Xamarin.Forms;
 
-namespace CloudMarket
+namespace CloudMarket.Converters
 {
     public class ByteToImageConverter : IValueConverter
     {

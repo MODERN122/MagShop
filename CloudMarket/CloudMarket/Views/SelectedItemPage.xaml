@@ -2,11 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects"
-             xmlns:prism="http://prismlibrary.com" xmlns:c="clr-namespace:CloudMarket"
+             xmlns:prism="http://prismlibrary.com" xmlns:c="clr-namespace:CloudMarket" xmlns:c1="clr-namespace:CloudMarket.Converters"
              x:Class="CloudMarket.Views.SelectedItemPage">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <c:ByteToImageConverter x:Key="ByteToImageConverter"/>
+            <c1:ByteToImageConverter x:Key="ByteToImageConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -19,12 +19,13 @@
                 </CarouselView.ItemTemplate>
             </CarouselView>
             <Frame BindingContext="{Binding Product}" CornerRadius="10" HasShadow="True">
-                <Grid RowDefinitions="Auto,20,20, 20,Auto" ColumnDefinitions="Auto">
-                    <Label Text="{Binding ProductName}"  Grid.Row="1"/>
-                    <Label Text="{Binding PriceNew}"  Grid.Row="2"/>
-                    <Label Text="{Binding Rating}" Grid.Row="3"/>
-                    <Label Text="{Binding Description}" Grid.Row="4"/>
-                </Grid>
+                <StackLayout>
+                    <Label Text="{Binding ProductName}"/>
+                    <Label Text="{Binding Url}" />
+                    <Label Text="{Binding PriceNew}"  />
+                    <Label Text="{Binding Rating}" />
+                    <Label Text="{Binding Description}"/>
+                </StackLayout>
             </Frame>
         </StackLayout>
     </ContentPage.Content>
