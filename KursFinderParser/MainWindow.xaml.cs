@@ -175,7 +175,7 @@ namespace kursfinderparser
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluQG1pY3Jvc29mdC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvcnMiLCJuYmYiOjE2MjE4Njc1NjMsImV4cCI6MTYyMjQ3MjM2MywiaWF0IjoxNjIxODY3NTYzfQ.S21duqFTQPtq8dUxLwAPgGMWVJdBWBalDQPMvKjs84Y";
                 HttpClient httpClient = new HttpClient();
-                httpClient.BaseAddress = new Uri("https://698d3eb5da9c.ngrok.io");
+                httpClient.BaseAddress = new Uri("https://ea5501b7b096.ngrok.io");
                 httpClient.DefaultRequestHeaders.Add("Authorization",
                     "Bearer " + authToken);
                 var result = await httpClient.PostAsync("/api/products", content);

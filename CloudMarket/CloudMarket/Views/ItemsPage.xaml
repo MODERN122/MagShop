@@ -7,6 +7,7 @@
              xmlns:prism="http://prismlibrary.com" xmlns:c="clr-namespace:CloudMarket.Converters"
              mc:Ignorable="d"
              x:Class="CloudMarket.Views.ItemsPage"
+             x:Name="this"
              Title="Главная">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Login" Command="{Binding AuthByMicrosoftCommand}"/>
@@ -18,36 +19,50 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid RowDefinitions="40,40,*">
+        <Grid RowDefinitions="40,Auto,*">
             <StackLayout Orientation="Horizontal">
                 <Picker SelectedIndex="{Binding ItemSelectedIndex, Mode=TwoWay}" ItemsSource="{Binding Categories}" ItemDisplayBinding="{Binding Name}" Title="Выбор категории"/>
             </StackLayout>
-            <StackLayout Orientation="Horizontal"  Grid.Row="1">
-                <CollectionView ItemsSource="{Binding FilteredProperties}" ItemsLayout="HorizontalList">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                                <Grid ColumnDefinitions="40,35">
-                                    <Label Text="{Binding PropertyName}"/>
-                                    <Button Text="X" Grid.Column="1" 
-                                            CommandParameter="{Binding .}"
-                                            Command="{Binding RemovePropertyFilterCommand}"/>
-                                </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-                <CollectionView ItemsSource="{Binding UnfilteredProperties}" ItemsLayout="HorizontalList">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                                <Grid ColumnDefinitions="40,35">
-                                    <Label Text="{Binding PropertyName}" WidthRequest="80"/>
-                                    <Button Text="+" Command="{Binding AddPropertyFilterCommand}"
-                                            CommandParameter="{Binding .}"
+            <Grid ColumnDefinitions="*,*"   Grid.Row="1" HeightRequest="150">
+                <StackLayout>
+                    <Label Text="Выберите свойства"/>
+                    <FlexLayout BindableLayout.ItemsSource="{Binding UnfilteredProperties}"
+                                       Wrap="Wrap" AlignItems="Center"
+                                       JustifyContent="SpaceBetween">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="Auto,Auto">
+                                    <Label Text="{Binding PropertyName}" WidthRequest="50"/>
+                                    <Grid IsVisible="false" BindingContext="{x:Reference this}" x:Name="gridcontext"></Grid>
+                                    <Button Text="+" Command="{Binding Path=BindingContext.BindingContext.AddPropertyFilterCommand, Source={x:Reference gridcontext}}"
+                                            CommandParameter="{Binding .}" WidthRequest="35"
                                             Grid.Column="1"/>
                                 </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </StackLayout>
+
+                <StackLayout 
+                    Grid.Column="1">
+                    <Label Text="Выбранные свойства"/>
+                    <FlexLayout BindableLayout.ItemsSource="{Binding FilteredProperties}"
+                                       Wrap="Wrap" AlignItems="Center" WidthRequest="50"
+                                       JustifyContent="SpaceBetween" >
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="Auto,Auto">
+                                    <Label Text="{Binding PropertyName}"/>
+                                    <Grid IsVisible="false" BindingContext="{x:Reference this}" x:Name="gridcontext"></Grid>
+                                    <Button Text="X" Grid.Column="1" WidthRequest="35"
+                                            CommandParameter="{Binding .}"
+                                           Command="{Binding Path=BindingContext.BindingContext.RemovePropertyFilterCommand, Source={x:Reference gridcontext}}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </StackLayout>
+            </Grid>
             <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Command="{Binding LoadItemsCommand}"
                          Grid.Row="2">
                 <CollectionView x:Name="ItemsCollectionView"

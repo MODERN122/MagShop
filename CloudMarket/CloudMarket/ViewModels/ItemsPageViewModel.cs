@@ -124,24 +124,20 @@ namespace CloudMarket.ViewModels
                 Categories.Add(_defaultCategory);
                 if (res3 != null)
                 {
-                    //res3.ForEach(x =>
-                    //{
-                    //    if (!Categories.Any(y => y.CategoryId == x.CategoryId))
-                    //    {
-                    //        Categories.Add(x.Category);
-                    //    }
-                    //    x.Properties.ForEach(z =>
-                    //    {
-                    //        if (!UnfilteredProperties.Select(r => r.PropertyName).Contains(z.PropertyName))
-                    //        {
-                    //            UnfilteredProperties.Add(z);
-                    //        }
-                    //    });
-                    //    //if (x.Properties[0]?.PropertyItems[2]?.Image != null && x.PreviewImage==null)
-                    //    //{
-                    //    //    x.PreviewImage = x.Properties[0]?.PropertyItems[2]?.Image;
-                    //    //}
-                    //});
+                    res3.ForEach(x =>
+                    {
+                        if (!Categories.Any(y => y.CategoryId == x.CategoryId))
+                        {
+                            Categories.Add(x.Category);
+                        }
+                        x.Properties.ForEach(z =>
+                        {
+                            if (!UnfilteredProperties.Select(r => r.PropertyName).Contains(z.PropertyName))
+                            {
+                                UnfilteredProperties.Add(z);
+                            }
+                        });
+                    });
                     Items.Clear();
                     res3.ForEach(x => Items.Add(x));
                 }
