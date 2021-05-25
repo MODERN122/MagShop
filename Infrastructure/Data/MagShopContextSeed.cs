@@ -422,7 +422,7 @@ namespace Infrastructure.Data
                     new Address("Pkorova", "23")
                 }),
 
-                new User(id1,"Bariga","Palenkov", "bar.yaga@mail.ru", "+7988888888", new DateTime(2005,4,27),
+                new User(id1,"Иван","Иванович", "i.i@mail.ru", "+7988888888", new DateTime(2005,4,27),
                 new Basket(){ BasketId=BASKET_SELLER_ID},
                 new List<CreditCard>(){
                     new CreditCard(){ CreditCardId=CREDIT_CARD_SELLER_ID, CardNumber="12345678"}
