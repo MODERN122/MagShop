@@ -161,7 +161,6 @@ namespace kursfinderparser
                     Description = course.Description,
                     StoreId = "12346",
                     CategoryId = "category5",                    
-                    Price = double.TryParse(course.Price, out price)? price : 0,
                     PreviewImage = course.Image,
                     Properties = new List<Property>()
                     {
@@ -176,7 +175,7 @@ namespace kursfinderparser
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluQG1pY3Jvc29mdC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvcnMiLCJuYmYiOjE2MjE4Njc1NjMsImV4cCI6MTYyMjQ3MjM2MywiaWF0IjoxNjIxODY3NTYzfQ.S21duqFTQPtq8dUxLwAPgGMWVJdBWBalDQPMvKjs84Y";
                 HttpClient httpClient = new HttpClient();
-                httpClient.BaseAddress = new Uri("https://7a18206a8842.ngrok.io");
+                httpClient.BaseAddress = new Uri("https://698d3eb5da9c.ngrok.io");
                 httpClient.DefaultRequestHeaders.Add("Authorization",
                     "Bearer " + authToken);
                 var result = await httpClient.PostAsync("/api/products", content);

@@ -1,32 +1,59 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects"
-             xmlns:prism="http://prismlibrary.com" xmlns:c="clr-namespace:CloudMarket" xmlns:c1="clr-namespace:CloudMarket.Converters"
+             xmlns:c="clr-namespace:CloudMarket.Converters"
              x:Class="CloudMarket.Views.SelectedItemPage">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <c1:ByteToImageConverter x:Key="ByteToImageConverter"/>
+            <c:ByteToImageConverter x:Key="ByteToImageConverter"/>
+            <c:ProductToImagesConverter x:Key="ProductToImagesConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <CarouselView ItemsSource="{Binding Product.Images}" EmptyView="No images">
-                <CarouselView.ItemTemplate>
-                    <DataTemplate>
-                        <Image Source="{Binding ByteImage, Converter={x:StaticResource ByteToImageConverter}}"/>
-                    </DataTemplate>
-                </CarouselView.ItemTemplate>
-            </CarouselView>
-            <Frame BindingContext="{Binding Product}" CornerRadius="10" HasShadow="True">
-                <StackLayout>
-                    <Label Text="{Binding ProductName}"/>
-                    <Label Text="{Binding Url}" />
-                    <Label Text="{Binding PriceNew}"  />
-                    <Label Text="{Binding Rating}" />
-                    <Label Text="{Binding Description}"/>
+        <ScrollView>
+            <StackLayout>
+                <CarouselView ItemsSource="{Binding Product, Converter={StaticResource ProductToImagesConverter}}" EmptyView="No images" HeightRequest="100">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding .}"/>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+                <StackLayout BindableLayout.ItemsSource="{Binding Product.Properties}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Grid RowDefinitions="Auto" ColumnDefinitions="Auto" Margin="4">
+                                    <Grid RowDefinitions="Auto,*">
+                                        <Label Text="{Binding PropertyName}" FontSize="Subtitle"  FontAttributes="Bold"/>
+                                        <FlexLayout Grid.Row="1" BindableLayout.ItemsSource="{Binding PropertyItems}"         
+                                       Wrap="Wrap" AlignItems="Center"
+                                       JustifyContent="SpaceBetween">
+                                            <BindableLayout.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid ColumnDefinitions="Auto" RowDefinitions="Auto" Margin="9,9,0,0">
+                                                        <Frame  Padding="10,7" CornerRadius="15" BackgroundColor="AliceBlue">
+                                                            <Label Text="{Binding Caption}" FontSize="Body" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>                                                        
+                                                        <!--<Label Text="{Binding Quantity,StringFormat='{0:0.0}'}" FontSize="Body" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>-->
+                                                    </Frame>
+                                                    <Label Text="{Binding PriceNew}" IsVisible="False" x:Name="priceLb"/>
+                                                </Grid>
+                                                </DataTemplate>
+                                            </BindableLayout.ItemTemplate>
+                                        </FlexLayout>
+                                    </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
                 </StackLayout>
-            </Frame>
-        </StackLayout>
+                <Frame BindingContext="{Binding Product}" CornerRadius="10" HasShadow="True">
+                    <StackLayout>
+                        <Label Text="{Binding ProductName}"/>
+                        <Label Text="{Binding Url}" />
+                        <Label Text="{Binding Rating}" />
+                        <Label Text="{Binding Description}"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
