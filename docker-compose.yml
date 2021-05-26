@@ -5,6 +5,8 @@ services:
            build:
                 context: .
                 dockerfile: PublicApi/Dockerfile
+           ports:
+              - "5098:80"
            depends_on:
               - db
     db:
