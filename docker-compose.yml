@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.4"
 services:
     publicapi:
            image: ${DOCKER_REGISTRY-}publicapi
