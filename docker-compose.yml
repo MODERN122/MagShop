@@ -1,16 +1,21 @@
 version: "3.4"
 services:
     publicapi:
-           image: ${DOCKER_REGISTRY-}publicapi
-           build:
-                context: .
-                dockerfile: PublicApi/Dockerfile
-           ports:
-              - "5098:80"
-           depends_on:
-              - db
+        image: ${DOCKER_REGISTRY-}publicapi
+        container_name: publicapi
+        build:
+            context: .
+            dockerfile: PublicApi/Dockerfile           
+        depends_on:
+            - "db"
+        ports:
+         - "5098:80"
     db:
-        image: "mcr.microsoft.com/mssql/server"
+        image: "mcr.microsoft.com/mssql/server:2019-latest"
+        container_name: mssqldb
+        user: root
+        volumes:
+            - ./data:/var/opt/mssql/data
         environment:
             SA_PASSWORD: "<p@SSw0rd34>"
             ACCEPT_EULA: "Y"
