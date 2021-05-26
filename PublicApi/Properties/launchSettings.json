@@ -19,7 +19,6 @@
     },
     "PublicApi": {
       "commandName": "Project",
-      "launchBrowser": false,
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -33,6 +32,15 @@
       "publishAllPorts": true,
       "useSSL": true,
       "sslPort": 44339
+    },
+    "WSL 2": {
+      "commandName": "WSL2",
+      "launchUrl": "https://localhost:5099/swagger",
+      "environmentVariables": {
+        "ASPNETCORE_URLS": "https://localhost:5099;http://localhost:5098",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "distributionName": ""
     }
   }
 }

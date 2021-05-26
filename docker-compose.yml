@@ -1,8 +1,16 @@
-version: '3.4'
-
+version: "3.9"
 services:
-  publicapi:
-    image: ${DOCKER_REGISTRY-}publicapi
-    build:
-      context: .
-      dockerfile: PublicApi/Dockerfile
+    publicapi:
+           image: ${DOCKER_REGISTRY-}publicapi
+           build:
+                context: .
+                dockerfile: PublicApi/Dockerfile
+           depends_on:
+              - db
+    db:
+        image: "mcr.microsoft.com/mssql/server"
+        environment:
+            SA_PASSWORD: "<p@SSw0rd34>"
+            ACCEPT_EULA: "Y"
+        ports:
+         - "1433:1433"
