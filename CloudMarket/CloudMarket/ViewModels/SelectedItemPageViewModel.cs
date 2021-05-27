@@ -6,6 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+using Xamarin.CommunityToolkit.ObjectModel;
+using Xamarin.Essentials;
 
 namespace CloudMarket.ViewModels
 {
@@ -13,6 +16,9 @@ namespace CloudMarket.ViewModels
     {
         private INavigationService _navigationService;
         private DataStoreService _dataStoreService;
+
+        public AsyncCommand OpenLinkCommand { get; }
+
         private CancellationTokenSource cancellationToken;
         private Product _product;
 
@@ -23,6 +29,12 @@ namespace CloudMarket.ViewModels
         {
             _navigationService = navigationService;
             _dataStoreService = dataStoreService;
+            OpenLinkCommand = new AsyncCommand(OpenLink);
+        }
+
+        private async Task OpenLink()
+        {
+            await Launcher.OpenAsync(Product.Url);
         }
 
         public Product Product

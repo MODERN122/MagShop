@@ -45,12 +45,16 @@
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </StackLayout>
-                <Frame BindingContext="{Binding Product}" CornerRadius="10" HasShadow="True">
+                <Frame CornerRadius="10" HasShadow="True">
                     <StackLayout>
-                        <Label Text="{Binding ProductName}"/>
-                        <Label Text="{Binding Url}" />
-                        <Label Text="{Binding Rating}" />
-                        <Label Text="{Binding Description}"/>
+                        <Label Text="{Binding Product.ProductName}"/>
+                        <Label Text="{Binding Product.Url}" TextDecorations="Underline" TextColor="Blue">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenLinkCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="{Binding Product.Rating}" />
+                        <Label Text="{Binding Product.Description}"/>
                     </StackLayout>
                 </Frame>
             </StackLayout>
