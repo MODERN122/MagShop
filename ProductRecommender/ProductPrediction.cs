@@ -6,7 +6,7 @@ namespace ProductRecommender
 {
     public class ProductPrediction
     {
-        public string asin;
+        public float Label;
         public float Score;
     }
 }
