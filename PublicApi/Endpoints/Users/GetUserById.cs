@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace PublicApi.Endpoints.Users
 {
-    public class GetUserById : BaseAsyncEndpoint<string, GetUserResponse>
+    public class GetUserById : BaseAsyncEndpoint.WithRequest<string>.WithResponse<GetUserResponse>
     {
         private readonly IAsyncRepository<User> _userRepository;
         private readonly UserManager<UserAuthAccess> _userManager;

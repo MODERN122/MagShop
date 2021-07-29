@@ -22,7 +22,7 @@ namespace ApplicationCore.Endpoints.Products
 {
     [Authorize(Roles = "Administrators,Sellers", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     //[Authorize(Roles = ConstantsAPI.ADMINISTRATORS, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class Update : BaseAsyncEndpoint<PutProductRequest, PutProductResponse>
+    public class Update : BaseAsyncEndpoint.WithRequest<PutProductRequest>.WithResponse<PutProductResponse>
     {
         private readonly IAsyncRepository<Product> _productRepository;
         private readonly IAsyncRepository<Store> _storeRepository;

@@ -28,7 +28,7 @@ namespace PublicApi.Endpoints.Users
     namespace PublicApi.Endpoints.Users
     {
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public class GetUser : BaseAsyncEndpoint<GetUserResponse>
+        public class GetUser : BaseAsyncEndpoint.WithoutRequest.WithResponse<GetUserResponse>
         {
             private readonly IAsyncRepository<User> _userRepository;
             private readonly UserManager<UserAuthAccess> _userManager;

@@ -27,6 +27,7 @@ using Microsoft.OpenApi.Models;
 using ApplicationCore;
 using Infrastructure.Services;
 using Infrastructure.Logging;
+using PublicApi.GraphQL;
 
 namespace PublicApi
 {
@@ -49,14 +50,34 @@ namespace PublicApi
                        .AddDefaultTokenProviders();
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
             services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
-            services.Configure<CatalogSettings>(Configuration);
-            services.AddSingleton<IUriComposer>(new UriComposer(Configuration.Get<CatalogSettings>()));
+            //services.Configure<CatalogSettings>(Configuration);
+            //services.AddSingleton<IUriComposer>(new UriComposer(Configuration.Get<CatalogSettings>()));
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
             services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
-
             var baseUrlConfig = new BaseUrlConfiguration();
             Configuration.Bind(BaseUrlConfiguration.CONFIG_NAME, baseUrlConfig);
-            services.AddScoped<IFileSystem, WebFileSystemService>(x => new WebFileSystemService($"{baseUrlConfig.WebBase}File"));
+            services.AddScoped<IFileSystem, WebFileSystemService>(x => new WebFileSystemService($"{baseUrlConfig.WebBase}File")); 
+
+            // use real database
+            // Requires LocalDB which can be installed with SQL Server Express 2016
+            // https://www.microsoft.com/en-us/download/details.aspx?id=54284
+            services.AddPooledDbContextFactory<MagShopContext>(x =>
+            {
+#if RELEASE
+                x.UseSqlServer(Configuration.GetConnectionString("MagShopDBConnectionDocker")));
+#else
+                x.UseSqlServer(Configuration.GetConnectionString("MagShopDBConnection"));
+#endif
+                x.EnableSensitiveDataLogging();
+            });
+
+            services.AddScoped(x => x.GetRequiredService<IDbContextFactory<MagShopContext>>().CreateDbContext());
+
+            services
+                .AddGraphQLServer()
+                .AddQueryType<Query>()
+                .AddMutationType<Mutation>();
+
 
             services.AddMemoryCache();
 
@@ -133,30 +154,6 @@ namespace PublicApi
                 });
             });
         }
-        public void ConfigureDockerServices(IServiceCollection services)
-        {
-            ConfigureDevelopmentServices(services);
-        }
-        public void ConfigureDevelopmentServices(IServiceCollection services)
-        {
-            // use real database
-            ConfigureProductionServices(services);
-        }
-        public void ConfigureProductionServices(IServiceCollection services)
-        {
-            // use real database
-            // Requires LocalDB which can be installed with SQL Server Express 2016
-            // https://www.microsoft.com/en-us/download/details.aspx?id=54284
-            string str = Configuration.GetConnectionString("MagShopDBConnection");
-            services.AddDbContext<MagShopContext>(c =>
-#if RELEASE
-            c.UseSqlServer(Configuration.GetConnectionString("MagShopDBConnectionDocker")));
-#else
-            c.UseSqlServer(str));
-#endif
-
-            ConfigureServices(services);
-        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -165,7 +162,7 @@ namespace PublicApi
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -182,6 +179,11 @@ namespace PublicApi
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            }); 
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGraphQL();
             });
 
             app.UseEndpoints(endpoints =>

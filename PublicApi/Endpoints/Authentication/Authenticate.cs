@@ -13,7 +13,9 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Endpoints.Authentication
 {
-    public class Authenticate : BaseAsyncEndpoint<AuthenticationRequest, AuthenticationResponse>
+    public class Authenticate : BaseAsyncEndpoint
+        .WithRequest<AuthenticationRequest>
+        .WithResponse<AuthenticationResponse>
     {
         private readonly SignInManager<UserAuthAccess> _signInManager;
         private readonly ITokenClaimsService _tokenClaimsService;

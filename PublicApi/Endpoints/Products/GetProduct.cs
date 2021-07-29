@@ -19,7 +19,7 @@ using Infrastructure.Constants;
 
 namespace ApplicationCore.Endpoints.Products
 {
-    public class GetProduct : BaseAsyncEndpoint<string, GetProductResponse>
+    public class GetProduct : BaseAsyncEndpoint.WithRequest<string>.WithResponse<GetProductResponse>
     {
         private readonly IAsyncRepository<Product> _productRepository;
 

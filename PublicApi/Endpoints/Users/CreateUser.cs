@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Endpoints.Users
 {
-    public class CreateUser : BaseAsyncEndpoint<CreateUserRequest, CreateUserResponse>
+    public class CreateUser : BaseAsyncEndpoint.WithRequest<CreateUserRequest>.WithResponse<CreateUserResponse>
     {
         private readonly IAsyncRepository<User> _userRepository;
         private readonly UserManager<UserAuthAccess> _userManager;

@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 namespace ApplicationCore.Endpoints.Products
 {
     [Authorize(Roles = "Administrators,Sellers", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class Delete : BaseAsyncEndpoint<string, DeleteUserResponse>
+    public class Delete : BaseAsyncEndpoint.WithRequest<string>.WithResponse<DeleteUserResponse>
     {
 
         private readonly IAsyncRepository<Product> _productRepository;

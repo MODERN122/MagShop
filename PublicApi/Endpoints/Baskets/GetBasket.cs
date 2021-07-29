@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 namespace ApplicationCore.Endpoints.Baskets
 {
     [Authorize(Roles = ConstantsAPI.USERS, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class GetBasket : BaseAsyncEndpoint<string, GetBasketResponse>
+    public class GetBasket : BaseAsyncEndpoint.WithRequest<string>.WithResponse<GetBasketResponse>
     {
         private readonly IBasketRepository _basketRepository;
         private readonly IAsyncRepository<User> _userRepository;

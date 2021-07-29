@@ -21,7 +21,7 @@ namespace ApplicationCore.Endpoints.Products
 {
     [Authorize(Roles = ConstantsAPI.ADMINISTRATORS, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     //[Authorize(Roles = ConstantsAPI.SELLERS, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class CreateProduct : BaseAsyncEndpoint<CreateProductRequest, CreateProductResponse>
+    public class CreateProduct : BaseAsyncEndpoint.WithRequest<CreateProductRequest>.WithResponse<CreateProductResponse>
     {
         private readonly IAsyncRepository<Product> _itemRepository;
         private readonly IAsyncRepository<Store> _storeRepository;
@@ -63,8 +63,6 @@ namespace ApplicationCore.Endpoints.Products
                     var product = new Product();
                     _mapper.Map(request, product);
                     product = await _itemRepository.AddAsync(product, cancellationToken);
-                    var productSpec = new ProductSpecification(product.ProductId);
-                    product = await _itemRepository.FirstAsync(productSpec);
                     if (product.ProductId != null)
                     {
                         //var picName = $"{newItem}/{Path.GetExtension(request.PictureName)}";

@@ -11,9 +11,6 @@ namespace Infrastructure.Data
 {
     public class MagShopContext : IdentityDbContext<UserAuthAccess>
     {
-        public MagShopContext()
-        {
-        }
         public MagShopContext(DbContextOptions<MagShopContext> options):base(options)
         {
         }
@@ -26,11 +23,6 @@ namespace Infrastructure.Data
         public DbSet<Store> Stores { get; set; }
         public DbSet<User> Users { get; set; }
 
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.EnableSensitiveDataLogging();
-        }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace ApplicationCore.Endpoints.Products
 {
 
-    public class GetProducts : BaseAsyncEndpoint<GetProductsRequest,GetProductsResponse>
+    public class GetProducts : BaseAsyncEndpoint.WithRequest<GetProductsRequest>.WithResponse<GetProductsResponse>
     {
         private readonly IAsyncRepository<Product> _productRepository;
 
