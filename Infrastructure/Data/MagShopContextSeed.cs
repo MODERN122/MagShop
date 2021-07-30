@@ -132,7 +132,8 @@ namespace Infrastructure.Data
 
         private static void AddPreconfiguredBasketItemsToFirstUser(MagShopContext context)
         {
-            var user = context.Users.Find(USER_ID);
+            var user = context.Users.Include(x => x.Basket)
+                    .ThenInclude(x => x.Items).First(x=>x.Id==USER_ID);
             var products = context.Products.Where(x => x.StoreId == STORE_ID);
             List<BasketItem> basketItems = new List<BasketItem>();
             foreach (var product in products)

@@ -12,6 +12,13 @@ namespace PublicApi.GraphQL
 {
     public class Mutation
     {
+        private IAsyncRepository<Product> _productRepository;
+
+        public Mutation(
+            IAsyncRepository<Product> productRepository)
+        {
+            _productRepository = productRepository;
+        }
         public record AddProductInput(
             string ProductName,
             string StoreId,
@@ -26,10 +33,8 @@ namespace PublicApi.GraphQL
             public Product Product { get; }
         }
 
-        [UseMagShopContext]
         public async Task<AddProductPayload> AddProductAsync(
-               AddProductInput input,
-               [ScopedService] MagShopContext context)
+               AddProductInput input)
         {
             var product = new Product
             {
@@ -37,10 +42,8 @@ namespace PublicApi.GraphQL
                 StoreId = input.StoreId,
                 CategoryId = input.CategoryId
             };
-
-            var res = await context.Products.AddAsync(product);
-            await context.SaveChangesAsync();
-            return new AddProductPayload(res?.Entity);
+            var result = await _productRepository.AddAsync(product, new System.Threading.CancellationToken());
+            return new AddProductPayload(result);
         }
     }
 }

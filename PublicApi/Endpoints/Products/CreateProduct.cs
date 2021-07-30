@@ -53,7 +53,7 @@ namespace ApplicationCore.Endpoints.Products
             {
                 var response = new CreateProductResponse(request.CorrelationId());
 
-                System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+                ClaimsPrincipal currentUser = this.User;
                 var currentUserName = currentUser.FindFirst(ClaimTypes.Name).Value;
                 UserAuthAccess user = await _userManager.FindByNameAsync(currentUserName);
                 var store = await _storeRepository.GetByIdAsync(request.StoreId);
@@ -81,7 +81,7 @@ namespace ApplicationCore.Endpoints.Products
                     return Forbid();
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 return BadRequest();
             }

@@ -49,7 +49,8 @@ namespace PublicApi
                        .AddEntityFrameworkStores<MagShopContext>()
                        .AddDefaultTokenProviders();
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
-            services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
+            services.AddScoped<IBasketRepository, BasketRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
             //services.Configure<CatalogSettings>(Configuration);
             //services.AddSingleton<IUriComposer>(new UriComposer(Configuration.Get<CatalogSettings>()));
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
@@ -58,9 +59,6 @@ namespace PublicApi
             Configuration.Bind(BaseUrlConfiguration.CONFIG_NAME, baseUrlConfig);
             services.AddScoped<IFileSystem, WebFileSystemService>(x => new WebFileSystemService($"{baseUrlConfig.WebBase}File")); 
 
-            // use real database
-            // Requires LocalDB which can be installed with SQL Server Express 2016
-            // https://www.microsoft.com/en-us/download/details.aspx?id=54284
             services.AddPooledDbContextFactory<MagShopContext>(x =>
             {
 #if RELEASE

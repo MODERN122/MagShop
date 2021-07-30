@@ -52,14 +52,14 @@ namespace ApplicationCore.Entities
         public OrderItem(int quantity, Product product, List<PropertyItem> propertyItems)
         {
             UnitPrice = propertyItems.First(x=>x.PriceNew!=null).PriceNew;
-            ProducOrdered = product;
+            Product = product;
             SetQuantity(quantity);
         }
         public string OrderItemId { get; set; } = Guid.NewGuid().ToString();
         public double? UnitPrice { get; private set; }
         public int Quantity { get; private set; }
         public string ProductId { get; set; }
-        public Product ProducOrdered { get; set; }
+        public Product Product { get; set; }
 
         public void SetQuantity(int quantity)
         {

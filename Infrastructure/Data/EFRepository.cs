@@ -19,71 +19,99 @@ namespace Infrastructure.Data
     /// <typeparam name="T"></typeparam>
     public class EfRepository<T> : IAsyncRepository<T> where T : class, IAggregateRoot
     {
-        protected readonly MagShopContext _dbContext;
+        protected readonly IDbContextFactory<MagShopContext> _contextFactory;
 
-        public EfRepository(MagShopContext dbContext)
+        public EfRepository(IDbContextFactory<MagShopContext> contextFactory)
         {
-            _dbContext = dbContext;
+            _contextFactory = contextFactory;
         }
 
         public virtual async Task<T> GetByIdAsync(string id)
         {
-            return await _dbContext.Set<T>().FindAsync(id);
+            using (var context = this._contextFactory.CreateDbContext())
+            {
+                return await context.Set<T>().FindAsync(id);
+            }
         }
 
         public async Task<IReadOnlyList<T>> ListAllAsync()
         {
-            return await _dbContext.Set<T>().ToListAsync();
+            using (var context = this._contextFactory.CreateDbContext())
+            {
+                return await context.Set<T>().ToListAsync();
+            }
         }
 
         public async Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec)
         {
-            var specificationResult = ApplySpecification(spec);
-            return await specificationResult.ToListAsync();
+            using (var context = this._contextFactory.CreateDbContext())
+            {
+                var specificationResult = ApplySpecification(spec);
+                return await specificationResult.ToListAsync();
+            }
         }
 
         public async Task<int> CountAsync(ISpecification<T> spec)
         {
-            var specificationResult = ApplySpecification(spec);
-            return await specificationResult.CountAsync();
+            using (var context = this._contextFactory.CreateDbContext())
+            {
+                var specificationResult = ApplySpecification(spec);
+                return await specificationResult.CountAsync();
+            }
         }
 
         public async Task<T> AddAsync(T entity, CancellationToken token)
         {
-            await _dbContext.Set<T>().AddAsync(entity);
-            await _dbContext.SaveChangesAsync(token);
+            using (var context = this._contextFactory.CreateDbContext())
+            {
+                await context.Set<T>().AddAsync(entity);
+                await context.SaveChangesAsync(token);
 
-            return entity;
+                return entity;
+            }
         }
 
         public async Task UpdateAsync(T entity, CancellationToken token)
         {
-            _dbContext.Entry(entity).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync(token);
+            using (var context = this._contextFactory.CreateDbContext())
+            {
+                context.Entry(entity).State = EntityState.Modified;
+                await context.SaveChangesAsync(token);
+            }
         }
 
         public async Task DeleteAsync(T entity, CancellationToken token)
         {
-            _dbContext.Set<T>().Remove(entity);
-            await _dbContext.SaveChangesAsync(token);
+            using (var context = this._contextFactory.CreateDbContext())
+            {
+                context.Set<T>().Remove(entity);
+                await context.SaveChangesAsync(token);
+            }
         }
-
         public async Task<T> FirstAsync(ISpecification<T> spec)
         {
-            var specificationResult = ApplySpecification(spec);
-            return await specificationResult.FirstAsync();
+            using (var context = this._contextFactory.CreateDbContext())
+            {
+                var specificationResult = ApplySpecification(spec);
+                return await specificationResult.FirstAsync();
+            }
         }
 
         public async Task<T> FirstOrDefaultAsync(ISpecification<T> spec)
         {
-            var specificationResult = ApplySpecification(spec);
-            return await specificationResult.FirstOrDefaultAsync();
+            using (var context = this._contextFactory.CreateDbContext())
+            {
+                var specificationResult = ApplySpecification(spec);
+                return await specificationResult.FirstOrDefaultAsync();
+            }
         }
-
         protected IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
-            var evaluator = new SpecificationEvaluator<T>();
-            return evaluator.GetQuery(_dbContext.Set<T>().AsSplitQuery(), spec);
+            using (var context = this._contextFactory.CreateDbContext())
+            {
+                var evaluator = new SpecificationEvaluator<T>();
+                return evaluator.GetQuery(context.Set<T>().AsSplitQuery(), spec);
+            }
         }
     }
 }

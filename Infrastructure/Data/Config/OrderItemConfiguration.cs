@@ -11,7 +11,7 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<OrderItem> builder)
         {
-            builder.HasOne(o => o.ProducOrdered);
+            builder.HasOne(o => o.Product);
 
             builder.Property(b => b.UnitPrice)
                 .IsRequired()

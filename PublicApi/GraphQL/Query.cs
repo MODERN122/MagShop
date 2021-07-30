@@ -13,26 +13,35 @@ namespace PublicApi.GraphQL
 {
     public class Query
     {
-        private IAsyncRepository<Product> _itemRepository;
+        private IAsyncRepository<Product> _productsRepository;
+        private IOrderRepository _ordersRepository;
+        private IAsyncRepository<User> _usersRepository;
+        private IAsyncRepository<Store> _storesRepository;
 
-        public Query(IAsyncRepository<Product> itemRepository)
+        public Query(IAsyncRepository<Product> productsRepository,
+            IOrderRepository ordersRepository,
+            IAsyncRepository<User> usersRepository,
+            IAsyncRepository<Store> storesRepository)
         {
-            _itemRepository = itemRepository;
+            _ordersRepository = ordersRepository;
+            _usersRepository = usersRepository;
+            _storesRepository = storesRepository;
+            _productsRepository = productsRepository;
         }
-        [UseMagShopContext]
-        public async Task<List<User>> GetUsers([ScopedService] MagShopContext context) =>
-            await context.Users.ToListAsync();
 
-        [UseMagShopContext]
-        public async Task<List<Store>> GetStores([ScopedService] MagShopContext context) =>
-            await context.Stores.ToListAsync();
+        public async Task<IReadOnlyList<User>> GetUsers() =>
+            await _usersRepository.ListAllAsync();
 
-        [UseMagShopContext]
-        public async Task<List<Order>> GetOrders([ScopedService] MagShopContext context) =>
-            await context.Orders.ToListAsync();
+        public async Task<IReadOnlyList<Store>> GetStores() =>
+            await _storesRepository.ListAllAsync();
 
-        [UseMagShopContext]
-        public async Task<IReadOnlyList<Product>> GetProducts([ScopedService] MagShopContext context) =>
-            await _itemRepository.ListAllAsync();
+        public async Task<Order> GetOrder(string id) =>
+            await _ordersRepository.GetByIdWithItemsAsync(id);
+        public async Task<IReadOnlyList<Order>> GetOrders() =>
+            await _ordersRepository.ListAllAsync();
+
+        public async Task<IReadOnlyList<Product>> GetProducts() =>
+            //await context.Set<Product>().Include(x=>x.Store).Include(x=>x.Images).ToListAsync();
+            await _productsRepository.ListAllAsync();
     }
 }

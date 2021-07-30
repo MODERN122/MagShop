@@ -10,16 +10,20 @@ namespace Infrastructure.Data
 {
     public class OrderRepository : EfRepository<Order>, IOrderRepository
     {
-        public OrderRepository(MagShopContext dbContext) : base(dbContext)
+        public OrderRepository(IDbContextFactory<MagShopContext> dbContext) : base(dbContext)
         {
         }
 
-        public Task<Order> GetByIdWithItemsAsync(string id)
+        public async Task<Order> GetByIdWithItemsAsync(string id)
         {
-            return _dbContext.Orders
+            using (var context = this._contextFactory.CreateDbContext())
+            {
+                var res = await context.Set<Order>()
                 .Include(o => o.Items)
-                .ThenInclude(i=>i.ProducOrdered)
+                .ThenInclude(i => i.Product)
                 .FirstOrDefaultAsync(x => x.OrderId == id);
+                return res;
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Infrastructure.Data
     public class BasketRepository : EfRepository<Basket>, IBasketRepository
     {
         
-        public BasketRepository(MagShopContext dbContext) : base(dbContext)
+        public BasketRepository(IDbContextFactory<MagShopContext> dbContext) : base(dbContext)
         {
         }
 
@@ -30,12 +30,15 @@ namespace Infrastructure.Data
                 }
                 else
                 {
-                    var user = await _dbContext.Set<User>().FindAsync(userId);
-                    Guard.Against.Null(user, nameof(user));
-                    var basket = new Basket() { UserId = user.Id };
-                    await _dbContext.Set<Basket>().AddAsync(basket, token);
-                    await _dbContext.SaveChangesAsync(token);
-                    return basket;
+                    using (var context = this._contextFactory.CreateDbContext())
+                    {
+                        var user = await context.Set<User>().FindAsync(userId);
+                        Guard.Against.Null(user, nameof(user));
+                        var basket = new Basket() { UserId = user.Id };
+                        await context.Set<Basket>().AddAsync(basket, token);
+                        await context.SaveChangesAsync(token);
+                        return basket;
+                    }
                 }
             }
             catch (Exception ex)
@@ -47,12 +50,15 @@ namespace Infrastructure.Data
         {
             try
             {
-                var user = await _dbContext.Set<User>().FindAsync(userId);
-                Guard.Against.Null(user, nameof(user));
-                var basket = new Basket() { UserId = user.Id };
-                await _dbContext.Set<Basket>().AddAsync(basket, token);
-                await _dbContext.SaveChangesAsync(token);
-                return basket;
+                using (var context = this._contextFactory.CreateDbContext())
+                {
+                    var user = await context.Set<User>().FindAsync(userId);
+                    Guard.Against.Null(user, nameof(user));
+                    var basket = new Basket() { UserId = user.Id };
+                    await context.Set<Basket>().AddAsync(basket, token);
+                    await context.SaveChangesAsync(token);
+                    return basket;
+                }
             }
             catch (Exception ex)
             {
