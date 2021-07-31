@@ -1,6 +1,6 @@
 ﻿using ApplicationCore.Base;
 
-namespace ApplicationCore.Endpoints.Products
+namespace ApplicationCore.RESTApi.Products
 {
     public class DeleteUserResponse : BaseResponse
     {

@@ -2,7 +2,7 @@
 using ApplicationCore.Base;
 using System.Collections.Generic;
 
-namespace ApplicationCore.Endpoints.Products
+namespace ApplicationCore.RESTApi.Products
 {
     public class CreateProductRequest : BaseRequest
     {

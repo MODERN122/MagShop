@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ApplicationCore.Endpoints
+namespace ApplicationCore.RESTApi
 {
     public static class EndpointUrlConstants
     {

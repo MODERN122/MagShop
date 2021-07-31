@@ -1,6 +1,6 @@
 ﻿using ApplicationCore.Base;
 
-namespace ApplicationCore.Endpoints.Authentication
+namespace ApplicationCore.RESTApi.Authentication
 {
     public class AuthenticationRequest : BaseRequest
     {

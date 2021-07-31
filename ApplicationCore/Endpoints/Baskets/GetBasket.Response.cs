@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApplicationCore.Entities;
 
-namespace ApplicationCore.Endpoints.Baskets
+namespace ApplicationCore.RESTApi.Baskets
 {
     public class GetBasketResponse : BaseResponse
     {

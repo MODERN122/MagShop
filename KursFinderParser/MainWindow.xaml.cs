@@ -1,4 +1,4 @@
-﻿using ApplicationCore.Endpoints.Products;
+﻿using ApplicationCore.RESTApi.Products;
 using ApplicationCore.Entities;
 using Newtonsoft.Json;
 using System;

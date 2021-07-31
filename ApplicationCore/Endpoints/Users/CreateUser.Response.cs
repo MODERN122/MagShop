@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ApplicationCore.Endpoints.Users
+namespace ApplicationCore.RESTApi.Users
 {
     public class CreateUserResponse : BaseResponse
     {

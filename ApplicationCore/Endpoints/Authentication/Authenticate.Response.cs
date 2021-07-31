@@ -1,7 +1,7 @@
 ﻿using ApplicationCore.Base;
 using System;
 
-namespace ApplicationCore.Endpoints.Authentication
+namespace ApplicationCore.RESTApi.Authentication
 {
     public class AuthenticationResponse : BaseResponse
     {

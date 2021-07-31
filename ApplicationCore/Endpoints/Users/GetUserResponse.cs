@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace ApplicationCore.Endpoints.Users
+namespace ApplicationCore.RESTApi.Users
 {
     public class GetUserResponse : BaseResponse
     {

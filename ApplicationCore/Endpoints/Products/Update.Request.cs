@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace ApplicationCore.Endpoints.Products
+namespace ApplicationCore.RESTApi.Products
 {
     public class PutProductRequest : BaseRequest
     {

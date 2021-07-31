@@ -19,9 +19,9 @@ namespace Infrastructure.Data
             using (var context = this._contextFactory.CreateDbContext())
             {
                 var res = await context.Set<Order>()
-                .Include(o => o.Items)
-                .ThenInclude(i => i.Product)
-                .FirstOrDefaultAsync(x => x.OrderId == id);
+                    .Include(o => o.Items)
+                    .ThenInclude(i => i.Product)
+                    .FirstOrDefaultAsync(x => x.OrderId == id);
                 return res;
             }
         }

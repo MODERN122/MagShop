@@ -1,7 +1,7 @@
 ﻿using ApplicationCore.Entities;
 using AutoMapper;
-using ApplicationCore.Endpoints.Products;
-using ApplicationCore.Endpoints.Users;
+using ApplicationCore.RESTApi.Products;
+using ApplicationCore.RESTApi.Users;
 using System;
 using System.Collections.Generic;
 using System.Text;

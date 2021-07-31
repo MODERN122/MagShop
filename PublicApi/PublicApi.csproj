@@ -45,7 +45,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Endpoints\Orders\" />
+    <Folder Include="GraphQL\Products\" />
+    <Folder Include="GraphQL\Orders\" />
+    <Folder Include="GraphQL\Users\" />
+    <Folder Include="GraphQL\Authentication\" />
+    <Folder Include="RESTApi\Orders\" />
   </ItemGroup>
 
 

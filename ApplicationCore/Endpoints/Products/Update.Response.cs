@@ -2,7 +2,7 @@
 using ApplicationCore.Base;
 using System;
 
-namespace ApplicationCore.Endpoints.Products
+namespace ApplicationCore.RESTApi.Products
 {
     public class PutProductResponse: BaseResponse
     {
