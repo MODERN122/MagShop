@@ -22,7 +22,7 @@ namespace PublicApi.GraphQL.Products
             _productRepository = productRepository;
         }
 
-        [Authorize]
+        [Authorize(Roles =new[] { "Administrators" })]
         public async Task<IReadOnlyList<Product>> GetProducts(
             [Service] IHttpContextAccessor contextAccessor) =>
             await _productRepository.ListAllAsync();

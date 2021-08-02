@@ -37,6 +37,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using System.Threading;
 using PublicApi.GraphQL.Products;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Principal;
 
 namespace PublicApi
 {
@@ -96,6 +98,7 @@ namespace PublicApi
                                 ValidateAudience = false
                             };
                         });
+
             services.AddAuthorization();
             //TODO Сделать политику, в которой просматривать личную информацию и прочие действия сможет только тот чья это информация
             //services.AddAuthorization(options =>
@@ -164,7 +167,23 @@ namespace PublicApi
                 .AddTypeExtension<UserQueries>()
                 .AddTypeExtension<ProductQueries>()
                 .AddTypeExtension<AuthenticationMutations>()
-                .AddHttpRequestInterceptor<AuthInterceptor>();
+                .AddHttpRequestInterceptor((context, executor, builder, cancellationToken) => {
+                    try
+                    {
+                        // Decode token
+                        var authHeader = context.Request.Headers.Single(p => p.Key == "Authorization");
+                        var tokenHandler = new JwtSecurityTokenHandler();
+                        var tokenStr = string.Join("", authHeader.Value.First().Skip(7));
+                        var token = tokenHandler.ReadJwtToken(tokenStr);
+                        // Get username and roles
+                        var username = token.Claims.First(x=>x.Type== "unique_name")?.Value;
+                        var roles = token.Claims.Where(p => p.Type.Equals("role")).Select(p => p?.Value).ToArray();
+                        // Set User identity
+                        context.User = new GenericPrincipal(new GenericIdentity(username), roles);
+                    }
+                    catch (Exception ex) { }
+                    return ValueTask.CompletedTask;
+                });
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
