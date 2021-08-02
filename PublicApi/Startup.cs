@@ -28,6 +28,15 @@ using ApplicationCore;
 using Infrastructure.Services;
 using Infrastructure.Logging;
 using PublicApi.GraphQL;
+using PublicApi.GraphQL.Interceptors;
+using PublicApi.GraphQL.Users;
+using PublicApi.GraphQL.Authentication;
+using HotChocolate.AspNetCore.Interceptors;
+using HotChocolate.AspNetCore;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+using System.Threading;
+using PublicApi.GraphQL.Products;
 
 namespace PublicApi
 {
@@ -71,28 +80,23 @@ namespace PublicApi
 
             services.AddScoped(x => x.GetRequiredService<IDbContextFactory<MagShopContext>>().CreateDbContext());
 
-            services
-                .AddGraphQLServer()
-                .AddQueryType<Query>()
-                .AddMutationType<Mutation>();
-
-
             services.AddMemoryCache();
 
             var key = Encoding.ASCII.GetBytes(ConstantsAPI.JWT_SECRET_KEY);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(config =>
-            {
-                config.RequireHttpsMetadata = false;
-                config.SaveToken = true;
-                config.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
+                        .AddJwtBearer(config =>
+                        {
+                            config.RequireHttpsMetadata = false;
+                            config.SaveToken = true;
+                            config.TokenValidationParameters = new TokenValidationParameters
+                            {
+                                ValidateIssuerSigningKey = true,
+                                IssuerSigningKey = new SymmetricSecurityKey(key),
+                                ValidateIssuer = false,
+                                ValidateAudience = false
+                            };
+                        });
+            services.AddAuthorization();
 
             //TODO Сделать политику, в которой просматривать личную информацию и прочие действия сможет только тот чья это информация
             //services.AddAuthorization(options =>
@@ -151,6 +155,16 @@ namespace PublicApi
                     }
                 });
             });
+
+            services
+                .AddGraphQLServer()
+                .AddAuthorization()
+                .AddQueryType<Query>()
+                .AddMutationType<Mutation>()
+                .AddTypeExtension<UserQueries>()
+                .AddTypeExtension<ProductQueries>()
+                .AddTypeExtension<AuthenticationMutations>()
+                .AddHttpRequestInterceptor<AuthInterceptor>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
