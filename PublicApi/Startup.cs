@@ -39,6 +39,7 @@ using System.Threading;
 using PublicApi.GraphQL.Products;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Principal;
+using PublicApi.GraphQL.Orders;
 
 namespace PublicApi
 {
@@ -166,6 +167,7 @@ namespace PublicApi
                 .AddMutationType<Mutation>()
                 .AddTypeExtension<UserQueries>()
                 .AddTypeExtension<ProductQueries>()
+                .AddTypeExtension<OrderQueries>()
                 .AddTypeExtension<AuthenticationMutations>()
                 .AddHttpRequestInterceptor((context, executor, builder, cancellationToken) => {
                     try
@@ -177,9 +179,9 @@ namespace PublicApi
                         var token = tokenHandler.ReadJwtToken(tokenStr);
                         // Get username and roles
                         var username = token.Claims.First(x=>x.Type== "unique_name")?.Value;
-                        var roles = token.Claims.Where(p => p.Type.Equals("role")).Select(p => p?.Value).ToArray();
                         // Set User identity
-                        context.User = new GenericPrincipal(new GenericIdentity(username), roles);
+                        context.User = new GenericPrincipal(new GenericIdentity(username), token.Claims.Select(x=>x.Value).ToArray());
+                        builder.TryAddProperty(nameof(ClaimsPrincipal), context.User);
                     }
                     catch (Exception ex) { }
                     return ValueTask.CompletedTask;

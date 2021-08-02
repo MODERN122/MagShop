@@ -15,16 +15,13 @@ namespace PublicApi.GraphQL
     public class Query
     {
         private IAsyncRepository<Product> _productsRepository;
-        private IOrderRepository _ordersRepository;
         private IAsyncRepository<User> _usersRepository;
         private IAsyncRepository<Store> _storesRepository;
 
         public Query(IAsyncRepository<Product> productsRepository,
-            IOrderRepository ordersRepository,
             IAsyncRepository<User> usersRepository,
             IAsyncRepository<Store> storesRepository)
         {
-            _ordersRepository = ordersRepository;
             _usersRepository = usersRepository;
             _storesRepository = storesRepository;
             _productsRepository = productsRepository;
@@ -36,10 +33,6 @@ namespace PublicApi.GraphQL
         public async Task<IEnumerable<Store>> GetStores() =>
             (await _storesRepository.ListAllAsync());
 
-        public async Task<Order> GetOrder(string id) =>
-            await _ordersRepository.GetByIdWithItemsAsync(id);
-        public async Task<IEnumerable<Order>> GetOrders(int limit) =>
-            (await _ordersRepository.ListAllAsync()).Take(limit);
 
     }
 }

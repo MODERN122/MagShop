@@ -25,10 +25,11 @@ namespace PublicApi.GraphQL.Users
         [Authorize]
         public async Task<GetUserResponse> GetUser(
             [Service] IAsyncRepository<User> userRepository,
+            [Service] IHttpContextAccessor contextAccessor,
             [Service] UserManager<UserAuthAccess> userManager,
-            ClaimsPrincipal currentUser)
+            [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
         {
-            UserAuthAccess userAuth = await userManager.GetUserAsync(currentUser);
+            UserAuthAccess userAuth = await userManager.FindByNameAsync(currentUser.Claims.First().Value);
             if (userAuth != null)
             {
                 var response = new GetUserResponse(Guid.NewGuid());
@@ -42,12 +43,13 @@ namespace PublicApi.GraphQL.Users
 
         [Authorize(Roles = new string[] {"Administators"})]
         public async Task<GetUserResponse> GetUserById(
+
             [Service] IAsyncRepository<User> userRepository, 
             [Service] UserManager<UserAuthAccess> userManager, 
             [Service] IHttpContextAccessor contextAccessor,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
         {
-            UserAuthAccess userAuth = await userManager.GetUserAsync(currentUser);
+            UserAuthAccess userAuth = await userManager.FindByNameAsync(currentUser.Claims.First().Value);
             if (userAuth != null)
             {
                 var response = new GetUserResponse(Guid.NewGuid());
