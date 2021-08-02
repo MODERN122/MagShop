@@ -7,6 +7,7 @@ using HotChocolate;
 using HotChocolate.AspNetCore.Authorization;
 using HotChocolate.Types;
 using Infrastructure.Identity;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PublicApi.Extensions;
@@ -19,9 +20,9 @@ using System.Threading.Tasks;
 namespace PublicApi.GraphQL.Users
 {
     [ExtendObjectType(typeof(Query))]
-    [Authorize]
     public class UserQueries
     {
+        [Authorize]
         public async Task<GetUserResponse> GetUser(
             [Service] IAsyncRepository<User> userRepository,
             [Service] UserManager<UserAuthAccess> userManager,
@@ -39,11 +40,11 @@ namespace PublicApi.GraphQL.Users
             return null;
         }
 
-        //[Authorize(Roles = new string[] {"Administators"})]
+        [Authorize(Roles = new string[] {"Administators"})]
         public async Task<GetUserResponse> GetUserById(
             [Service] IAsyncRepository<User> userRepository, 
-            [Service] UserManager<UserAuthAccess> userManager,
-            [Service] ITokenClaimsService tokenClaimsService, 
+            [Service] UserManager<UserAuthAccess> userManager, 
+            [Service] IHttpContextAccessor contextAccessor,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
         {
             UserAuthAccess userAuth = await userManager.GetUserAsync(currentUser);

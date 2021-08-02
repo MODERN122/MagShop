@@ -1,7 +1,9 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using HotChocolate;
+using HotChocolate.AspNetCore.Authorization;
 using HotChocolate.Types;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +23,8 @@ namespace PublicApi.GraphQL.Products
         }
 
         [Authorize]
-        public async Task<IReadOnlyList<Product>> GetProducts() =>
+        public async Task<IReadOnlyList<Product>> GetProducts(
+            [Service] IHttpContextAccessor contextAccessor) =>
             await _productRepository.ListAllAsync();
     }
 }

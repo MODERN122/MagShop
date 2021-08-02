@@ -97,7 +97,6 @@ namespace PublicApi
                             };
                         });
             services.AddAuthorization();
-
             //TODO Сделать политику, в которой просматривать личную информацию и прочие действия сможет только тот чья это информация
             //services.AddAuthorization(options =>
             //{
@@ -156,6 +155,7 @@ namespace PublicApi
                 });
             });
 
+            services.AddHttpContextAccessor();
             services
                 .AddGraphQLServer()
                 .AddAuthorization()
