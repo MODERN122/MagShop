@@ -69,7 +69,7 @@ namespace PublicApi
             services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
             var baseUrlConfig = new BaseUrlConfiguration();
             Configuration.Bind(BaseUrlConfiguration.CONFIG_NAME, baseUrlConfig);
-            services.AddScoped<IFileSystem, WebFileSystemService>(x => new WebFileSystemService($"{baseUrlConfig.WebBase}File")); 
+            services.AddScoped<IFileSystem, WebFileSystemService>(x => new WebFileSystemService($"{baseUrlConfig.WebBase}File"));
 
             services.AddPooledDbContextFactory<MagShopContext>(x =>
             {
@@ -169,21 +169,31 @@ namespace PublicApi
                 .AddTypeExtension<ProductQueries>()
                 .AddTypeExtension<OrderQueries>()
                 .AddTypeExtension<AuthenticationMutations>()
-                .AddHttpRequestInterceptor((context, executor, builder, cancellationToken) => {
+                .AddHttpRequestInterceptor((context, executor, builder, cancellationToken) =>
+                {
                     try
                     {
                         // Decode token
                         var authHeader = context.Request.Headers.Single(p => p.Key == "Authorization");
                         var tokenHandler = new JwtSecurityTokenHandler();
-                        var tokenStr = string.Join("", authHeader.Value.First().Skip(7));
-                        var token = tokenHandler.ReadJwtToken(tokenStr);
-                        // Get username and roles
-                        var username = token.Claims.First(x=>x.Type== "unique_name")?.Value;
-                        // Set User identity
-                        context.User = new GenericPrincipal(new GenericIdentity(username), token.Claims.Select(x=>x.Value).ToArray());
+                        var tokenStr = string.Join("", authHeader.Value.First().Skip(7)); 
+                        var key = Encoding.ASCII.GetBytes(ConstantsAPI.JWT_SECRET_KEY);
+
+                        var tokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(key),
+                            ValidateIssuer = false,
+                            ValidateAudience = false
+                        };
+                        var token = tokenHandler.ValidateToken(tokenStr, tokenValidationParameters, out var validToken);
+                        JwtSecurityToken validJwt = validToken as JwtSecurityToken;
+                        context.User = token;
                         builder.TryAddProperty(nameof(ClaimsPrincipal), context.User);
                     }
-                    catch (Exception ex) { }
+                    catch (Exception ex)
+                    {
+                    }
                     return ValueTask.CompletedTask;
                 });
         }
@@ -212,7 +222,7 @@ namespace PublicApi
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            }); 
+            });
 
             app.UseEndpoints(endpoints =>
             {

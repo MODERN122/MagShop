@@ -23,7 +23,7 @@ namespace PublicApi.GraphQL.Users
     public class UserQueries
     {
         [Authorize]
-        public async Task<GetUserResponse> GetUser(
+        public async Task<User> GetUser(
             [Service] IAsyncRepository<User> userRepository,
             [Service] IHttpContextAccessor contextAccessor,
             [Service] UserManager<UserAuthAccess> userManager,
@@ -32,33 +32,23 @@ namespace PublicApi.GraphQL.Users
             UserAuthAccess userAuth = await userManager.FindByNameAsync(currentUser.Claims.First().Value);
             if (userAuth != null)
             {
-                var response = new GetUserResponse(Guid.NewGuid());
                 var user = await userRepository.GetByIdAsync(userAuth.Id);
-                Guard.Against.Null(user, nameof(user));
-                response.User = user;
-                return response;
+                return user;
             }
             return null;
         }
 
-        [Authorize(Roles = new string[] {"Administators"})]
-        public async Task<GetUserResponse> GetUserById(
-
-            [Service] IAsyncRepository<User> userRepository, 
-            [Service] UserManager<UserAuthAccess> userManager, 
+        [Authorize(Roles = new string[] { "Administators" })]
+        public async Task<User> GetUserById(
+            string id,
+            [Service] IAsyncRepository<User> userRepository,
+            [Service] UserManager<UserAuthAccess> userManager,
             [Service] IHttpContextAccessor contextAccessor,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
         {
-            UserAuthAccess userAuth = await userManager.FindByNameAsync(currentUser.Claims.First().Value);
-            if (userAuth != null)
-            {
-                var response = new GetUserResponse(Guid.NewGuid());
-                var user = await userRepository.GetByIdAsync(userAuth.Id);
-                Guard.Against.Null(user, nameof(user));
-                response.User = user;
-                return response;
-            }
-            return null;
+            //UserAuthAccess userAuth = await userManager.FindByNameAsync(currentUser.Claims.First().Value);
+            var user = await userRepository.GetByIdAsync(id);
+            return user;
         }
 
     }
