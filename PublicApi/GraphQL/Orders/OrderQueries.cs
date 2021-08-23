@@ -14,15 +14,20 @@ namespace PublicApi.GraphQL.Orders
     [ExtendObjectType(typeof(Query))]
     public class OrderQueries
     {
-        public async Task<Order> GetOrder(string id,
-            [Service] IOrderRepository ordersRepository) =>
-            await ordersRepository.GetByIdWithItemsAsync(id);
+        private IOrderRepository _ordersRepository;
 
-        public async Task<IEnumerable<Order>> GetOrders(int? limit,
-            [Service]IOrderRepository ordersRepository)
+        public OrderQueries(
+            IOrderRepository orderRepository)
         {
-            OrderSpecification productSpecification = new OrderSpecification(limit??int.MaxValue);
-            var orders = await ordersRepository.ListAsync(productSpecification);
+            _ordersRepository = orderRepository;
+        }
+        public async Task<Order> GetOrder(string id) =>
+            await _ordersRepository.GetByIdWithItemsAsync(id);
+
+        public async Task<IEnumerable<Order>> GetOrders(int? skip, int? limit)
+        {
+            OrderSpecification productSpecification = new OrderSpecification(skip??0, limit??int.MaxValue);
+            var orders = await _ordersRepository.ListAsync(productSpecification);
             return orders;
         }
     }

@@ -16,9 +16,10 @@ namespace Infrastructure.Data
 
         public async Task<Order> GetByIdWithItemsAsync(string id)
         {
-            using (var context = this._contextFactory.CreateDbContext())
+            using (var context = _contextFactory.CreateDbContext())
             {
                 var res = await context.Set<Order>()
+                    .Include(x=>x.ShipToAddress)
                     .Include(o => o.Items)
                     .ThenInclude(i => i.Product)
                     .FirstOrDefaultAsync(x => x.OrderId == id);

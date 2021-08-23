@@ -8,14 +8,15 @@ namespace ApplicationCore.Specifications
 {
     public class OrderSpecification : Specification<Order>
     {
-        public OrderSpecification(int skip=0, int limit = int.MaxValue)
+        public OrderSpecification(int skip = 0, int limit = int.MaxValue)
         {
             Query
                 .Skip(skip)
-                .Take(limit)
+                .Take(limit);
+            Query
                 .Include(x => x.Items)
                     .ThenInclude(x => x.Product)
-                    .ThenInclude(x => x.Images);
+                        .ThenInclude(x => x.Images);
             Query.Include(x => x.ShipToAddress);
         }
     }

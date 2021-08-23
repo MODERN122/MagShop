@@ -46,7 +46,7 @@ namespace Infrastructure.Data
         {
             using (var context = this._contextFactory.CreateDbContext())
             {
-                var specificationResult = ApplySpecification(spec);
+                var specificationResult = ApplySpecification(spec, context);
                 return await specificationResult.ToListAsync();
             }
         }
@@ -55,7 +55,7 @@ namespace Infrastructure.Data
         {
             using (var context = this._contextFactory.CreateDbContext())
             {
-                var specificationResult = ApplySpecification(spec);
+                var specificationResult = ApplySpecification(spec, context);
                 return await specificationResult.CountAsync();
             }
         }
@@ -92,7 +92,7 @@ namespace Infrastructure.Data
         {
             using (var context = this._contextFactory.CreateDbContext())
             {
-                var specificationResult = ApplySpecification(spec);
+                var specificationResult = ApplySpecification(spec, context);
                 return await specificationResult.FirstAsync();
             }
         }
@@ -101,17 +101,14 @@ namespace Infrastructure.Data
         {
             using (var context = this._contextFactory.CreateDbContext())
             {
-                var specificationResult = ApplySpecification(spec);
+                var specificationResult = ApplySpecification(spec, context);
                 return await specificationResult.FirstOrDefaultAsync();
             }
         }
-        protected IQueryable<T> ApplySpecification(ISpecification<T> spec)
+        protected IQueryable<T> ApplySpecification(ISpecification<T> spec, MagShopContext context)
         {
-            using (var context = this._contextFactory.CreateDbContext())
-            {
                 var evaluator = new SpecificationEvaluator<T>();
                 return evaluator.GetQuery(context.Set<T>().AsSplitQuery(), spec);
-            }
         }
     }
 }

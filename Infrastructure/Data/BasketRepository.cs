@@ -13,24 +13,24 @@ namespace Infrastructure.Data
 {
     public class BasketRepository : EfRepository<Basket>, IBasketRepository
     {
-        
+
         public BasketRepository(IDbContextFactory<MagShopContext> dbContext) : base(dbContext)
         {
         }
 
-        public async Task<Basket> FirstAsync(string userId, ISpecification<Basket> spec,  CancellationToken token)
+        public async Task<Basket> FirstAsync(string userId, ISpecification<Basket> spec, CancellationToken token)
         {
             try
             {
-                var specificationResult = ApplySpecification(spec);
-                var currentBasket = await specificationResult.FirstAsync();
-                if (currentBasket != null)
+                using (var context = this._contextFactory.CreateDbContext())
                 {
-                    return currentBasket;
-                }
-                else
-                {
-                    using (var context = this._contextFactory.CreateDbContext())
+                    var specificationResult = ApplySpecification(spec, context);
+                    var currentBasket = await specificationResult.FirstAsync();
+                    if (currentBasket != null)
+                    {
+                        return currentBasket;
+                    }
+                    else
                     {
                         var user = await context.Set<User>().FindAsync(userId);
                         Guard.Against.Null(user, nameof(user));
