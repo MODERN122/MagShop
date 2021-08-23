@@ -6,13 +6,10 @@ using System.Text;
 
 namespace ApplicationCore.Specifications
 {
-    public class OrderSpecification : Specification<Order>
+    public class OrderSpecification : BaseSpecification<Order>
     {
-        public OrderSpecification(int skip = 0, int limit = int.MaxValue)
+        public OrderSpecification(int pageIndex = 0, int pageSize = 20) : base(pageIndex, pageSize)
         {
-            Query
-                .Skip(skip)
-                .Take(limit);
             Query
                 .Include(x => x.Items)
                     .ThenInclude(x => x.Product)

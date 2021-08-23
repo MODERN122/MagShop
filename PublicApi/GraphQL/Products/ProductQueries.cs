@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using ApplicationCore.Specifications;
 using HotChocolate;
 using HotChocolate.AspNetCore.Authorization;
 using HotChocolate.Types;
@@ -22,9 +23,13 @@ namespace PublicApi.GraphQL.Products
             _productRepository = productRepository;
         }
 
-        [Authorize(Roles =new[] {"Administrators"})]
-        public async Task<IReadOnlyList<Product>> GetProducts(
-            [Service] IHttpContextAccessor contextAccessor) =>
+        public async Task<IReadOnlyList<Product>> GetProductsSpec(int pageIndex = 0, int pageSize = 20)
+        {
+            var spec = new ProductSpecification(pageIndex, pageSize);
+            return await _productRepository.ListAsync(spec);
+        }
+
+        public async Task<IReadOnlyList<Product>> GetProducts() =>
             await _productRepository.ListAllAsync();
     }
 }

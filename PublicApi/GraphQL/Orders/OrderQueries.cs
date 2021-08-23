@@ -2,6 +2,7 @@
 using ApplicationCore.Interfaces;
 using ApplicationCore.Specifications;
 using HotChocolate;
+using HotChocolate.AspNetCore.Authorization;
 using HotChocolate.Types;
 using Infrastructure.Data;
 using System;
@@ -24,9 +25,10 @@ namespace PublicApi.GraphQL.Orders
         public async Task<Order> GetOrder(string id) =>
             await _ordersRepository.GetByIdWithItemsAsync(id);
 
-        public async Task<IEnumerable<Order>> GetOrders(int? skip, int? limit)
+        [Authorize(Roles = new[] { "Administrators" })]
+        public async Task<IEnumerable<Order>> GetOrders(int pageIndex = 0, int pageSize = 20)
         {
-            OrderSpecification productSpecification = new OrderSpecification(skip??0, limit??int.MaxValue);
+            OrderSpecification productSpecification = new OrderSpecification(pageIndex, pageSize);
             var orders = await _ordersRepository.ListAsync(productSpecification);
             return orders;
         }
