@@ -5,7 +5,7 @@ namespace ApplicationCore.Entities
 {
     public class BasketItem
     {
-        public string BasketItemId { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; set; } = Guid.NewGuid().ToString();
         public int Quantity { get; private set; }
         public string ProductId { get; private set; }
         public Product Product { get; set; }
@@ -18,7 +18,7 @@ namespace ApplicationCore.Entities
         public BasketItem(int quantity, Product product)
         {
             Product = product;
-            ProductId = product.ProductId;
+            ProductId = product.Id;
             SetQuantity(quantity);
         }
 

@@ -20,7 +20,8 @@ namespace PublicApi.GraphQL.Products
         public record AddProductInput(
             string ProductName,
             string StoreId,
-            string CategoryId);
+            string CategoryId,
+            List<string> PropertiesId);
         public class AddProductPayload
         {
             public AddProductPayload(Product product)
@@ -37,7 +38,7 @@ namespace PublicApi.GraphQL.Products
         {
             var product = new Product
             {
-                ProductName = input.ProductName,
+                Name = input.ProductName,
                 StoreId = input.StoreId,
                 CategoryId = input.CategoryId
             };

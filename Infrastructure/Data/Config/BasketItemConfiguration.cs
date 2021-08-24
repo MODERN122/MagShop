@@ -18,7 +18,7 @@ namespace Infrastructure.Data.Config
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasForeignKey(x => x.ProductId)
                 .IsRequired();
-            builder.HasKey(p => p.BasketItemId);
+            builder.HasKey(p => p.Id);
         }
     }
 }

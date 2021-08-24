@@ -7,13 +7,10 @@ using System.Text;
 
 namespace Infrastructure.Data.Config
 {
-    public class PropertyConfiguration : IEntityTypeConfiguration<Property>
+    public class ProductPropertyConfiguration : IEntityTypeConfiguration<ProductProperty>
     {
-        public void Configure(EntityTypeBuilder<Property> builder)
+        public void Configure(EntityTypeBuilder<ProductProperty> builder)
         {
-            builder.HasMany(p => p.Items)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

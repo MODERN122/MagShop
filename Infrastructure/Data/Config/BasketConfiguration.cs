@@ -14,7 +14,7 @@ namespace Infrastructure.Data.Config
             var navigation = builder.Metadata.FindNavigation(nameof(Basket.Items));
             navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
 
-            builder.HasKey(p => p.BasketId);
+            builder.HasKey(p => p.Id);
         }
     }
 }

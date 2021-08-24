@@ -23,9 +23,10 @@ namespace PublicApi.GraphQL.Products
             _productRepository = productRepository;
         }
 
-        public async Task<IReadOnlyList<Product>> GetProductsSpec(int pageIndex = 0, int pageSize = 20)
+        public async Task<IReadOnlyList<Product>> GetSearchProducts(int pageIndex = 0, int pageSize = 20, string categoryId = null, string storeId = null,
+            List<string> propertiesId = null)
         {
-            var spec = new ProductSpecification(pageIndex, pageSize);
+            var spec = new ProductSpecification(categoryId: categoryId, storeId: storeId, properties: propertiesId, pageIndex, pageSize);
             return await _productRepository.ListAsync(spec);
         }
 

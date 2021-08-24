@@ -67,7 +67,7 @@ namespace ApplicationCore.Entities
         }
         public void AddOrder(Order order)
         {
-            if (!Orders.Any(i => i.OrderId == order.OrderId))
+            if (!Orders.Any(i => i.Id == order.Id))
             {
                 _orders.Add(order);
                 return;

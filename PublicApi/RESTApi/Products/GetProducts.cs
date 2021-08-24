@@ -41,7 +41,7 @@ namespace ApplicationCore.RESTApi.Products
             }
             else
             {
-                var productSpec = new ProductSpecification(request.CategoryId, request.StoreId, request.PropertiesId);
+                var productSpec = new ProductSpecification(request.CategoryId, request.StoreId, request.PropertiesId, 0, 20);
                 var products = await _productRepository.ListAsync(productSpec);
                 response.Products = products.Cast<ProductPreview>().ToList();
                 return Ok(response);

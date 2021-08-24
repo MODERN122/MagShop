@@ -1,22 +1,26 @@
-﻿using System;
+﻿using ApplicationCore.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace ApplicationCore.Entities
 {
-    public class Property
+    public class Property : IAggregateRoot
     {
         public Property()
         {
 
         }
-        public Property(string propertyName, List<PropertyItem> propertyItems)
+        public Property(string id, string propertyName, List<PropertyItem> propertyItems)
         {
-            PropertyName = propertyName;
-            PropertyItems = propertyItems;
+            Id = id;
+            Name = propertyName;
+            Items = propertyItems;
         }
         public string Id { get; set; } = Guid.NewGuid().ToString();
-        public string PropertyName { get; set; }
-        public List<PropertyItem> PropertyItems {get;set;}
+        public string Name { get; set; }
+        public List<PropertyItem> Items {get;set;}
+        public ICollection<Product> Products { get; set; }
+        public List<ProductProperty> ProductProperties { get; set; }
     }
     public class PropertyItem
     {

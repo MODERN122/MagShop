@@ -14,8 +14,8 @@ namespace ApplicationCore.Entities
         {
 
         }
-        public string ProductId { get; set; } = Guid.NewGuid().ToString();
-        public string ProductName { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Name { get; set; }
         public byte[] PreviewImage { get; set; }
         public string CategoryId { get; set; }
 
@@ -25,7 +25,6 @@ namespace ApplicationCore.Entities
         /// Constraint 0.0-5.0
         /// </summary>
         public double Rating { get; set; }
-        public List<Property> Properties { get; set; }
         [Required]
         public string StoreId { get; set; }
         [JsonIgnore]

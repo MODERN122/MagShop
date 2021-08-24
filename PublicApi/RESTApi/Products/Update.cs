@@ -73,9 +73,9 @@ namespace ApplicationCore.RESTApi.Products
                 {
                     var newProd = _mapper.Map(request, oldProduct);
                     await _productRepository.UpdateAsync(oldProduct, cancellationToken);
-                    var productSpec = new ProductSpecification(oldProduct.ProductId);
+                    var productSpec = new ProductSpecification(oldProduct.Id);
                     oldProduct = await _productRepository.FirstAsync(productSpec);
-                    if (oldProduct.ProductId != null)
+                    if (oldProduct.Id != null)
                     {
 
                     }

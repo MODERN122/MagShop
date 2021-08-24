@@ -14,7 +14,7 @@ namespace Infrastructure.Data.Config
             builder.Property(b => b.ParentId)
                 .IsRequired(false);
             builder.HasOne(p => p.ParentCategory)
-                .WithMany(m => m.ChildrenCategories)
+                .WithMany(m => m.Childs)
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasForeignKey(f => f.ParentId);
         }

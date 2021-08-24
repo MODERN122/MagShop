@@ -22,7 +22,7 @@ namespace Infrastructure.Data
                     .Include(x=>x.ShipToAddress)
                     .Include(o => o.Items)
                     .ThenInclude(i => i.Product)
-                    .FirstOrDefaultAsync(x => x.OrderId == id);
+                    .FirstOrDefaultAsync(x => x.Id == id);
                 return res;
             }
         }

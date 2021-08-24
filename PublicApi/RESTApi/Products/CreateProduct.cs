@@ -63,7 +63,7 @@ namespace ApplicationCore.RESTApi.Products
                     var product = new Product();
                     _mapper.Map(request, product);
                     product = await _itemRepository.AddAsync(product, cancellationToken);
-                    if (product.ProductId != null)
+                    if (product.Id != null)
                     {
                         //var picName = $"{newItem}/{Path.GetExtension(request.PictureName)}";
                         //if (await _webFileSystem.SavePicture(picName, request.PictureBase64))
@@ -74,7 +74,7 @@ namespace ApplicationCore.RESTApi.Products
                     }
 
                     response.Product = product;
-                    return Created(this.Url.ToString() + "/" + product.ProductId, response);
+                    return Created(this.Url.ToString() + "/" + product.Id, response);
                 }
                 else
                 {

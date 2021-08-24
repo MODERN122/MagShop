@@ -20,7 +20,7 @@ namespace ApplicationCore.Entities
             AddRangeOrderItems(items);
         }
         
-        public string OrderId { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
         private readonly List<OrderItem> _items = new List<OrderItem>();
         public IReadOnlyCollection<OrderItem> Items => _items.AsReadOnly();
@@ -55,7 +55,7 @@ namespace ApplicationCore.Entities
             Product = product;
             SetQuantity(quantity);
         }
-        public string OrderItemId { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; set; } = Guid.NewGuid().ToString();
         public double? UnitPrice { get; private set; }
         public int Quantity { get; private set; }
         public string ProductId { get; set; }

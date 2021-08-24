@@ -14,12 +14,15 @@ namespace PublicApi.GraphQL
 {
     public class Query
     {
-        private IAsyncRepository<User> _usersRepository;
-        private IAsyncRepository<Store> _storesRepository;
+        private readonly IAsyncRepository<Property> _propertiesRepository;
+        private readonly IAsyncRepository<User> _usersRepository;
+        private readonly IAsyncRepository<Store> _storesRepository;
 
         public Query(IAsyncRepository<User> usersRepository,
-            IAsyncRepository<Store> storesRepository)
+            IAsyncRepository<Store> storesRepository,
+            IAsyncRepository<Property> propertiesRepository)
         {
+            _propertiesRepository = propertiesRepository;
             _usersRepository = usersRepository;
             _storesRepository = storesRepository;
         }
@@ -30,6 +33,10 @@ namespace PublicApi.GraphQL
 
         public async Task<IEnumerable<Store>> GetStores() =>
             await _storesRepository.ListAllAsync();
+
+        public async Task<IEnumerable<Property>> GetProperties() =>
+            await _propertiesRepository.ListAllAsync();
+
 
 
     }

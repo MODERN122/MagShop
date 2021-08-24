@@ -18,12 +18,12 @@ namespace ApplicationCore.Entities
         /// <param name="weight">weight for ML constraint 0.0-1.0</param>
         public Category(string id, string parentId, string name, double weight)
         {
-            CategoryId = id;
+            Id = id;
             ParentId = parentId;
             Name = name;
             Weight = weight;
         }
-        public string CategoryId { get; set; }
+        public string Id { get; set; }
         public string ParentId { get; set; }
         public string Name { get; set; }
         /// <summary>
@@ -33,7 +33,7 @@ namespace ApplicationCore.Entities
         [JsonIgnore]
         public Category ParentCategory { get; set; }
         [JsonIgnore]
-        public List<Category> ChildrenCategories { get; set; }
+        public List<Category> Childs { get; set; }
         [JsonIgnore]
         public List<Product> Products { get; set; }
 
