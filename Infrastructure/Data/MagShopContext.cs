@@ -26,10 +26,7 @@ namespace Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
-            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            
-            builder.Entity<Product>()
+            base.OnModelCreating(builder); builder.Entity<Product>()
            .HasMany(p => p.Properties)
            .WithMany(p => p.Products)
            .UsingEntity<ProductProperty>(
@@ -43,9 +40,10 @@ namespace Infrastructure.Data
                    .HasForeignKey(pt => pt.ProductId),
                j =>
                {
-                   j.Property(pt => pt.PublicationDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
-                   j.HasKey(t => new { t.ProductId, t.PropertyId });
+                   j.Property(pt => pt.PublicationDate).HasDefaultValueSql("CURRENT_TIMESTAMP");                  
                });
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());         
+           
         }
     }
 }

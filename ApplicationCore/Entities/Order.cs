@@ -49,7 +49,7 @@ namespace ApplicationCore.Entities
         {
 
         }
-        public OrderItem(int quantity, Product product, List<PropertyItem> propertyItems)
+        public OrderItem(int quantity, Product product, List<ProductPropertyItem> propertyItems)
         {
             UnitPrice = propertyItems.First(x=>x.PriceNew!=null).PriceNew;
             Product = product;

@@ -32,6 +32,8 @@ namespace ApplicationCore.Entities
             CategoryId = categoryId;
             Description = description;
             StoreId = storeId;
+            Random x = new Random();
+            Rating = x.Next(1, 5);
         }
         public Product(string name, string categoryId,
             string description, string storeId)
@@ -47,7 +49,7 @@ namespace ApplicationCore.Entities
         public double Weight { get; set; }
         public string Description { get; set; }
         public string Url { get; set; }
-        public ICollection<Property> Properties { get; set; }
+        public List<Property> Properties { get; set; }
         public List<ProductProperty> ProductProperties { get; set; }
         //Not Added while
         //public List<string> Reviews { get; set; }

@@ -16,24 +16,25 @@ namespace ApplicationCore.Specifications
                 .Where(p => p.Id == productId);
             Query
                 .Include(i => i.Category);
-            Query.Include(p => p.Properties)
-                .ThenInclude(i => i.Items);
+            Query.Include(x => x.ProductProperties).ThenInclude(x => x.ProductPropertyItems);
+            Query.Include(p => p.Properties);
             Query.
                 Include(p => p.Images);
             Query.Include(p => p.Store);
         }
-        public ProductSpecification(string categoryId, string storeId, List<string> properties, int pageIndex, int pageSize) : base(pageIndex, pageSize)
+        public ProductSpecification(string categoryId, string storeId, List<string> propertiesId, int pageIndex, int pageSize) : base(pageIndex, pageSize)
         {
             Query
                 .Where(p => (string.IsNullOrWhiteSpace(categoryId) || p.CategoryId == categoryId) && (string.IsNullOrWhiteSpace(storeId) || p.StoreId == storeId));
-            if (properties != null && properties.Count != 0)
+            if (propertiesId != null && propertiesId.Count != 0)
             {
-                Query.Where(p => p.Properties.Any(a => properties.Any(z => z == a.Name)));
+                Query.Where(p => p.Properties.Any(a => propertiesId.Any(z => z == a.Id)));
             }
             Query
                 .Include(i => i.Category);
-            Query.Include(p => p.Properties)
-                .ThenInclude(i => i.Items);
+
+            Query.Include(x => x.ProductProperties).ThenInclude(x => x.Property).ThenInclude(x=>x.Items);
+            
         }
     }
 }

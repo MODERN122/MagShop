@@ -6,6 +6,7 @@ namespace ApplicationCore.Entities
 {
     public class ProductProperty
     {
+        public string Id { get; set; } = Guid.NewGuid().ToString();
         public DateTime PublicationDate { get; set; }
 
         public string ProductId { get; set; }
@@ -13,5 +14,7 @@ namespace ApplicationCore.Entities
 
         public string PropertyId { get; set; }
         public Property Property { get; set; }
+
+        public List<ProductPropertyItem> ProductPropertyItems { get; set; }
     }
 }

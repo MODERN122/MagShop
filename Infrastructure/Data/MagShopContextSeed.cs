@@ -43,6 +43,11 @@ namespace Infrastructure.Data
         private const string CATEGORY_4_ID = "category4";
         private const string CATEGORY_5_ID = "category5";
         private const string CATEGORY_6_ID = "category6";
+        //Properties
+        private const string PROPERTY_1_ID = "property1";
+        private const string PROPERTY_2_ID = "property2";
+        private const string PROPERTY_3_ID = "property3";
+
         #endregion
 
         public static async Task SeedAsync(MagShopContext context,
@@ -137,7 +142,7 @@ namespace Infrastructure.Data
             }
         }
 
-        private static List<Property> GetPreconfiguredProperties()
+        private static List<Property> GetPreconfiguredProperties(string propertyId=null)
         {
             #region IMAGES
             var assembly = Assembly.GetExecutingAssembly();
@@ -206,35 +211,44 @@ namespace Infrastructure.Data
             }
             #endregion
             Random random = new Random();
-            return new List<Property>()
+            var list = new List<Property>()
             {
-               new Property("1", "Классы",
-                        new List<PropertyItem>(){
-                           new PropertyItem("1", random.Next(1000,10000)){Image = image1 },
-                        new PropertyItem("2" , random.Next(1000,10000)){Image = image1 },
-                        new PropertyItem("3", random.Next(1000,10000)){Image = image1 },
-                        new PropertyItem("4", random.Next(1000,10000)){Image = image1 },
-                        new PropertyItem("5", random.Next(1000,10000)){Image = image1 },
-                        new PropertyItem("6", random.Next(1000,10000)){Image = image1 },
-                        new PropertyItem("7", random.Next(1000,10000)){Image = image1 },
-                        new PropertyItem("8", random.Next(1000,10000)){Image = image1 },
-                        new PropertyItem("9", random.Next(1000,10000)){Image = image1 },
-                        }),
-                new Property("2","Типы",
+               new Property(PROPERTY_1_ID, "Классы",
+                new List<PropertyItem>(){
+                    new PropertyItem("1","1"),
+                    new PropertyItem("2","2"),
+                    new PropertyItem("3","3"),
+                    new PropertyItem("4","4"),
+                    new PropertyItem("5","5"),
+                    new PropertyItem("6","6"),
+                    new PropertyItem("7","7"),
+                    new PropertyItem("8","8"),
+                    new PropertyItem("9","9"),
+                }),
+                new Property(PROPERTY_2_ID,"Типы",
+                   new List<PropertyItem>(){
+                       new PropertyItem("10","Для голубей"),
+                       new PropertyItem("12","Для воробьев"),
+                       new PropertyItem("13","Для белок"),
+                       new PropertyItem("14","Для кошек"),
+
+                   }),
+                new Property(PROPERTY_3_ID,"Уровень сложности",
                     new List<PropertyItem>(){
-                        new PropertyItem("Для голубей", random.Next(1000,10000)){Image = image2 },
-                        new PropertyItem("Для воробьев", random.Next(1000,10000)){Image = image2 },
-                        new PropertyItem("Для белок", random.Next(1000,10000)){Image = image2 },
-                        new PropertyItem("Для кошек", random.Next(1000,10000)){Image = image2 },
-                    }),
-                new Property("3","Уровень сложности",
-                    new List<PropertyItem>(){
-                        new PropertyItem("Минимальный", random.Next(1000,10000)){Image = image3},
-                        new PropertyItem("Нормальный", random.Next(1000,10000)){Image = image3},
-                        new PropertyItem("Продвинутый", random.Next(1000,10000)){Image = image3},
-                        new PropertyItem("Экспертный", random.Next(1000,10000)){Image = image3},
+                        new PropertyItem("15","Минимальный"),
+                        new PropertyItem("16","Нормальный"),
+                        new PropertyItem("17","Продвинутый"),
+                        new PropertyItem("18","Экспертный"),
                     })
             };
+            if (propertyId != null)
+            {
+                return list.Where(x => x.Id == propertyId).ToList();
+            }
+            else
+            {
+                return list;
+            }
         }
 
         private static void AddPreconfiguredBasketItemsToFirstUser(MagShopContext context)
@@ -335,66 +349,125 @@ namespace Infrastructure.Data
             }
             #endregion
             Random random = new Random();
+            Func<string, List<ProductPropertyItem>> func = x=> GetPreconfiguredProperties(x).First()
+                                .Items.Select(y => (y.Id, y.Caption))
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList();
             return new List<Product>()
             {
-                new Product(PRODUCT_1_ID, "Биология", CATEGORY_3_ID, "Обучит науке о живых организмах",
-
-                    STORE_ID)
+                new Product(PRODUCT_1_ID, "Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
                  {
                     ProductProperties = new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
                             ProductId = PRODUCT_1_ID,
-                            PropertyId = GetPreconfiguredProperties().First().Id
+                            PropertyId = PROPERTY_1_ID,
+                            ProductPropertyItems = func(PROPERTY_1_ID)
                         }
                     },
                     PreviewImage = image1,
                     Url = "ewqeqe"
                 },
 
-               // new Product(PRODUCT_2_ID, "Корушка", CATEGORY_6_ID, "Сдлайте все своими руками",
-               //  STORE_ID)
-               // {
-               //     PreviewImage = image2,
-               //     Url = "ewqeqe"
-               // },
-               // new Product(PRODUCT_3_ID, "1с", CATEGORY_5_ID, "Обучитесь программированию на 1с",
-               // STORE_ID)
-               // {
-               //     PreviewImage = image3,
-               //     Url = "ewqeqe"
-               // },
-               // new Product(PRODUCT_4_ID, "Физика", CATEGORY_4_ID, "Обучение основам физики"
+                new Product(PRODUCT_2_ID, "Корушка", CATEGORY_6_ID, "Сдлайте все своими руками",
+                 STORE_ID)
+                {
+                    ProductProperties = new List<ProductProperty>()
+                    {
+                        new ProductProperty()
+                        {
+                            ProductId = PRODUCT_2_ID,
+                            PropertyId = PROPERTY_2_ID,
+                            ProductPropertyItems = func(PROPERTY_1_ID)
+                        }
+                    },
+                    PreviewImage = image2,
+                    Url = "ewqeqe"
+                },
+                new Product(PRODUCT_3_ID, "1с", CATEGORY_5_ID, "Обучитесь программированию на 1с",
+                STORE_ID)
+                {ProductProperties = new List<ProductProperty>()
+                    {
+                        new ProductProperty()
+                        {
+                            ProductId = PRODUCT_3_ID,
+                            PropertyId = PROPERTY_1_ID,
+                            ProductPropertyItems = func(PROPERTY_1_ID)
+                        }
+                    },
+                    PreviewImage = image3,
+                    Url = "ewqeqe"
+                },
+                new Product(PRODUCT_4_ID, "Физика", CATEGORY_4_ID, "Обучение основам физики"
 
-               // , STORE_ID)
-               // {
-               //     PreviewImage = image4,
-               //     Url = "ewqeqe"
-               // },
-               // new Product(PRODUCT_5_ID, "Французкий язык", CATEGORY_2_ID, "Научитесь говорить как истинный француз",
-               //STORE_ID+"1")
-               // {
-               //     PreviewImage = image5,
-               //     Url = "ewqeqe"
-               // },
-               // new Product(PRODUCT_6_ID, "Математика", CATEGORY_1_ID, "Научитесть складывать цифры и не только",
-               // STORE_ID+"1")
-               // {
-               //     PreviewImage = image6,
-               //     Url = "ewqeqe"
-               // },
-               // new Product(PRODUCT_7_ID, "Русский язык", CATEGORY_2_ID, "Обучат грамматике",
-               //STORE_ID+"2")
-               // {
-               //     PreviewImage = image7,
-               //     Url = "ewqeqe"
-               // },
-               // new Product(PRODUCT_8_ID, "География", CATEGORY_4_ID, "Научат ориентироваться в картах",  STORE_ID+"2")
-               // {
-               //     PreviewImage = image8,
-               //     Url = "ewqeqe"
-               // },
+                , STORE_ID)
+                {ProductProperties = new List<ProductProperty>()
+                    {
+                        new ProductProperty()
+                        {
+                            ProductId = PRODUCT_4_ID,
+                            PropertyId = PROPERTY_1_ID,
+                            ProductPropertyItems = func(PROPERTY_2_ID)
+                        }
+                    },
+                    PreviewImage = image4,
+                    Url = "ewqeqe"
+                },
+                new Product(PRODUCT_5_ID, "Французкий язык", CATEGORY_2_ID, "Научитесь говорить как истинный француз",
+               STORE_ID+"1")
+                {ProductProperties = new List<ProductProperty>()
+                    {
+                        new ProductProperty()
+                        {
+                            ProductId = PRODUCT_5_ID,
+                            PropertyId = PROPERTY_3_ID,
+                            ProductPropertyItems = func(PROPERTY_1_ID)
+                        }
+                    },
+                    PreviewImage = image5,
+                    Url = "ewqeqe"
+                },
+                new Product(PRODUCT_6_ID, "Математика", CATEGORY_1_ID, "Научитесть складывать цифры и не только",
+                STORE_ID+"1")
+                {ProductProperties = new List<ProductProperty>()
+                    {
+                        new ProductProperty()
+                        {
+                            ProductId = PRODUCT_6_ID,
+                            PropertyId = PROPERTY_3_ID,
+                            ProductPropertyItems = func(PROPERTY_2_ID)
+                        }
+                    },
+                    PreviewImage = image6,
+                    Url = "ewqeqe"
+                },
+                new Product(PRODUCT_7_ID, "Русский язык", CATEGORY_2_ID, "Обучат грамматике",
+               STORE_ID+"2")
+                {ProductProperties = new List<ProductProperty>()
+                    {
+                        new ProductProperty()
+                        {
+                            ProductId = PRODUCT_7_ID,
+                            PropertyId = PROPERTY_1_ID,
+                            ProductPropertyItems = func(PROPERTY_1_ID)
+                        }
+                    },
+                    PreviewImage = image7,
+                    Url = "ewqeqe"
+                },
+                new Product(PRODUCT_8_ID, "География", CATEGORY_4_ID, "Научат ориентироваться в картах",  STORE_ID+"2")
+                {ProductProperties = new List<ProductProperty>()
+                    {
+                        new ProductProperty()
+                        {
+                            ProductId = PRODUCT_8_ID,
+                            PropertyId = PROPERTY_2_ID,
+                            ProductPropertyItems = func(PROPERTY_3_ID)
+                        }
+                    },
+                    PreviewImage = image8,
+                    Url = "ewqeqe"
+                },
             };
         }
         #endregion
@@ -417,7 +490,7 @@ namespace Infrastructure.Data
             List<OrderItem> orderItems = new List<OrderItem>();
             foreach (var product in products)
             {
-                orderItems.Add(new OrderItem(2, product, product.Properties.Select(x => x.Items.First()).ToList()));
+                orderItems.Add(new OrderItem(2, product, product.ProductProperties.Select(x => x.ProductPropertyItems.First()).ToList()));
             }
             user.AddOrder(
                 new Order(DateTime.Now, user.Addresses.First().AddressId, orderItems));

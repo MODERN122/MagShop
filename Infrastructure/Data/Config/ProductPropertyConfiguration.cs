@@ -11,6 +11,10 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<ProductProperty> builder)
         {
+            builder.HasKey(x => x.Id);
+            builder.HasMany(p => p.ProductPropertyItems)
+                .WithOne(x => x.ProductProperty)
+                .HasForeignKey(x => x.ProductPropertyId);
         }
     }
 }

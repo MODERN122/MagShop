@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using ApplicationCore.Specifications;
 using HotChocolate;
 using HotChocolate.AspNetCore.Authorization;
 using Infrastructure.Data;
@@ -34,8 +35,11 @@ namespace PublicApi.GraphQL
         public async Task<IEnumerable<Store>> GetStores() =>
             await _storesRepository.ListAllAsync();
 
-        public async Task<IEnumerable<Property>> GetProperties() =>
-            await _propertiesRepository.ListAllAsync();
+        public async Task<IEnumerable<Property>> GetProperties()
+        {
+            var spec = new PropertySpecification();
+            return await _propertiesRepository.ListAsync(spec);
+        }
 
 
 

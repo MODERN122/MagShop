@@ -13,7 +13,7 @@ namespace Infrastructure.Data.Config
         {
             builder.HasMany(x => x.Images)
                 .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);            
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

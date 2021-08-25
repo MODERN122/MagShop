@@ -26,11 +26,13 @@ namespace PublicApi.GraphQL.Products
         public async Task<IReadOnlyList<Product>> GetSearchProducts(int pageIndex = 0, int pageSize = 20, string categoryId = null, string storeId = null,
             List<string> propertiesId = null)
         {
-            var spec = new ProductSpecification(categoryId: categoryId, storeId: storeId, properties: propertiesId, pageIndex, pageSize);
+            var spec = new ProductSpecification(categoryId: categoryId, storeId: storeId, propertiesId: propertiesId, pageIndex, pageSize);
             return await _productRepository.ListAsync(spec);
         }
-
-        public async Task<IReadOnlyList<Product>> GetProducts() =>
-            await _productRepository.ListAllAsync();
+        public async Task<Product> GetProductById(string id)
+        {
+            var spec = new ProductSpecification(id);
+            return await _productRepository.FirstAsync(spec);
+        }
     }
 }

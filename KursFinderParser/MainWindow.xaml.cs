@@ -164,9 +164,9 @@ namespace kursfinderparser
                     PreviewImage = course.Image,
                     Properties = new List<Property>()
                     {
-                        new Property("Продолжительность", new List<PropertyItem>()
+                        new Property("Продолжительность", new List<ProductPropertyItem>()
                         {
-                            new PropertyItem(course.Duration, double.Parse(new String(course.Price.Where(Char.IsDigit).ToArray())))
+                            new ProductPropertyItem(course.Duration, double.Parse(new String(course.Price.Where(Char.IsDigit).ToArray())))
                         })
                     },
                     Url = course.OuterUrl
