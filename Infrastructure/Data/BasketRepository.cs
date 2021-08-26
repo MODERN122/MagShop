@@ -46,7 +46,7 @@ namespace Infrastructure.Data
                 return null;
             }
         }
-        public async Task<Basket> AddBasketAsync(string userId, CancellationToken token)
+        public async Task<Basket> AddBasketAsync(string userId, CancellationToken token = default)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace Infrastructure.Data
             }
         }
 
-        public async Task<Basket> TransferBasketAsync(string anonymousUserId, CancellationToken token)
+        public async Task<Basket> TransferBasketAsync(string anonymousUserId, CancellationToken token = default)
         {
             return new Basket();
         }

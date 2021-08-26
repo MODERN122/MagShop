@@ -10,9 +10,9 @@ namespace ApplicationCore.Interfaces
         Task<T> GetByIdAsync(string id);
         Task<IReadOnlyList<T>> ListAllAsync();
         Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec);
-        Task<T> AddAsync(T entity, CancellationToken token);
-        Task UpdateAsync(T entity, CancellationToken token);
-        Task DeleteAsync(T entity, CancellationToken token);
+        Task<T> AddAsync(T entity, CancellationToken token= default);
+        Task<bool> UpdateAsync(T entity, CancellationToken token = default);
+        Task DeleteAsync(T entity, CancellationToken token = default);
         Task<int> CountAsync(ISpecification<T> spec);
         Task<T> FirstAsync(ISpecification<T> spec);
         Task<T> FirstOrDefaultAsync(ISpecification<T> spec);

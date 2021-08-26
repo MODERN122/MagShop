@@ -188,7 +188,7 @@ namespace PublicApi.Providers.AwsS3
                 {
                     var actualFolder = folder.Substring(sourcePrefix.Length);
                     actualFolder = actualFolder.Substring(0, actualFolder.Length - 1);
-                    var ttt = CopyFolderInsideS3Bucket(strippedSource + "/" + actualFolder, strippedDestination + "/" + actualFolder).Result;
+                    var ttt = CopyFolderInsideS3Bucket(strippedSource + "/" + actualFolder, strippedDestination + "/" + actualFolder);
                 }
 
                 return true;

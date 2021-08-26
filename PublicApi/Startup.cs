@@ -169,6 +169,7 @@ namespace PublicApi
                 .AddTypeExtension<ProductQueries>()
                 .AddTypeExtension<OrderQueries>()
                 .AddTypeExtension<AuthenticationMutations>()
+                .AddTypeExtension<ProductMutaions>()
                 .AddHttpRequestInterceptor((context, executor, builder, cancellationToken) =>
                 {
                     try

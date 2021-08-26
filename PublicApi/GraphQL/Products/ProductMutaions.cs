@@ -1,6 +1,10 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using HotChocolate;
 using HotChocolate.AspNetCore.Authorization;
+using HotChocolate.Data;
+using HotChocolate.Types;
+using Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +12,10 @@ using System.Threading.Tasks;
 
 namespace PublicApi.GraphQL.Products
 {
+    [ExtendObjectType(typeof(Mutation))]
+    //[ExtendObjectType(
+    //nameof(ProductProperty),
+    //IgnoreProperties = new[] { nameof(ProductProperty.ProductId), nameof(ProductProperty.Product) })]
     public class ProductMutaions
     {
         private IAsyncRepository<Product> _productRepository;
@@ -17,11 +25,20 @@ namespace PublicApi.GraphQL.Products
         {
             _productRepository = productRepository;
         }
+
         public record AddProductInput(
-            string ProductName,
+    [GraphQLNonNullType]
+            string Name,
+    [GraphQLNonNullType]
             string StoreId,
+    [GraphQLNonNullType]
             string CategoryId,
-            List<string> PropertiesId);
+    [GraphQLNonNullType]
+            string Description,
+    [GraphQLNonNullType]
+            string PreviewImagePath,
+    [GraphQLNonNullType]
+            List<ProductPropertiesInput> ProductProperties);
         public class AddProductPayload
         {
             public AddProductPayload(Product product)
@@ -31,19 +48,53 @@ namespace PublicApi.GraphQL.Products
 
             public Product Product { get; }
         }
-
-        [Authorize]
-        public async Task<AddProductPayload> AddProductAsync(
-               AddProductInput input)
+        public class ProductPropertiesInput
         {
-            var product = new Product
+            [GraphQLNonNullType]
+            public string PropertyId { get; set; }
+            public List<ProductPropertyItemInput> ProductPropertyItems { get; set; }
+        }
+        public class ProductPropertyItemInput
+        {
+            [GraphQLNonNullType]
+            public string Caption { get; set; }
+
+            [GraphQLNonNullType]
+            public string PropertyItemId { get; set; }
+            public string ImagePath { get; set; }
+        }
+        
+        [UseDbContext(typeof(MagShopContext))]
+        [Authorize]
+        public async Task<Product> AddProductAsync(
+               AddProductInput input,
+               [ScopedService] MagShopContext context)
+        {
+            var product = new Product(input.Name, input.CategoryId, input.Description, input.StoreId)
             {
-                Name = input.ProductName,
-                StoreId = input.StoreId,
-                CategoryId = input.CategoryId
+                ProductProperties = input.ProductProperties
+                    .Select(x => new ProductProperty()
+                    {
+                        PropertyId = x.PropertyId,
+                        ProductPropertyItems = x.ProductPropertyItems?
+                            .Select(x => new ProductPropertyItem(x.PropertyItemId, x.Caption))
+                            .ToList()??new List<ProductPropertyItem>()
+                    })
+                    .ToList(),
+                PreviewImagePath = input.PreviewImagePath,
+                //TODO create url for data
+                Url = ""
             };
-            var result = await _productRepository.AddAsync(product, new System.Threading.CancellationToken());
-            return new AddProductPayload(result);
+            try
+            {
+                var result = await _productRepository.AddAsync(product);
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
     }
 }

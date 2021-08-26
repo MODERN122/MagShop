@@ -49,7 +49,7 @@ namespace ApplicationCore.Entities
         public PropertyItem PropertyItem { get; set; }
         [ForeignKey("ProductPropertyId")]
         public ProductProperty ProductProperty { get; set; }
-        public byte[] Image { get; set; }
+        public byte[] Image { get; set; } = new byte[0];
 
         public double PriceNew { get; set; } = -1;
         public double? PriceOld { get; set; }

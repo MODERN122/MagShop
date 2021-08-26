@@ -60,27 +60,34 @@ namespace Infrastructure.Data
             }
         }
 
-        public async Task<T> AddAsync(T entity, CancellationToken token)
+        public async Task<T> AddAsync(T entity, CancellationToken token = default)
         {
             using (var context = this._contextFactory.CreateDbContext())
             {
-                await context.Set<T>().AddAsync(entity);
-                await context.SaveChangesAsync(token);
-
-                return entity;
+                var result = await context.Set<T>().AddAsync(entity);
+                var resInt = await context.SaveChangesAsync(token);
+                if (resInt > 0)
+                {
+                    return result.Entity;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
-        public async Task UpdateAsync(T entity, CancellationToken token)
+        public async Task<bool> UpdateAsync(T entity, CancellationToken token = default)
         {
             using (var context = this._contextFactory.CreateDbContext())
             {
                 context.Entry(entity).State = EntityState.Modified;
                 await context.SaveChangesAsync(token);
+                return true;
             }
         }
 
-        public async Task DeleteAsync(T entity, CancellationToken token)
+        public async Task DeleteAsync(T entity, CancellationToken token = default)
         {
             using (var context = this._contextFactory.CreateDbContext())
             {
@@ -110,5 +117,6 @@ namespace Infrastructure.Data
                 var evaluator = new SpecificationEvaluator<T>();
                 return evaluator.GetQuery(context.Set<T>().AsSplitQuery(), spec);
         }
+
     }
 }

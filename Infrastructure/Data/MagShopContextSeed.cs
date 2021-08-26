@@ -360,12 +360,10 @@ namespace Infrastructure.Data
                     {
                         new ProductProperty()
                         {
-                            ProductId = PRODUCT_1_ID,
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
                     },
-                    PreviewImage = image1,
                     Url = "ewqeqe"
                 },
 
@@ -381,7 +379,6 @@ namespace Infrastructure.Data
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
                     },
-                    PreviewImage = image2,
                     Url = "ewqeqe"
                 },
                 new Product(PRODUCT_3_ID, "1с", CATEGORY_5_ID, "Обучитесь программированию на 1с",
@@ -395,7 +392,6 @@ namespace Infrastructure.Data
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
                     },
-                    PreviewImage = image3,
                     Url = "ewqeqe"
                 },
                 new Product(PRODUCT_4_ID, "Физика", CATEGORY_4_ID, "Обучение основам физики"
@@ -410,7 +406,6 @@ namespace Infrastructure.Data
                             ProductPropertyItems = func(PROPERTY_2_ID)
                         }
                     },
-                    PreviewImage = image4,
                     Url = "ewqeqe"
                 },
                 new Product(PRODUCT_5_ID, "Французкий язык", CATEGORY_2_ID, "Научитесь говорить как истинный француз",
@@ -424,7 +419,6 @@ namespace Infrastructure.Data
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
                     },
-                    PreviewImage = image5,
                     Url = "ewqeqe"
                 },
                 new Product(PRODUCT_6_ID, "Математика", CATEGORY_1_ID, "Научитесть складывать цифры и не только",
@@ -438,7 +432,6 @@ namespace Infrastructure.Data
                             ProductPropertyItems = func(PROPERTY_2_ID)
                         }
                     },
-                    PreviewImage = image6,
                     Url = "ewqeqe"
                 },
                 new Product(PRODUCT_7_ID, "Русский язык", CATEGORY_2_ID, "Обучат грамматике",
@@ -452,7 +445,6 @@ namespace Infrastructure.Data
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
                     },
-                    PreviewImage = image7,
                     Url = "ewqeqe"
                 },
                 new Product(PRODUCT_8_ID, "География", CATEGORY_4_ID, "Научат ориентироваться в картах",  STORE_ID+"2")
@@ -465,7 +457,6 @@ namespace Infrastructure.Data
                             ProductPropertyItems = func(PROPERTY_3_ID)
                         }
                     },
-                    PreviewImage = image8,
                     Url = "ewqeqe"
                 },
             };

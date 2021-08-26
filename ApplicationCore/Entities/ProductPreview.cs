@@ -16,7 +16,7 @@ namespace ApplicationCore.Entities
         }
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; }
-        public byte[] PreviewImage { get; set; }
+        public string PreviewImagePath { get; set; }
         public string CategoryId { get; set; }
 
         public Category Category { get; set; }
