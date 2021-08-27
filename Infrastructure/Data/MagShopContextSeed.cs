@@ -114,6 +114,147 @@ namespace Infrastructure.Data
                     await context.Products.AddRangeAsync(
                         GetPrecongifuredProducts());
                     await context.SaveChangesAsync();
+                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
+                    {
+                        ProductProperties = new List<ProductProperty>()
+                    {
+                        new ProductProperty()
+                        {
+                            PropertyId = PROPERTY_1_ID,
+                            ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
+                                .Items.Select(y => (y.Id, y.Caption))
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                        }
+                    },
+                        Url = "ewqeqe"
+                    });
+                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
+                    {
+                        ProductProperties = new List<ProductProperty>()
+                    {
+                        new ProductProperty()
+                        {
+                            PropertyId = PROPERTY_1_ID,
+                            ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
+                                .Items.Select(y => (y.Id, y.Caption))
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                        }
+                    },
+                        Url = "ewqeqe"
+                    });
+                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
+                    {
+                        ProductProperties = new List<ProductProperty>()
+                    {
+                        new ProductProperty()
+                        {
+                            PropertyId = PROPERTY_1_ID,
+                            ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
+                                .Items.Select(y => (y.Id, y.Caption))
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                        }
+                    },
+                        Url = "ewqeqe"
+                    });
+                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
+                    {
+                        ProductProperties = new List<ProductProperty>()
+                    {
+                        new ProductProperty()
+                        {
+                            PropertyId = PROPERTY_1_ID,
+                            ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
+                                .Items.Select(y => (y.Id, y.Caption))
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                        }
+                    },
+                        Url = "ewqeqe"
+                    });
+                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
+                    {
+                        ProductProperties = new List<ProductProperty>()
+                    {
+                        new ProductProperty()
+                        {
+                            PropertyId = PROPERTY_1_ID,
+                            ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
+                                .Items.Select(y => (y.Id, y.Caption))
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                        }
+                    },
+                        Url = "ewqeqe"
+                    });
+                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
+                    {
+                        ProductProperties = new List<ProductProperty>()
+                    {
+                        new ProductProperty()
+                        {
+                            PropertyId = PROPERTY_1_ID,
+                            ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
+                                .Items.Select(y => (y.Id, y.Caption))
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                        }
+                    },
+                        Url = "ewqeqe"
+                    });
+                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
+                    {
+                        ProductProperties = new List<ProductProperty>()
+                    {
+                        new ProductProperty()
+                        {
+                            PropertyId = PROPERTY_1_ID,
+                            ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
+                                .Items.Select(y => (y.Id, y.Caption))
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                        }
+                    },
+                        Url = "ewqeqe"
+                    });
+                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
+                    {
+                        ProductProperties = new List<ProductProperty>()
+                    {
+                        new ProductProperty()
+                        {
+                            PropertyId = PROPERTY_1_ID,
+                            ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
+                                .Items.Select(y => (y.Id, y.Caption))
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                        }
+                    },
+                        Url = "ewqeqe"
+                    });
+                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
+                    {
+                        ProductProperties = new List<ProductProperty>()
+                    {
+                        new ProductProperty()
+                        {
+                            PropertyId = PROPERTY_1_ID,
+                            ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
+                                .Items.Select(y => (y.Id, y.Caption))
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                        }
+                    },
+                        Url = "ewqeqe"
+                    });
+                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
+                    {
+                        ProductProperties = new List<ProductProperty>()
+                    {
+                        new ProductProperty()
+                        {
+                            PropertyId = PROPERTY_1_ID,
+                            ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
+                                .Items.Select(y => (y.Id, y.Caption))
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                        }
+                    },
+                        Url = "ewqeqe"
+                    });
+                    await context.SaveChangesAsync();
                 }
 
                 if (!await context.Orders.AnyAsync())

@@ -36,7 +36,7 @@ namespace PublicApi.GraphQL.Products
     [GraphQLNonNullType]
             string Description,
     [GraphQLNonNullType]
-            string PreviewImagePath,
+            string Image,
     [GraphQLNonNullType]
             List<ProductPropertiesInput> ProductProperties);
         public class AddProductPayload
@@ -81,7 +81,7 @@ namespace PublicApi.GraphQL.Products
                             .ToList()??new List<ProductPropertyItem>()
                     })
                     .ToList(),
-                PreviewImagePath = input.PreviewImagePath,
+                Image = input.Image,
                 //TODO create url for data
                 Url = ""
             };

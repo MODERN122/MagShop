@@ -26,6 +26,7 @@ namespace ApplicationCore.Entities
         public string Id { get; set; }
         public string ParentId { get; set; }
         public string Name { get; set; }
+        public string Image { get; set; }
         /// <summary>
         /// Constraint 0.0-1.0
         /// </summary>
