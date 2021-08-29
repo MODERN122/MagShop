@@ -40,6 +40,7 @@ using PublicApi.GraphQL.Products;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Principal;
 using PublicApi.GraphQL.Orders;
+using PublicApi.GraphQL.Categories;
 
 namespace PublicApi
 {
@@ -168,6 +169,7 @@ namespace PublicApi
                 .AddTypeExtension<UserQueries>()
                 .AddTypeExtension<ProductQueries>()
                 .AddTypeExtension<OrderQueries>()
+                .AddTypeExtension<CategoryQueries>()
                 .AddTypeExtension<AuthenticationMutations>()
                 .AddTypeExtension<ProductMutaions>()
                 .AddHttpRequestInterceptor((context, executor, builder, cancellationToken) =>

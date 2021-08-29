@@ -410,12 +410,12 @@ namespace Infrastructure.Data
             return new List<Category>()
             {
                 new Category(PARENT_ID, null, "MAIN_CATEGORY", 0),
-                new Category(CATEGORY_1_ID, PARENT_ID, "Технические предметы", 0.2),
-                new Category(CATEGORY_2_ID, PARENT_ID, "Лингвестические предметы", 0.2),
-                new Category(CATEGORY_3_ID, PARENT_ID, "Биологическое направение", 0.1),
-                new Category(CATEGORY_4_ID, PARENT_ID, "Естественные науки", 0.2 ),
-                new Category(CATEGORY_5_ID, PARENT_ID, "Программирование", 0.25),
-                new Category(CATEGORY_6_ID, PARENT_ID, "Очумелые ручки", 0.311233223)
+                new Category(CATEGORY_1_ID, PARENT_ID, "Электроника", 0.2),
+                new Category(CATEGORY_2_ID, PARENT_ID, "Мужской гардероб", 0.2),
+                new Category(CATEGORY_3_ID, PARENT_ID, "Здоровье", 0.1),
+                new Category(CATEGORY_4_ID, PARENT_ID, "Украшения", 0.2 ),
+                new Category(CATEGORY_5_ID, PARENT_ID, "Строительство", 0.25),
+                new Category(CATEGORY_6_ID, PARENT_ID, "Товары для дома", 0.31)
 
             };
         }

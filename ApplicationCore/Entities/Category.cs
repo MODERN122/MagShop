@@ -4,10 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using ApplicationCore.Interfaces;
 
 namespace ApplicationCore.Entities
 {
-    public class Category
+    public class Category : IAggregateRoot
     {
         /// <summary>
         /// Get category with parent Category
@@ -26,16 +27,14 @@ namespace ApplicationCore.Entities
         public string Id { get; set; }
         public string ParentId { get; set; }
         public string Name { get; set; }
-        public string Image { get; set; }
+        public string Image { get; set; } = "https://www.clipartkey.com/mpngs/m/150-1501297_f" +
+            "inish-clipart-icon-png-product-icon-ico.png";
         /// <summary>
         /// Constraint 0.0-1.0
         /// </summary>
         public double Weight { get; set; }
-        [JsonIgnore]
         public Category ParentCategory { get; set; }
-        [JsonIgnore]
         public List<Category> Childs { get; set; }
-        [JsonIgnore]
         public List<Product> Products { get; set; }
 
         public Category()

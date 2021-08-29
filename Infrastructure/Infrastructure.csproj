@@ -48,4 +48,8 @@
     <Resource Include="Data\Images\3.jpg" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Images\Categories\" />
+  </ItemGroup>
+
 </Project>
