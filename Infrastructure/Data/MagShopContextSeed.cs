@@ -114,9 +114,7 @@ namespace Infrastructure.Data
                     await context.Products.AddRangeAsync(
                         GetPrecongifuredProducts());
                     await context.SaveChangesAsync();
-                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
-                    {
-                        ProductProperties = new List<ProductProperty>()
+                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -125,12 +123,11 @@ namespace Infrastructure.Data
                                 .Items.Select(y => (y.Id, y.Caption))
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
                         }
-                    },
+                    })
+                    {
                         Url = "ewqeqe"
                     });
-                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
-                    {
-                        ProductProperties = new List<ProductProperty>()
+                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -139,12 +136,11 @@ namespace Infrastructure.Data
                                 .Items.Select(y => (y.Id, y.Caption))
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
                         }
-                    },
+                    })
+                    { 
                         Url = "ewqeqe"
                     });
-                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
-                    {
-                        ProductProperties = new List<ProductProperty>()
+                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -153,12 +149,10 @@ namespace Infrastructure.Data
                                 .Items.Select(y => (y.Id, y.Caption))
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
                         }
-                    },
+                    })
+                    {
                         Url = "ewqeqe"
-                    });
-                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
-                    {
-                        ProductProperties = new List<ProductProperty>()
+                    }); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -167,12 +161,10 @@ namespace Infrastructure.Data
                                 .Items.Select(y => (y.Id, y.Caption))
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
                         }
-                    },
+                    })
+                    {
                         Url = "ewqeqe"
-                    });
-                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
-                    {
-                        ProductProperties = new List<ProductProperty>()
+                    }); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -181,12 +173,10 @@ namespace Infrastructure.Data
                                 .Items.Select(y => (y.Id, y.Caption))
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
                         }
-                    },
+                    })
+                    {
                         Url = "ewqeqe"
-                    });
-                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
-                    {
-                        ProductProperties = new List<ProductProperty>()
+                    }); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -195,12 +185,10 @@ namespace Infrastructure.Data
                                 .Items.Select(y => (y.Id, y.Caption))
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
                         }
-                    },
+                    })
+                    {
                         Url = "ewqeqe"
-                    });
-                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
-                    {
-                        ProductProperties = new List<ProductProperty>()
+                    }); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -209,12 +197,10 @@ namespace Infrastructure.Data
                                 .Items.Select(y => (y.Id, y.Caption))
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
                         }
-                    },
+                    })
+                    {
                         Url = "ewqeqe"
-                    });
-                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
-                    {
-                        ProductProperties = new List<ProductProperty>()
+                    }); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -223,12 +209,10 @@ namespace Infrastructure.Data
                                 .Items.Select(y => (y.Id, y.Caption))
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
                         }
-                    },
+                    })
+                    {
                         Url = "ewqeqe"
-                    });
-                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
-                    {
-                        ProductProperties = new List<ProductProperty>()
+                    }); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -237,21 +221,8 @@ namespace Infrastructure.Data
                                 .Items.Select(y => (y.Id, y.Caption))
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
                         }
-                    },
-                        Url = "ewqeqe"
-                    });
-                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
+                    })
                     {
-                        ProductProperties = new List<ProductProperty>()
-                    {
-                        new ProductProperty()
-                        {
-                            PropertyId = PROPERTY_1_ID,
-                            ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
-                                .Items.Select(y => (y.Id, y.Caption))
-                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
-                        }
-                    },
                         Url = "ewqeqe"
                     });
                     await context.SaveChangesAsync();
@@ -413,6 +384,8 @@ namespace Infrastructure.Data
                 new Category(CATEGORY_1_ID, PARENT_ID, "Электроника", 0.2),
                 new Category(CATEGORY_2_ID, PARENT_ID, "Мужской гардероб", 0.2),
                 new Category(CATEGORY_3_ID, PARENT_ID, "Здоровье", 0.1),
+                new Category("category7", CATEGORY_3_ID, "Лекарства", 0.1),
+                new Category("category8", CATEGORY_3_ID, "Тренажеры", 0.1),
                 new Category(CATEGORY_4_ID, PARENT_ID, "Украшения", 0.2 ),
                 new Category(CATEGORY_5_ID, PARENT_ID, "Строительство", 0.25),
                 new Category(CATEGORY_6_ID, PARENT_ID, "Товары для дома", 0.31)
@@ -495,23 +468,21 @@ namespace Infrastructure.Data
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList();
             return new List<Product>()
             {
-                new Product(PRODUCT_1_ID, "Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID)
-                 {
-                    ProductProperties = new List<ProductProperty>()
+                new Product(PRODUCT_1_ID, "Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID,
+                new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
-                    },
+                    })
+                 {
                     Url = "ewqeqe"
                 },
 
                 new Product(PRODUCT_2_ID, "Корушка", CATEGORY_6_ID, "Сдлайте все своими руками",
-                 STORE_ID)
-                {
-                    ProductProperties = new List<ProductProperty>()
+                 STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -519,12 +490,13 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_2_ID,
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
-                    },
+                    })
+                {
+                    
                     Url = "ewqeqe"
                 },
                 new Product(PRODUCT_3_ID, "1с", CATEGORY_5_ID, "Обучитесь программированию на 1с",
-                STORE_ID)
-                {ProductProperties = new List<ProductProperty>()
+                STORE_ID,new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -532,13 +504,13 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
-                    },
+                    })
+                { 
                     Url = "ewqeqe"
                 },
                 new Product(PRODUCT_4_ID, "Физика", CATEGORY_4_ID, "Обучение основам физики"
 
-                , STORE_ID)
-                {ProductProperties = new List<ProductProperty>()
+                , STORE_ID,new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -546,12 +518,12 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = func(PROPERTY_2_ID)
                         }
-                    },
+                    })
+                {
                     Url = "ewqeqe"
                 },
                 new Product(PRODUCT_5_ID, "Французкий язык", CATEGORY_2_ID, "Научитесь говорить как истинный француз",
-               STORE_ID+"1")
-                {ProductProperties = new List<ProductProperty>()
+               STORE_ID+"1",new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -559,12 +531,12 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_3_ID,
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
-                    },
+                    })
+                {
                     Url = "ewqeqe"
                 },
                 new Product(PRODUCT_6_ID, "Математика", CATEGORY_1_ID, "Научитесть складывать цифры и не только",
-                STORE_ID+"1")
-                {ProductProperties = new List<ProductProperty>()
+                STORE_ID+"1",new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -572,12 +544,12 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_3_ID,
                             ProductPropertyItems = func(PROPERTY_2_ID)
                         }
-                    },
+                    })
+                {
                     Url = "ewqeqe"
                 },
                 new Product(PRODUCT_7_ID, "Русский язык", CATEGORY_2_ID, "Обучат грамматике",
-               STORE_ID+"2")
-                {ProductProperties = new List<ProductProperty>()
+               STORE_ID+"2", new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -585,11 +557,10 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
-                    },
+                    }){
                     Url = "ewqeqe"
                 },
-                new Product(PRODUCT_8_ID, "География", CATEGORY_4_ID, "Научат ориентироваться в картах",  STORE_ID+"2")
-                {ProductProperties = new List<ProductProperty>()
+                new Product(PRODUCT_8_ID, "География", CATEGORY_4_ID, "Научат ориентироваться в картах",  STORE_ID+"2", new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -597,7 +568,7 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_2_ID,
                             ProductPropertyItems = func(PROPERTY_3_ID)
                         }
-                    },
+                    }){
                     Url = "ewqeqe"
                 },
             };

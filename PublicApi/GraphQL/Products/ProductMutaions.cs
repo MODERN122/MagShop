@@ -70,9 +70,7 @@ namespace PublicApi.GraphQL.Products
                AddProductInput input,
                [ScopedService] MagShopContext context)
         {
-            var product = new Product(input.Name, input.CategoryId, input.Description, input.StoreId)
-            {
-                ProductProperties = input.ProductProperties
+            var product = new Product(input.Name, input.CategoryId, input.Description, input.StoreId, input.ProductProperties
                     .Select(x => new ProductProperty()
                     {
                         PropertyId = x.PropertyId,
@@ -80,7 +78,8 @@ namespace PublicApi.GraphQL.Products
                             .Select(x => new ProductPropertyItem(x.PropertyItemId, x.Caption))
                             .ToList()??new List<ProductPropertyItem>()
                     })
-                    .ToList(),
+                    .ToList())
+            { 
                 Image = input.Image,
                 //TODO create url for data
                 Url = ""
