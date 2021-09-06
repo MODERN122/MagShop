@@ -11,10 +11,6 @@ namespace ApplicationCore.Entities
 {
     public class Product : ProductPreview
     {
-        public Product()
-        {
-
-        }
         /// <summary>
         /// Initialize Product
         /// </summary>
@@ -92,7 +88,7 @@ namespace ApplicationCore.Entities
                 priceNew += tempPriceNew;
                 priceOld += tempPriceOld;
             }
-            Discount = (int) ((priceOld - priceNew)*100 / priceOld);
+            Discount = (int)((priceOld - priceNew) * 100 / priceOld);
         }
 
     }

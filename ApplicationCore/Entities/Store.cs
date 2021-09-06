@@ -8,7 +8,7 @@ using ApplicationCore.Interfaces;
 
 namespace ApplicationCore.Entities
 {
-    public class Store : IAggregateRoot
+    public class Store : BaseDateTimeEntity
     {
         public Store()
         {

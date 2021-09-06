@@ -3,6 +3,7 @@ using ApplicationCore.Interfaces;
 using ApplicationCore.Specifications;
 using HotChocolate;
 using HotChocolate.AspNetCore.Authorization;
+using HotChocolate.Data;
 using HotChocolate.Types;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -22,7 +23,6 @@ namespace PublicApi.GraphQL.Products
 
             _productRepository = productRepository;
         }
-
         public async Task<IReadOnlyList<Product>> GetSearchProducts(int pageIndex = 0, int pageSize = 20, string categoryId = null, string storeId = null,
             List<string> propertiesId = null)
         {

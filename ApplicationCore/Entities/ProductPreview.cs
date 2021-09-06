@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 
 namespace ApplicationCore.Entities
 {
-    public class ProductPreview : IAggregateRoot
+    public class ProductPreview : BaseDateTimeEntity
     {
         public ProductPreview()
         {

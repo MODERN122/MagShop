@@ -7,15 +7,15 @@ using System.Text;
 
 namespace ApplicationCore.Entities
 {
-    public class Order : IAggregateRoot
+    public class Order : BaseDateTimeEntity
     {
         public Order()
         {
 
         }
-        public Order(DateTime datetimeOrder, string addressId, List<OrderItem> items)
+        public Order(DateTime publicationDateTime, string addressId, List<OrderItem> items)
         {
-            DateTimeOrder = datetimeOrder;
+            PublicationDateTime = publicationDateTime;
             AddressId = addressId;
             AddRangeOrderItems(items);
         }
@@ -24,7 +24,6 @@ namespace ApplicationCore.Entities
 
         private readonly List<OrderItem> _items = new List<OrderItem>();
         public IReadOnlyCollection<OrderItem> Items => _items.AsReadOnly();
-        public DateTime DateTimeOrder { get; set; } = DateTime.Now;
         public string AddressId { get; set; }
         public Address ShipToAddress { get; set; }
         public double Total()

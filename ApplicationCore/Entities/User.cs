@@ -10,7 +10,7 @@ using System.Text.Json.Serialization;
 
 namespace ApplicationCore.Entities
 {
-    public class User : IAggregateRoot
+    public class User : BaseDateTimeEntity
     {
         public User()
         {

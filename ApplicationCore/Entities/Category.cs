@@ -8,7 +8,7 @@ using ApplicationCore.Interfaces;
 
 namespace ApplicationCore.Entities
 {
-    public class Category : IAggregateRoot
+    public class Category : BaseDateTimeEntity
     {
         /// <summary>
         /// Get category with parent Category

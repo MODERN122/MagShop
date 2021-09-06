@@ -22,13 +22,13 @@ namespace PublicApi.GraphQL.Categories
         {
             _categoriesRepository = categoriesRepository;
         }
-        public async Task<Category> GetOrder(string id) =>
+        public async Task<Category> GetCategoryById(string id) =>
             await _categoriesRepository.GetByIdAsync(id);
 
         [UseMagShopContext]
         public async Task<IEnumerable<Category>> GetCategories(string parentId, [ScopedService] MagShopContext context)
         {
-            var categories = await context.Categories.Where(x=>x.ParentId==parentId).ToListAsync();
+            var categories = await context.Categories.Include(x=>x.Childs).Where(x=>x.ParentId==parentId).ToListAsync();
             return categories;
         }
     }

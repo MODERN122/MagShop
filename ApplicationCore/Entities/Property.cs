@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApplicationCore.Entities
 {
-    public class Property : IAggregateRoot
+    public class Property : BaseDateTimeEntity
     {
         public Property()
         {
@@ -23,7 +23,7 @@ namespace ApplicationCore.Entities
         public ICollection<Product> Products { get; set; }
         public List<ProductProperty> ProductProperties { get; set; }
     }
-    public class ProductPropertyItem
+    public class ProductPropertyItem : BaseDateTimeEntity
     {
         public ProductPropertyItem(string caption, double priceNew, double priceOld)
         {
