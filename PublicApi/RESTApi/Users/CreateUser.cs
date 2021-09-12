@@ -21,11 +21,11 @@ namespace ApplicationCore.RESTApi.Users
     {
         private readonly IAsyncRepository<User> _userRepository;
         private readonly UserManager<UserAuthAccess> _userManager;
-        private readonly ITokenClaimsService _tokenClaimsService;
+        private readonly IUserAuthService _tokenClaimsService;
         private readonly IMapper _mapper;
 
         public CreateUser(IAsyncRepository<User> userRepository, UserManager<UserAuthAccess> userManager,
-            IMapper mapper, ITokenClaimsService tokenClaimsService)
+            IMapper mapper, IUserAuthService tokenClaimsService)
         {
             _userRepository = userRepository;
             _userManager = userManager;

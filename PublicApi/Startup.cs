@@ -41,6 +41,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Principal;
 using PublicApi.GraphQL.Orders;
 using PublicApi.GraphQL.Categories;
+using Infrastructure.Repositories;
 
 namespace PublicApi
 {
@@ -64,13 +65,13 @@ namespace PublicApi
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             //services.Configure<CatalogSettings>(Configuration);
             //services.AddSingleton<IUriComposer>(new UriComposer(Configuration.Get<CatalogSettings>()));
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
-            services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
+            services.AddSingleton<IUserAuthService, UserAuthService>();
             var baseUrlConfig = new BaseUrlConfiguration();
             Configuration.Bind(BaseUrlConfiguration.CONFIG_NAME, baseUrlConfig);
-            services.AddScoped<IFileSystem, WebFileSystemService>(x => new WebFileSystemService($"{baseUrlConfig.WebBase}File"));
 
             services.AddPooledDbContextFactory<MagShopContext>(x =>
             {
@@ -162,6 +163,8 @@ namespace PublicApi
 
             services.AddHttpContextAccessor();
             services
+                .AddScoped<Query>()
+                .AddScoped<Mutation>()
                 .AddGraphQLServer()
                 .AddAuthorization()
                 .AddQueryType<Query>()
@@ -171,6 +174,7 @@ namespace PublicApi
                 .AddTypeExtension<OrderQueries>()
                 .AddTypeExtension<CategoryQueries>()
                 .AddTypeExtension<AuthenticationMutations>()
+                .AddTypeExtension<UserMutaions>()
                 .AddTypeExtension<ProductMutaions>()
                 .AddHttpRequestInterceptor((context, executor, builder, cancellationToken) =>
                 {

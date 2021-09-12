@@ -17,10 +17,10 @@ namespace ApplicationCore.RESTApi.Authentication
         .WithResponse<AuthenticationResponse>
     {
         private readonly SignInManager<UserAuthAccess> _signInManager;
-        private readonly ITokenClaimsService _tokenClaimsService;
+        private readonly IUserAuthService _tokenClaimsService;
 
         public Authenticate(SignInManager<UserAuthAccess> signInManager,
-            ITokenClaimsService tokenClaimsService)
+            IUserAuthService tokenClaimsService)
         {
             _signInManager = signInManager;
             _tokenClaimsService = tokenClaimsService;
@@ -37,11 +37,7 @@ namespace ApplicationCore.RESTApi.Authentication
         {
             var response = new AuthenticationResponse(request.CorrelationId());
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-            //var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
-
-            var result = await _signInManager.PasswordSignInAsync(request.Username, request.Password, false, true);
+            var result = await _signInManager.PasswordSignInAsync(request.UserName, request.Password, false, true);
 
             response.Result = result.Succeeded;
             if (!result.Succeeded)
@@ -49,8 +45,8 @@ namespace ApplicationCore.RESTApi.Authentication
             response.IsLockedOut = result.IsLockedOut;
             response.IsNotAllowed = result.IsNotAllowed;
             response.RequiresTwoFactor = result.RequiresTwoFactor;
-            response.Username = request.Username;
-            response.Token = await _tokenClaimsService.GetTokenAsync(request.Username);
+            response.Username = request.UserName;
+            response.Token = await _tokenClaimsService.GetTokenAsync(request.UserName);
 
             return Ok(response);
         }

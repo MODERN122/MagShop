@@ -20,11 +20,11 @@ namespace PublicApi.GraphQL.Authentication
     {
         public async Task<AuthenticationResponse> AuthenticateByLoginPassword(AuthenticationRequest request, 
             [Service] SignInManager<UserAuthAccess> signInManager,
-            [Service] ITokenClaimsService tokenClaimsService)
+            [Service] IUserAuthService tokenClaimsService)
         {
             var response = new AuthenticationResponse(request.CorrelationId());
 
-            var result = await signInManager.PasswordSignInAsync(request.Username, request.Password, false, true);
+            var result = await signInManager.PasswordSignInAsync(request.UserName, request.Password, false, true);
 
             response.Result = result.Succeeded;
             if (!result.Succeeded)
@@ -32,8 +32,8 @@ namespace PublicApi.GraphQL.Authentication
             response.IsLockedOut = result.IsLockedOut;
             response.IsNotAllowed = result.IsNotAllowed;
             response.RequiresTwoFactor = result.RequiresTwoFactor;
-            response.Username = request.Username;
-            response.Token = await tokenClaimsService.GetTokenAsync(request.Username);
+            response.Username = request.UserName;
+            response.Token = await tokenClaimsService.GetTokenAsync(request.UserName);
             return response;
         }
     }

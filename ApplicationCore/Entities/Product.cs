@@ -11,6 +11,7 @@ namespace ApplicationCore.Entities
 {
     public class Product : ProductPreview
     {
+        public Product() { }
         /// <summary>
         /// Initialize Product
         /// </summary>

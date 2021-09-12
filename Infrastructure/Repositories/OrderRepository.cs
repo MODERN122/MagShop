@@ -1,12 +1,13 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Data
+namespace Infrastructure.Repositories
 {
     public class OrderRepository : EfRepository<Order>, IOrderRepository
     {

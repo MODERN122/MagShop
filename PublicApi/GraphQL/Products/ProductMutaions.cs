@@ -64,11 +64,9 @@ namespace PublicApi.GraphQL.Products
             public string ImagePath { get; set; }
         }
         
-        [UseDbContext(typeof(MagShopContext))]
         [Authorize]
         public async Task<Product> AddProductAsync(
-               AddProductInput input,
-               [ScopedService] MagShopContext context)
+               AddProductInput input)
         {
             var product = new Product(input.Name, input.CategoryId, input.Description, input.StoreId, input.ProductProperties
                     .Select(x => new ProductProperty()
@@ -91,7 +89,6 @@ namespace PublicApi.GraphQL.Products
             }
             catch (Exception ex)
             {
-
                 throw;
             }
         }

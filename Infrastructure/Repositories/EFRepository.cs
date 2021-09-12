@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Interfaces;
 using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
+using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Data
+namespace Infrastructure.Repositories
 {
     /// <summary>
     /// "There's some repetition here - couldn't we have some the sync methods call the async?"

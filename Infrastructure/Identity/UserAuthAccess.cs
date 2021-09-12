@@ -9,9 +9,16 @@ namespace Infrastructure.Identity
 {
     public class UserAuthAccess : IdentityUser
     {
-        public UserAuthAccess(string userName):base(userName)
+        public UserAuthAccess(string userName) : base(userName)
         {
-            Email = userName;
+        }
+        public UserAuthAccess(string userName, string phoneNumber) : base(userName)
+        {
+            PhoneNumber = phoneNumber;
+        }
+        public UserAuthAccess(string userName, string email, string some) : base(userName)
+        {
+            Email = email;
         }
         public string FirebaseToken { get; set; }
         public string FacebookToken { get; set; }
