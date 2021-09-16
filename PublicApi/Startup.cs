@@ -42,6 +42,7 @@ using System.Security.Principal;
 using PublicApi.GraphQL.Orders;
 using PublicApi.GraphQL.Categories;
 using Infrastructure.Repositories;
+using HotChocolate.Types;
 
 namespace PublicApi
 {
@@ -114,7 +115,8 @@ namespace PublicApi
                 options.AddPolicy(name: CORS_POLICY,
                                   builder =>
                                   {
-                                      builder.WithOrigins(baseUrlConfig.WebBase.Replace("host.docker.internal", "localhost").TrimEnd('/'));
+                                      //TODO
+                                      //builder.WithOrigins(baseUrlConfig.WebBase.Replace("host.docker.internal", "localhost").TrimEnd('/'));
                                       builder.AllowAnyMethod();
                                       builder.AllowAnyHeader();
                                   });
@@ -129,7 +131,6 @@ namespace PublicApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
                 c.EnableAnnotations();
-                c.SchemaFilter<CustomSchemaFilters>();
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
@@ -176,6 +177,7 @@ namespace PublicApi
                 .AddTypeExtension<AuthenticationMutations>()
                 .AddTypeExtension<UserMutaions>()
                 .AddTypeExtension<ProductMutaions>()
+                .AddType<UploadType>()
                 .AddHttpRequestInterceptor((context, executor, builder, cancellationToken) =>
                 {
                     try
@@ -183,7 +185,7 @@ namespace PublicApi
                         // Decode token
                         var authHeader = context.Request.Headers.Single(p => p.Key == "Authorization");
                         var tokenHandler = new JwtSecurityTokenHandler();
-                        var tokenStr = string.Join("", authHeader.Value.First().Skip(7)); 
+                        var tokenStr = string.Join("", authHeader.Value.First().Skip(7));
                         var key = Encoding.ASCII.GetBytes(ConstantsAPI.JWT_SECRET_KEY);
 
                         var tokenValidationParameters = new TokenValidationParameters

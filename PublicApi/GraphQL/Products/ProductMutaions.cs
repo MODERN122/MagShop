@@ -64,7 +64,7 @@ namespace PublicApi.GraphQL.Products
             public string ImagePath { get; set; }
         }
         
-        [Authorize]
+        [Authorize(Roles =new string[] { Infrastructure.Constants.ConstantsAPI.SELLERS})]
         public async Task<Product> AddProductAsync(
                AddProductInput input)
         {

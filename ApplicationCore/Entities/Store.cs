@@ -14,19 +14,33 @@ namespace ApplicationCore.Entities
         {
 
         }
-        public Store(string id, string sellerId, string name)
+        public Store(string id, string sellerId, string name, string approveDocument = null)
         {
             Id = id;
+            ApproveDocument = approveDocument;
             SellerId = sellerId;
             Name = name;
+        }
+        /// <summary>
+        /// Use for real operations
+        /// </summary>
+        /// <param name="sellerId">Идентфикатор продавца</param>
+        /// <param name="name">Имя магазина</param>
+        /// <param name="approveDocument">Подтверждающий документ (путь до файла в хранилище)</param>
+        public Store(string sellerId, string name, string approveDocument)
+        {
+            SellerId = sellerId;
+            Name = name;
+            ApproveDocument = approveDocument;
         }
         public string Id { get; set; }
         public string Name { get; set; }
         public float Rating { get; set; }
         public List<Product> StoreProducts { get; set; }
         public string SellerId { get; set; }
+        public string ApproveDocument { get; set; }
         [JsonIgnore]
-        public User Seller { get; set; }
+        public Seller Seller { get; set; }
 
 
     }

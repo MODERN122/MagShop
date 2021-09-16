@@ -56,6 +56,7 @@ namespace Infrastructure.Repositories
 
             var entity = new User()
             {
+                Id = userAccess.Id,
                 FirstName = firstName,
                 LastName = lastName,
                 BirthDate = birthDate,
@@ -75,6 +76,7 @@ namespace Infrastructure.Repositories
 
             var entity = new User()
             {
+                Id = userAccess.Id,
                 FirstName = firstName,
                 LastName = lastName,
                 BirthDate = birthDate,
