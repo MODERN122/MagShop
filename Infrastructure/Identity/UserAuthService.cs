@@ -43,7 +43,6 @@ namespace Infrastructure.Identity
             {
                 using UserManager<UserAuthAccess> userManager = serviceScope.ServiceProvider.GetService<UserManager<UserAuthAccess>>();
 
-
                 var user1 = await userManager.FindByNameAsync(userAccess.UserName);
                 if(user1!=null)
                 {

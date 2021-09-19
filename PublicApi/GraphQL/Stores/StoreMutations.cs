@@ -31,7 +31,6 @@ namespace PublicApi.GraphQL.Stores
     [GraphQLType(typeof(NonNullType<UploadType>))]
             List<IFile> ApproveDocument);
         public async Task<Store> RegisterStoreBySeller(RegisterStoreBySellerInput input,
-            [Service] IHttpContextAccessor contextAccessor,
             [Service] UserManager<UserAuthAccess> userManager,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
         {

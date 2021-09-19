@@ -79,8 +79,6 @@ namespace PublicApi.GraphQL.Products
                     .ToList())
             { 
                 Image = input.Image,
-                //TODO create url for data
-                Url = ""
             };
             try
             {

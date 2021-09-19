@@ -11,6 +11,7 @@ namespace Infrastructure.Identity
     {
         public UserAuthAccess(string userName) : base(userName)
         {
+            Id = userName;
         }
         public UserAuthAccess(string userName, string phoneNumber) : base(userName)
         {

@@ -73,6 +73,10 @@ namespace ApplicationCore.Entities
                 return;
             }
         }
+        public void AddItemToBasket(BasketItem basketItem)
+        {
+            Basket.AddBasketItem(basketItem);
+        }
 
         public void AddItemsToBasket(List<BasketItem> basketItems)
         {

@@ -16,11 +16,11 @@ using System.Threading.Tasks;
 namespace PublicApi.GraphQL.Users
 {
     [ExtendObjectType(typeof(Mutation))]
-    public class UserMutaions
+    public class UserMutations
     {
         private IUserRepository _userRepository;
 
-        public UserMutaions(IUserRepository userRepository)
+        public UserMutations(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }

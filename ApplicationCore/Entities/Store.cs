@@ -14,10 +14,10 @@ namespace ApplicationCore.Entities
         {
 
         }
-        public Store(string id, string sellerId, string name, string approveDocument = null)
+        public Store(string id, string sellerId, string name, float rating)
         {
             Id = id;
-            ApproveDocument = approveDocument;
+            Rating = rating;
             SellerId = sellerId;
             Name = name;
         }
@@ -40,7 +40,7 @@ namespace ApplicationCore.Entities
         public string SellerId { get; set; }
         public string ApproveDocument { get; set; }
         [JsonIgnore]
-        public Seller Seller { get; set; }
+        public User Seller { get; set; }
 
 
     }

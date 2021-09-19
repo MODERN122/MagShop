@@ -17,11 +17,11 @@ namespace Infrastructure.Data
     {
         #region Define consts
         //Users
-        private const string USER_ID = "demoseller@microsoft.com";
+        private const string USER_ID = "admin@microsoft.com" ;
         private const string BASKET_ID = "12345";
         private const string CREDIT_CARD_ID = "123";
         //Stores
-        private const string SELLER_ID = "1235";
+        private const string SELLER_ID = "demoseller@microsoft.com";
         private const string BASKET_SELLER_ID = "12346";
         private const string CREDIT_CARD_SELLER_ID = "124";
         private const string STORE_ID = "12346";
@@ -69,17 +69,14 @@ namespace Infrastructure.Data
                         await roleManager.CreateAsync(new IdentityRole(Constants.ConstantsAPI.SELLERS));
                         await roleManager.CreateAsync(new IdentityRole(Constants.ConstantsAPI.USERS));
 
-                        var defaultUser = new UserAuthAccess("demoseller@microsoft.com");
-                        defaultUser.Id = USER_ID;
+                        var defaultUser = new UserAuthAccess(SELLER_ID);
                         await userManager.CreateAsync(defaultUser, Constants.ConstantsAPI.DEFAULT_PASSWORD);
                         var user = await userManager.FindByNameAsync(defaultUser.UserName);
-                        await userManager.AddToRoleAsync(user, Constants.ConstantsAPI.USERS);
+                        await userManager.AddToRoleAsync(user, Constants.ConstantsAPI.SELLERS);
 
-                        string adminUserName = "admin@microsoft.com";
-                        var adminUser = new UserAuthAccess(adminUserName);
-                        adminUser.Id = SELLER_ID;
+                        var adminUser = new UserAuthAccess(USER_ID);
                         await userManager.CreateAsync(adminUser, Constants.ConstantsAPI.DEFAULT_PASSWORD);
-                        adminUser = await userManager.FindByNameAsync(adminUserName);
+                        adminUser = await userManager.FindByNameAsync(adminUser.UserName);
                         await userManager.AddToRoleAsync(adminUser, Constants.ConstantsAPI.ADMINISTRATORS);
 
 
@@ -124,9 +121,7 @@ namespace Infrastructure.Data
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
                         }
                     })
-                    {
-                        Url = "ewqeqe"
-                    });
+                    );
                     await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
@@ -137,9 +132,7 @@ namespace Infrastructure.Data
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
                         }
                     })
-                    { 
-                        Url = "ewqeqe"
-                    });
+                    );
                     await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
@@ -149,10 +142,7 @@ namespace Infrastructure.Data
                                 .Items.Select(y => (y.Id, y.Caption))
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
                         }
-                    })
-                    {
-                        Url = "ewqeqe"
-                    }); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
+                    })); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -162,9 +152,7 @@ namespace Infrastructure.Data
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
                         }
                     })
-                    {
-                        Url = "ewqeqe"
-                    }); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
+                    ); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -174,9 +162,7 @@ namespace Infrastructure.Data
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
                         }
                     })
-                    {
-                        Url = "ewqeqe"
-                    }); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
+                    ); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -186,9 +172,7 @@ namespace Infrastructure.Data
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
                         }
                     })
-                    {
-                        Url = "ewqeqe"
-                    }); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
+                   ); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -198,9 +182,7 @@ namespace Infrastructure.Data
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
                         }
                     })
-                    {
-                        Url = "ewqeqe"
-                    }); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
+                    ); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -210,9 +192,7 @@ namespace Infrastructure.Data
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
                         }
                     })
-                    {
-                        Url = "ewqeqe"
-                    }); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
+                    ); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -222,9 +202,7 @@ namespace Infrastructure.Data
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
                         }
                     })
-                    {
-                        Url = "ewqeqe"
-                    });
+                   );
                     await context.SaveChangesAsync();
                 }
 
@@ -476,10 +454,7 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
-                    })
-                 {
-                    Url = "ewqeqe"
-                },
+                    }),
 
                 new Product(PRODUCT_2_ID, "Корушка", CATEGORY_6_ID, "Сдлайте все своими руками",
                  STORE_ID, new List<ProductProperty>()
@@ -490,11 +465,7 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_2_ID,
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
-                    })
-                {
-                    
-                    Url = "ewqeqe"
-                },
+                    }),
                 new Product(PRODUCT_3_ID, "1с", CATEGORY_5_ID, "Обучитесь программированию на 1с",
                 STORE_ID,new List<ProductProperty>()
                     {
@@ -504,10 +475,7 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
-                    })
-                { 
-                    Url = "ewqeqe"
-                },
+                    }),
                 new Product(PRODUCT_4_ID, "Физика", CATEGORY_4_ID, "Обучение основам физики"
 
                 , STORE_ID,new List<ProductProperty>()
@@ -518,10 +486,7 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = func(PROPERTY_2_ID)
                         }
-                    })
-                {
-                    Url = "ewqeqe"
-                },
+                    }),
                 new Product(PRODUCT_5_ID, "Французкий язык", CATEGORY_2_ID, "Научитесь говорить как истинный француз",
                STORE_ID+"1",new List<ProductProperty>()
                     {
@@ -531,10 +496,7 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_3_ID,
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
-                    })
-                {
-                    Url = "ewqeqe"
-                },
+                    }),
                 new Product(PRODUCT_6_ID, "Математика", CATEGORY_1_ID, "Научитесть складывать цифры и не только",
                 STORE_ID+"1",new List<ProductProperty>()
                     {
@@ -544,10 +506,7 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_3_ID,
                             ProductPropertyItems = func(PROPERTY_2_ID)
                         }
-                    })
-                {
-                    Url = "ewqeqe"
-                },
+                    }),
                 new Product(PRODUCT_7_ID, "Русский язык", CATEGORY_2_ID, "Обучат грамматике",
                STORE_ID+"2", new List<ProductProperty>()
                     {
@@ -557,9 +516,7 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
-                    }){
-                    Url = "ewqeqe"
-                },
+                    }),
                 new Product(PRODUCT_8_ID, "География", CATEGORY_4_ID, "Научат ориентироваться в картах",  STORE_ID+"2", new List<ProductProperty>()
                     {
                         new ProductProperty()
@@ -568,9 +525,7 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_2_ID,
                             ProductPropertyItems = func(PROPERTY_3_ID)
                         }
-                    }){
-                    Url = "ewqeqe"
-                },
+                    }),
             };
         }
         #endregion
@@ -579,9 +534,9 @@ namespace Infrastructure.Data
         {
             return new List<Store>()
             {
-                new Store(STORE_ID, SELLER_ID, "Хорошие курсы"),
-                new Store(STORE_ID+"1", SELLER_ID, "Великолепные курсы"),
-                new Store(STORE_ID+"2", SELLER_ID, "Лучшие курсы"),
+                new Store(STORE_ID, SELLER_ID, "Хорошие курсы", 3.0f),
+                new Store(STORE_ID+"1", SELLER_ID, "Великолепные курсы", 4.2f),
+                new Store(STORE_ID+"2", SELLER_ID, "Лучшие курсы", 4.3f),
             };
         }
         #endregion

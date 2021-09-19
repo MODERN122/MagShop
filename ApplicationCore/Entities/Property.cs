@@ -17,6 +17,11 @@ namespace ApplicationCore.Entities
             Name = propertyName;
             Items = propertyItems;
         }
+        public Property(string propertyName, List<PropertyItem> propertyItems)
+        {
+            Name = propertyName;
+            Items = propertyItems;
+        }
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; }
         public List<PropertyItem> Items { get; set; }

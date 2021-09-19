@@ -43,6 +43,7 @@ using PublicApi.GraphQL.Orders;
 using PublicApi.GraphQL.Categories;
 using Infrastructure.Repositories;
 using HotChocolate.Types;
+using PublicApi.GraphQL.Basket;
 
 namespace PublicApi
 {
@@ -64,7 +65,6 @@ namespace PublicApi
                        .AddEntityFrameworkStores<MagShopContext>()
                        .AddDefaultTokenProviders();
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
-            services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             //services.Configure<CatalogSettings>(Configuration);
@@ -171,11 +171,13 @@ namespace PublicApi
                 .AddQueryType<Query>()
                 .AddMutationType<Mutation>()
                 .AddTypeExtension<UserQueries>()
+                .AddTypeExtension<BasketQueries>()
                 .AddTypeExtension<ProductQueries>()
                 .AddTypeExtension<OrderQueries>()
                 .AddTypeExtension<CategoryQueries>()
                 .AddTypeExtension<AuthenticationMutations>()
-                .AddTypeExtension<UserMutaions>()
+                .AddTypeExtension<UserMutations>()
+                .AddTypeExtension<BasketMutations>()
                 .AddTypeExtension<ProductMutaions>()
                 .AddType<UploadType>()
                 .AddHttpRequestInterceptor((context, executor, builder, cancellationToken) =>

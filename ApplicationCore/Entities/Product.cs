@@ -50,7 +50,6 @@ namespace ApplicationCore.Entities
         //Constraint 1.0-3.0
         public double Weight { get; set; }
         public string Description { get; set; }
-        public string Url { get; set; }
         public List<Property> Properties { get; set; }
         public List<ProductProperty> ProductProperties { get; private set; }
         //Not Added while

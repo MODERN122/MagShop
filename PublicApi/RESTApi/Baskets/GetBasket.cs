@@ -23,14 +23,12 @@ namespace ApplicationCore.RESTApi.Baskets
     [Authorize(Roles = ConstantsAPI.USERS, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class GetBasket : BaseAsyncEndpoint.WithRequest<string>.WithResponse<GetBasketResponse>
     {
-        private readonly IBasketRepository _basketRepository;
-        private readonly IAsyncRepository<User> _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly UserManager<UserAuthAccess> _userManager;
         private readonly IMapper _mapper;
 
-        public GetBasket(IBasketRepository basketRepository, UserManager<UserAuthAccess> userManager, IMapper mapper, IAsyncRepository<User> userRepository)
+        public GetBasket(IUserRepository userRepository, UserManager<UserAuthAccess> userManager, IMapper mapper)
         {
-            _basketRepository = basketRepository;
             _userRepository = userRepository;
             _userManager = userManager;
             _mapper = mapper;
@@ -47,7 +45,7 @@ namespace ApplicationCore.RESTApi.Baskets
             try
             {
                 var response = new GetBasketResponse(Guid.NewGuid());
-                var basket = await _basketRepository.FirstAsync(id, new BasketSpecification(id), cancellationToken);
+                var basket = await _userRepository.FirstAsync(id);
                 Guard.Against.Null(basket, nameof(basket));
                 response.BasketId = basket.Id;
                 response.BasketItems = basket.Items

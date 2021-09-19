@@ -16,5 +16,10 @@ namespace ApplicationCore.Interfaces
         Task<RegisterUserPayload> RegisterUserByFacebook(string firstName, string lastName, DateTimeOffset birthDate, string accessToken, string email);
 
         Task<RegisterSellerPayload> RegisterSellerByPhone(string firstName, string lastName, DateTimeOffset birthDate, string phoneNumber, string code);
+
+        Task<bool> AddBasketItem(string userId, string productId);
+        Task<bool> RemoveBasketItem(string userId, string productId);
+        Task<Basket> AddBasketAsync(string userId);
+        Task<Basket> FirstAsync(string userId);
     }
 }
