@@ -5,6 +5,7 @@ using ApplicationCore.RESTApi.Users;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ApplicationCore.GraphQLEndpoints;
 
 namespace ApplicationCore
 {
@@ -22,6 +23,8 @@ namespace ApplicationCore
 
             CreateMap<CreateUserRequest, User>();
             CreateMap<User, CreateUserResponse>();
+            CreateMap<EditUserInput, User>(MemberList.Source)
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
 
             CreateMap<PutProductRequest, CreateProductRequest>();

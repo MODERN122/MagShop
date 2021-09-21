@@ -74,5 +74,16 @@ namespace PublicApi.GraphQL.Users
             var result = await _userRepository.RemoveProductFromFavoriteAsync(currentUser.Claims.First().Value, productId);
             return result;
         }
+
+        [Authorize(Roles = new string[] { ConstantsAPI.USERS })]
+        public async Task<User> EditUserAsync(EditUserInput userNew, [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
+        {
+            if (currentUser.Claims.First().Value != userNew.Id)
+            {
+                throw new Exception("Вам низзя изменять этого пользователя");
+            }
+            var result = await _userRepository.EditUserAsync(userNew);
+            return result;
+        }
     }
 }

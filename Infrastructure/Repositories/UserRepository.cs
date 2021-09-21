@@ -3,6 +3,7 @@ using ApplicationCore.GraphQLEndpoints;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Specifications;
 using Ardalis.GuardClauses;
+using AutoMapper;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,11 +16,13 @@ namespace Infrastructure.Repositories
     {
         private readonly IUserAuthService _tokenClaimsService;
         private readonly IServiceProvider _serviceProvider;
+        private readonly IMapper _mapper;
         public UserRepository(IDbContextFactory<MagShopContext> dbContext, IServiceProvider serviceProvider,
-            IUserAuthService tokenClaimsService) : base(dbContext)
+            IUserAuthService tokenClaimsService, IMapper mapper) : base(dbContext)
         {
             _tokenClaimsService = tokenClaimsService;
             _serviceProvider = serviceProvider;
+            _mapper = mapper;
         }
         public async Task<RegisterSellerPayload> RegisterSellerByPhone(string firstName, string lastName, DateTimeOffset birthDate, string phoneNumber, string code)
         {
@@ -195,6 +198,21 @@ namespace Infrastructure.Repositories
                     throw new Exception("Товар не найден");
                 }
             }
+        }
+
+        public async Task<User> EditUserAsync(EditUserInput userNew)
+        {
+            using var context = this._contextFactory.CreateDbContext();
+            var user = await context.Set<User>().FirstOrDefaultAsync(x => x.Id == userNew.Id);
+            if (user!=null)
+            {
+                _mapper.Map(userNew, user);
+                context.Users.Update(user);
+                await context.SaveChangesAsync();
+                user = await context.Set<User>().FirstOrDefaultAsync(x => x.Id == userNew.Id);
+                return user;
+            }
+            return default;
         }
 
     }
