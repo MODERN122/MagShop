@@ -21,5 +21,7 @@ namespace ApplicationCore.Interfaces
         Task<bool> RemoveBasketItem(string userId, string productId);
         Task<Basket> AddBasketAsync(string userId);
         Task<Basket> FirstAsync(string userId);
+        Task<bool> AddProductToFavoriteAsync(string userId, string productId);
+        Task<bool> RemoveProductFromFavoriteAsync(string userId, string productId);
     }
 }

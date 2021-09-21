@@ -90,5 +90,6 @@ namespace PublicApi.GraphQL.Products
                 throw;
             }
         }
+
     }
 }

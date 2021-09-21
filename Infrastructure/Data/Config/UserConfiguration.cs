@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -53,7 +54,7 @@ namespace Infrastructure.Data.Config
             builder.Property(p => p.FavoriteProductsId)
             .HasConversion(
                 v => string.Join(',', v),
-                v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
+                v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList());
         }
     }
 }

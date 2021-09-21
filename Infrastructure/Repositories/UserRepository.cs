@@ -86,47 +86,39 @@ namespace Infrastructure.Repositories
 
             };
             var result = await AddAsync(entity);
-                return new RegisterUserPayload(result, token);
+            return new RegisterUserPayload(result, token);
         }
         public async Task<bool> AddBasketItem(string userId, string productId)
         {
-            try
+            using (var context = this._contextFactory.CreateDbContext())
             {
-                using (var context = this._contextFactory.CreateDbContext())
+                var user = await context.Users.Include(x => x.Basket)
+                   .ThenInclude(x => x.Items).FirstAsync(x => x.Id == userId);
+                var product = await context.Products.FirstAsync(x => x.Id == productId);
+                if (product != null)
                 {
-                    var user = await context.Users.Include(x => x.Basket)
-                       .ThenInclude(x => x.Items).FirstAsync(x => x.Id == userId);
-                    var product = await context.Products.FirstAsync(x => x.Id == productId);
-                    if (product != null)
+                    if (user.Basket != null)
                     {
-                        if (user.Basket != null)
-                        {
-                            user.AddItemToBasket(new BasketItem(1,product));
-                        }
-                        else
-                        {
-                           var basket =  await AddBasketAsync(user.Id);
-                            if (basket != null)
-                            {
-                                user = await context.Users.Include(x => x.Basket)
-                                    .ThenInclude(x => x.Items).FirstAsync(x => x.Id == userId);
-                                user.AddItemToBasket(new BasketItem(1, product));
-                            }
-
-                        }
-                        await context.SaveChangesAsync();
-                        return true;
+                        user.AddItemToBasket(new BasketItem(1, product));
                     }
                     else
                     {
-                        return false;
-                    }
-                }
+                        var basket = await AddBasketAsync(user.Id);
+                        if (basket != null)
+                        {
+                            user = await context.Users.Include(x => x.Basket)
+                                .ThenInclude(x => x.Items).FirstAsync(x => x.Id == userId);
+                            user.AddItemToBasket(new BasketItem(1, product));
+                        }
 
-            }
-            catch (Exception ex)
-            {
-                return false;
+                    }
+                    await context.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 
@@ -136,43 +128,72 @@ namespace Infrastructure.Repositories
         }
         public async Task<Basket> FirstAsync(string userId)
         {
-            try
+            using (var context = this._contextFactory.CreateDbContext())
             {
-                using (var context = this._contextFactory.CreateDbContext())
-                {
-                    UserSpecification spec = new UserSpecification(userId);
-                    var specificationResult = ApplySpecification(spec, context);
-                    var currentUser = await specificationResult.FirstOrDefaultAsync();
-                    if (currentUser.Basket != null)
-                        return currentUser.Basket;
-                    else
-                        return await AddBasketAsync(userId);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                return null;
+                UserSpecification spec = new UserSpecification(userId);
+                var specificationResult = ApplySpecification(spec, context);
+                var currentUser = await specificationResult.FirstOrDefaultAsync();
+                if (currentUser.Basket != null)
+                    return currentUser.Basket;
+                else
+                    return await AddBasketAsync(userId);
             }
         }
 
         public async Task<Basket> AddBasketAsync(string userId)
         {
-            try
+            using (var context = this._contextFactory.CreateDbContext())
             {
-                using (var context = this._contextFactory.CreateDbContext())
+                var user = await context.Set<User>().FindAsync(userId);
+                Guard.Against.Null(user, nameof(user));
+                var basket = new Basket() { UserId = user.Id };
+                await context.Baskets.AddAsync(basket);
+                await context.SaveChangesAsync();
+                return basket;
+            }
+        }
+        public async Task<bool> AddProductToFavoriteAsync(string userId, string productId)
+        {
+            using (var context = this._contextFactory.CreateDbContext())
+            {
+                var user = await context.Set<User>().FirstOrDefaultAsync(x => x.Id == userId);
+                Guard.Against.Null(user, nameof(user));
+                var product = await context.Products.FindAsync(productId);
+                if (product != null)
                 {
-                    var user = await context.Set<User>().FindAsync(userId);
-                    Guard.Against.Null(user, nameof(user));
-                    var basket = new Basket() { UserId = user.Id };
-                    await context.Baskets.AddAsync(basket);
+                    var result = user.AddProductToFavorite(productId);
+                    if (!result)
+                        return false;
+                    context.Users.Update(user);
                     await context.SaveChangesAsync();
-                    return basket;
+                    return true;
+                }
+                else
+                {
+                    throw new Exception("Товар не найден");
                 }
             }
-            catch (Exception ex)
+        }
+        public async Task<bool> RemoveProductFromFavoriteAsync(string userId, string productId)
+        {
+            using (var context = this._contextFactory.CreateDbContext())
             {
-                return null;
+                var user = await context.Set<User>().FirstOrDefaultAsync(x => x.Id == userId);
+                Guard.Against.Null(user, nameof(user));
+                var product = await context.Products.FindAsync(productId);
+                if (product != null)
+                {
+                    var result = user.RemoveProductFromFavorite(productId);
+                    if (!result)
+                        return false;
+                    context.Users.Update(user);
+                    await context.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    throw new Exception("Товар не найден");
+                }
             }
         }
 

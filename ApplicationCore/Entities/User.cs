@@ -38,7 +38,7 @@ namespace ApplicationCore.Entities
         }
         public string Id { get; set; } = Guid.NewGuid().ToString();
         //Collection product id favorites
-        public string[] FavoriteProductsId { get; set; }
+        public List<string> FavoriteProductsId { get; private set; } = new List<string>();
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [DataType(DataType.EmailAddress)]
@@ -76,6 +76,30 @@ namespace ApplicationCore.Entities
         public void AddItemToBasket(BasketItem basketItem)
         {
             Basket.AddBasketItem(basketItem);
+        }
+        public bool AddProductToFavorite(string productId)
+        {
+            if (this.FavoriteProductsId.Contains(productId))
+            {
+                return false;
+            }
+            else
+            {
+                this.FavoriteProductsId.Add(productId);
+                return true;
+            }
+        }
+        public bool RemoveProductFromFavorite(string productId)
+        {
+            if (!this.FavoriteProductsId.Contains(productId))
+            {
+                return false;
+            }
+            else
+            {
+                this.FavoriteProductsId.Remove(productId);
+                return true;
+            }
         }
 
         public void AddItemsToBasket(List<BasketItem> basketItems)
