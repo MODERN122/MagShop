@@ -9,6 +9,6 @@ namespace ApplicationCore.Entities
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string ProductId { get; set; }
-        public byte[] ByteImage { get; set; }
+        public string Path{ get; set; }
     }
 }

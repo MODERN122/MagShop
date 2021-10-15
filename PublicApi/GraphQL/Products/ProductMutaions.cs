@@ -51,7 +51,7 @@ namespace PublicApi.GraphQL.Products
         public class ProductPropertiesInput
         {
             [GraphQLNonNullType]
-            public string PropertyId { get; set; }
+            public string PropertyId { get; set; }            
             public List<ProductPropertyItemInput> ProductPropertyItems { get; set; }
         }
         public class ProductPropertyItemInput

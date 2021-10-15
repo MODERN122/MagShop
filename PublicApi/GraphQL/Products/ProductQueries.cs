@@ -32,7 +32,8 @@ namespace PublicApi.GraphQL.Products
         public async Task<Product> GetProductById(string id)
         {
             var spec = new ProductSpecification(id);
-            return await _productRepository.FirstAsync(spec);
+            var product = await _productRepository.FirstAsync(spec);
+            return product;
         }
     }
 }
