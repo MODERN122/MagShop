@@ -58,9 +58,11 @@ namespace PublicApi.GraphQL.Products
         {
             [GraphQLNonNullType]
             public string Caption { get; set; }
-
             [GraphQLNonNullType]
             public string PropertyItemId { get; set; }
+            [GraphQLNonNullType]
+            public int PriceNew { get; set; }
+            public int PriceOld { get; set; }
             public string ImagePath { get; set; }
         }
         

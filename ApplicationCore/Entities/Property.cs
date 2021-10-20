@@ -28,6 +28,7 @@ namespace ApplicationCore.Entities
         public ICollection<Product> Products { get; set; }
         public List<ProductProperty> ProductProperties { get; set; }
     }
+
     public class ProductPropertyItem : BaseDateTimeEntity
     {
         public ProductPropertyItem(string caption, double priceNew, double priceOld)
@@ -36,6 +37,7 @@ namespace ApplicationCore.Entities
             PriceNew = priceNew;
             PriceOld = priceOld;
         }
+
         /// <summary>
         /// Only for seed data
         /// </summary>
@@ -48,6 +50,7 @@ namespace ApplicationCore.Entities
             PriceOld = PriceNew + random.Next(100, 999);
             PropertyItemId = propertyItemId;
         }
+
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public string ProductPropertyId { get; set; }
         public string PropertyItemId { get; set; }
@@ -55,11 +58,11 @@ namespace ApplicationCore.Entities
         [ForeignKey("ProductPropertyId")]
         public ProductProperty ProductProperty { get; set; }
         public byte[] Image { get; set; } = new byte[0];
-
         public double PriceNew { get; set; } = -1;
         public double? PriceOld { get; set; }
         public string Caption { get; set; }
     }
+
     public class PropertyItem
     {
         public PropertyItem() { }
@@ -76,5 +79,4 @@ namespace ApplicationCore.Entities
         //Dont Use
         public ICollection<ProductPropertyItem> ProductPropertyItems { get; set; }
     }
-
 }
