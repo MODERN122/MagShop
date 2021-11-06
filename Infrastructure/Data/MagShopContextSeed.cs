@@ -58,7 +58,7 @@ namespace Infrastructure.Data
             try
             {
                 // TODO: Only run this if using a real database
-                context.Database.EnsureDeleted();
+                //context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
                 //context.Database.Migrate();
                 if (!await context.Users.AnyAsync())

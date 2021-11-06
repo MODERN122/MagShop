@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "mssql2": {
-      "type": "mssql",
+    "npgsql2": {
+      "type": "npgsql",
       "connectionId": "MagShopDBConnection"
     }
   }

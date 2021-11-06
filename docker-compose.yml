@@ -10,14 +10,14 @@ services:
             - "db"
         ports:
          - "80:80"
-    db:
-        image: "mcr.microsoft.com/mssql/server:2019-latest"
-        container_name: mssqldb
-        user: root
-        volumes:
-            - ./data:/var/opt/mssql/data
-        environment:
-            SA_PASSWORD: "<p@SSw0rd34>"
-            ACCEPT_EULA: "Y"
-        ports:
-         - "1433:1433"
+    #db:
+    #    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    #    container_name: npgsqldb
+    #    user: root
+    #    volumes:
+    #        - ./data:/var/opt/mssql/data
+    #    environment:
+    #        SA_PASSWORD: "<p@SSw0rd34>"
+    #        ACCEPT_EULA: "Y"
+    #    ports:
+    #     - "1433:1433"
