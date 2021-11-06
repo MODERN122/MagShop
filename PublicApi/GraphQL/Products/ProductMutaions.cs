@@ -13,9 +13,6 @@ using System.Threading.Tasks;
 namespace PublicApi.GraphQL.Products
 {
     [ExtendObjectType(typeof(Mutation))]
-    //[ExtendObjectType(
-    //nameof(ProductProperty),
-    //IgnoreProperties = new[] { nameof(ProductProperty.ProductId), nameof(ProductProperty.Product) })]
     public class ProductMutaions
     {
         private IAsyncRepository<Product> _productRepository;

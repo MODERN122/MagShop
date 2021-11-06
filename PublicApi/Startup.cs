@@ -77,9 +77,9 @@ namespace PublicApi
             services.AddPooledDbContextFactory<MagShopContext>(x =>
             {
 #if RELEASE
-                x.UseSqlServer(Configuration.GetConnectionString("MagShopDBConnectionDocker")));
+                x.UseNpgsql(Configuration.GetConnectionString("MagShopDBConnectionDocker")));
 #else
-                x.UseSqlServer(Configuration.GetConnectionString("MagShopDBConnection"));
+                x.UseNpgsql(Configuration.GetConnectionString("MagShopDBConnection"));
 #endif
                 x.EnableSensitiveDataLogging();
             });
