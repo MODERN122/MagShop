@@ -44,6 +44,7 @@ using PublicApi.GraphQL.Categories;
 using Infrastructure.Repositories;
 using HotChocolate.Types;
 using PublicApi.GraphQL.Basket;
+using PublicApi.GraphQL.Media;
 
 namespace PublicApi
 {
@@ -179,6 +180,7 @@ namespace PublicApi
                 .AddTypeExtension<UserMutations>()
                 .AddTypeExtension<BasketMutations>()
                 .AddTypeExtension<ProductMutaions>()
+                .AddTypeExtension<ImageMutations>()
                 .AddType<UploadType>()
                 .AddHttpRequestInterceptor((context, executor, builder, cancellationToken) =>
                 {

@@ -34,6 +34,24 @@ namespace ApplicationCore.Entities
             Rating = x.Next(1, 5);
             SetProductProperties(productProperties);
         }
+        /// <summary>
+        /// Add pre publish product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="categoryId"></param>
+        /// <param name="description"></param>
+        /// <param name="storeId"></param>
+        public Product(string name, string categoryId,
+           string description, string storeId)
+        {
+            Name = name;
+            CategoryId = categoryId;
+            Description = description;
+            StoreId = storeId;
+            Random x = new Random();
+            Rating = x.Next(1, 5);
+        }
         public Product(string name, string categoryId,
             string description, string storeId, List<ProductProperty> productProperties)
         {
@@ -43,6 +61,7 @@ namespace ApplicationCore.Entities
             StoreId = storeId;
             SetProductProperties(productProperties);
         }
+        public bool IsActive { get; private set; } = false;
         public List<Image> Images { get; set; }
         public string PriceNew { get; private set; }
         public string PriceOld { get; private set; }
@@ -54,6 +73,10 @@ namespace ApplicationCore.Entities
         public List<ProductProperty> ProductProperties { get; private set; }
         //Not Added while
         //public List<string> Reviews { get; set; }
+        public void SetProductIsActive(bool isActive)
+        {
+            IsActive = isActive;
+        }
 
         public void SetProductProperties(List<ProductProperty> productProperties)
         {

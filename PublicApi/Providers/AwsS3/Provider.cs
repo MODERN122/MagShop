@@ -11,16 +11,17 @@ namespace PublicApi.Providers.AwsS3
 {
     public static class Provider
     {
-        internal static string accessKey = "accessKey";
-        internal static string secretaccessKey = "secretAccessKey";
-        internal static AmazonS3Config conf = new AmazonS3Config { ServiceURL = "http://api.eric.s3storage.ru", SignatureVersion = "2" };
-        public static async Task<string> UploadFromStream(Stream fileBody, string extension, string container, string bucket = "pub")
+        internal static string accessKey = "173016_Mikhail";
+        internal static string secretaccessKey = "/Lu08LmX^Z";
+        const string bucketName = "MagShopS3";
+        internal static AmazonS3Config conf = new AmazonS3Config { ServiceURL = "https://s3.selcdn.ru", SignatureVersion = "2" };
+        public static async Task<string> UploadFromStream(Stream fileBody, string extension, string container, string bucket = bucketName)
         {
             using (var client = new AmazonS3Client(accessKey, secretaccessKey, conf))
             {
                 var fileGuid = Guid.NewGuid().ToString();
                 var keyName = string.Format("{0}/{1}.{2}", container, fileGuid, extension);
-                var req = new PutObjectRequest { InputStream = fileBody, BucketName = bucket, Key = keyName, CannedACL = S3CannedACL.PublicRead };
+                var req = new PutObjectRequest { InputStream = fileBody, BucketName = bucket, Key = keyName, CannedACL = S3CannedACL.BucketOwnerFullControl };
                 var res = await client.PutObjectAsync(req);
                 if (res.HttpStatusCode == System.Net.HttpStatusCode.OK)
                     return keyName;
@@ -29,12 +30,12 @@ namespace PublicApi.Providers.AwsS3
             }
         }
 
-        public static async Task<string> UploadFromMemory(byte[] fileBody, string extension, string container, string bucket = "pub")
+        public static async Task<string> UploadFromMemory(byte[] fileBody, string extension, string container, string bucket = bucketName)
         {
             return await UploadFromStream(new MemoryStream(fileBody), extension, container, bucket);
         }
 
-        public static async Task<bool> Exists(string fileName, string container, string bucket = "pub")
+        public static async Task<bool> Exists(string fileName, string container, string bucket = bucketName)
         {
             using (var client = new AmazonS3Client(accessKey, secretaccessKey, conf))
             {
@@ -63,7 +64,7 @@ namespace PublicApi.Providers.AwsS3
             }
         }
 
-        public static async Task<MemoryStream> Download(string fileName, string container, string bucket = "pub")
+        public static async Task<MemoryStream> Download(string fileName, string container, string bucket = bucketName)
         {
             MemoryStream ms = new MemoryStream();
             using (var client = new AmazonS3Client(accessKey, secretaccessKey, conf))
@@ -97,7 +98,7 @@ namespace PublicApi.Providers.AwsS3
             }
         }
 
-        public static bool CopyFolderInsideS3Bucket(string source, string destination, string bucket = "pub")
+        public static bool CopyFolderInsideS3Bucket(string source, string destination, string bucket = bucketName)
         {
             using (var client = new AmazonS3Client(accessKey, secretaccessKey, conf))
             {

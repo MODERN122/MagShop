@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using ApplicationCore.Specifications;
 using HotChocolate;
 using HotChocolate.AspNetCore.Authorization;
 using HotChocolate.Data;
@@ -24,17 +25,17 @@ namespace PublicApi.GraphQL.Products
         }
 
         public record AddProductInput(
-    [GraphQLNonNullType]
+            [GraphQLNonNullType]
             string Name,
-    [GraphQLNonNullType]
+            [GraphQLNonNullType]
             string StoreId,
-    [GraphQLNonNullType]
+            [GraphQLNonNullType]
             string CategoryId,
-    [GraphQLNonNullType]
+            [GraphQLNonNullType]
             string Description,
-    [GraphQLNonNullType]
+            [GraphQLNonNullType]
             string Image,
-    [GraphQLNonNullType]
+            string Id,
             List<ProductPropertiesInput> ProductProperties);
         public class AddProductPayload
         {
@@ -48,7 +49,7 @@ namespace PublicApi.GraphQL.Products
         public class ProductPropertiesInput
         {
             [GraphQLNonNullType]
-            public string PropertyId { get; set; }            
+            public string PropertyId { get; set; }
             public List<ProductPropertyItemInput> ProductPropertyItems { get; set; }
         }
         public class ProductPropertyItemInput
@@ -59,30 +60,68 @@ namespace PublicApi.GraphQL.Products
             public string PropertyItemId { get; set; }
             [GraphQLNonNullType]
             public int PriceNew { get; set; }
-            public int PriceOld { get; set; }
+            [GraphQLNonNullType]
             public string ImagePath { get; set; }
+            public int PriceOld { get; set; }
         }
-        
-        [Authorize(Roles =new string[] { Infrastructure.Constants.ConstantsAPI.SELLERS})]
+
+
+        [Authorize(Roles = new string[] { Infrastructure.Constants.ConstantsAPI.SELLERS })]
+        public async Task<Product> AddPrePublishProduct(AddProductInput input)
+        {
+            var product = new Product(input.Name, input.CategoryId, input.Description, input.StoreId);
+
+            var result = await _productRepository.AddAsync(product);
+            return result;
+        }
+
+        [Authorize(Roles = new string[] { Infrastructure.Constants.ConstantsAPI.SELLERS })]
         public async Task<Product> AddProductAsync(
                AddProductInput input)
         {
-            var product = new Product(input.Name, input.CategoryId, input.Description, input.StoreId, input.ProductProperties
+            try
+            {
+                ProductSpecification spec = new ProductSpecification(input.Id);
+                var product = await _productRepository.FirstOrDefaultAsync(spec);
+                if (product == null)
+                {
+                    product = new Product(input.Id, input.Name, input.CategoryId, input.Description, input.StoreId, input.ProductProperties
                     .Select(x => new ProductProperty()
                     {
                         PropertyId = x.PropertyId,
-                        ProductPropertyItems = x.ProductPropertyItems?
-                            .Select(x => new ProductPropertyItem(x.PropertyItemId, x.Caption))
-                            .ToList()??new List<ProductPropertyItem>()
+                        ProductPropertyItems = x.ProductPropertyItems
+                            .Select(x => new ProductPropertyItem(x.PropertyItemId, x.Caption, x.PriceNew, x.ImagePath))
+                            .ToList() ?? new List<ProductPropertyItem>()
                     })
                     .ToList())
-            { 
-                Image = input.Image,
-            };
-            try
-            {
-                var result = await _productRepository.AddAsync(product);
-                return result;
+                    {
+                        Image = input.Image,
+                    };
+                    var result = await _productRepository.AddAsync(product);
+                    return result;
+                }
+                else
+                {
+                    product = new Product(input.Id, input.Name, input.CategoryId, input.Description, input.StoreId, input.ProductProperties
+                       .Select(x => new ProductProperty()
+                       {
+                           PropertyId = x.PropertyId,
+                           ProductPropertyItems = x.ProductPropertyItems
+                               .Select(x => new ProductPropertyItem(x.PropertyItemId, x.Caption, x.PriceNew, x.ImagePath))
+                               .ToList() ?? new List<ProductPropertyItem>()
+                       })
+                       .ToList())
+                    {
+                        PublicationDateTime = product.PublicationDateTime,
+                        Image = input.Image,
+                    };
+                    var result = await _productRepository.UpdateAsync(product);
+                    if (!result)
+                    {
+                        throw new Exception("Не смогли обновить товар попробуйте заново");
+                    }
+                    return product;
+                }
             }
             catch (Exception ex)
             {

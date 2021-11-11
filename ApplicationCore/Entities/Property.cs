@@ -37,6 +37,13 @@ namespace ApplicationCore.Entities
             PriceNew = priceNew;
             PriceOld = priceOld;
         }
+        public ProductPropertyItem(string propertyItemId, string caption, double priceNew, string imagePath)
+        {
+            PropertyItemId = propertyItemId;
+            Caption = caption;
+            PriceNew = priceNew;
+            ImagePath = imagePath;
+        }
 
         /// <summary>
         /// Only for seed data
@@ -57,7 +64,7 @@ namespace ApplicationCore.Entities
         public PropertyItem PropertyItem { get; set; }
         [ForeignKey("ProductPropertyId")]
         public ProductProperty ProductProperty { get; set; }
-        public byte[] Image { get; set; } = new byte[0];
+        public string ImagePath { get; set; }
         public double PriceNew { get; set; } = -1;
         public double? PriceOld { get; set; }
         public string Caption { get; set; }
