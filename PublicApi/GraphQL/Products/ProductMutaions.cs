@@ -24,6 +24,7 @@ namespace PublicApi.GraphQL.Products
             _productRepository = productRepository;
         }
 
+        [GraphQLDescription("Product input for adding Prepublished product")]
         public record AddProductInput(
             [GraphQLNonNullType]
             string Name,
@@ -66,6 +67,7 @@ namespace PublicApi.GraphQL.Products
         }
 
 
+        [GraphQLDescription("Adding Prepublished product")]
         [Authorize(Roles = new string[] { Infrastructure.Constants.ConstantsAPI.SELLERS })]
         public async Task<Product> AddPrePublishProduct(AddProductInput input)
         {
@@ -75,6 +77,7 @@ namespace PublicApi.GraphQL.Products
             return result;
         }
 
+        [GraphQLDescription("Adding properties with images to product")]
         [Authorize(Roles = new string[] { Infrastructure.Constants.ConstantsAPI.SELLERS })]
         public async Task<Product> AddProductAsync(
                AddProductInput input)
