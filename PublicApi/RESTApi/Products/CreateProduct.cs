@@ -60,7 +60,7 @@ namespace ApplicationCore.RESTApi.Products
 
                 if ((store != null && store.SellerId == user.Id)||currentUser.IsInRole(ConstantsAPI.ADMINISTRATORS))
                 {
-                    var product = new Product();
+                    var product = new Product(store.Seller.Id);
                     _mapper.Map(request, product);
                     product = await _itemRepository.AddAsync(product, cancellationToken);
                     if (product.Id != null)

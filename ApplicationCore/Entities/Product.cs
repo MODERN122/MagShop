@@ -11,7 +11,12 @@ namespace ApplicationCore.Entities
 {
     public class Product : ProductPreview
     {
-        public Product() { }
+        [Obsolete("Uses only for EF Core generating")]
+        public Product()
+        {
+
+        }
+        public Product(string userId) : base(userId) { }
         /// <summary>
         /// Initialize Product
         /// </summary>
@@ -23,7 +28,7 @@ namespace ApplicationCore.Entities
         /// <param name="productProperties">collection of Properties</param>
         /// <param name="storeId">identifier of Store</param>
         public Product(string id, string name, string categoryId,
-            string description, string storeId, List<ProductProperty> productProperties)
+            string description, string storeId, List<ProductProperty> productProperties, string userId):base(userId)
         {
             Id = id;
             Name = name;
@@ -43,7 +48,7 @@ namespace ApplicationCore.Entities
         /// <param name="description"></param>
         /// <param name="storeId"></param>
         public Product(string name, string categoryId,
-           string description, string storeId)
+           string description, string storeId, string userId) : base(userId)
         {
             Name = name;
             CategoryId = categoryId;
@@ -53,7 +58,7 @@ namespace ApplicationCore.Entities
             Rating = x.Next(1, 5);
         }
         public Product(string name, string categoryId,
-            string description, string storeId, List<ProductProperty> productProperties)
+            string description, string storeId, List<ProductProperty> productProperties, string userId) : base(userId)
         {
             Name = name;
             CategoryId = categoryId;
@@ -111,7 +116,7 @@ namespace ApplicationCore.Entities
                 priceNew += tempPriceNew;
                 priceOld += tempPriceOld;
             }
-            Discount = (int)((priceOld - priceNew) * 100 / priceOld);
+            Discount = (int)((priceOld - priceNew) * 100 / priceOld!=0?priceOld:double.MaxValue);
         }
 
     }

@@ -72,7 +72,7 @@ namespace ApplicationCore.RESTApi.Products
                 if ((store != null && store.SellerId == user.Id) || currentUser.IsInRole(Infrastructure.Constants.ConstantsAPI.ADMINISTRATORS))
                 {
                     var newProd = _mapper.Map(request, oldProduct);
-                    await _productRepository.UpdateAsync(oldProduct, cancellationToken);
+                    await _productRepository.UpdateEntryAsync(oldProduct, cancellationToken);
                     var productSpec = new ProductSpecification(oldProduct.Id);
                     oldProduct = await _productRepository.FirstAsync(productSpec);
                     if (oldProduct.Id != null)

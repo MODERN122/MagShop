@@ -17,7 +17,7 @@ namespace ApplicationCore.Entities
         /// <param name="parentId">identidier category</param>
         /// <param name="name">name of category</param>
         /// <param name="weight">weight for ML constraint 0.0-1.0</param>
-        public Category(string id, string parentId, string name, double weight)
+        public Category(string id, string parentId, string name, double weight, string userId):base (userId)
         {
             Id = id;
             ParentId = parentId;
@@ -37,7 +37,9 @@ namespace ApplicationCore.Entities
         public List<Category> Childs { get; set; }
         public List<Product> Products { get; set; }
 
-        public Category()
+        [Obsolete("Uses only for EF Core generating")]
+        public Category() { }
+        public Category(string userId):base(userId)
         {
 
         }

@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Specifications;
+using Ardalis.GuardClauses;
 using HotChocolate;
 using HotChocolate.AspNetCore.Authorization;
 using HotChocolate.Data;
@@ -9,6 +10,7 @@ using Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace PublicApi.GraphQL.Products
@@ -17,11 +19,14 @@ namespace PublicApi.GraphQL.Products
     public class ProductMutaions
     {
         private IAsyncRepository<Product> _productRepository;
+        private IAsyncRepository<ProductProperty> _productPropertyRepository;
 
         public ProductMutaions(
-            IAsyncRepository<Product> productRepository)
+            IAsyncRepository<Product> productRepository,
+            IAsyncRepository<ProductProperty> productPropertyRepository)
         {
             _productRepository = productRepository;
+            _productPropertyRepository = productPropertyRepository;
         }
 
         [GraphQLDescription("Product input for adding Prepublished product")]
@@ -36,6 +41,7 @@ namespace PublicApi.GraphQL.Products
             string Description,
             [GraphQLNonNullType]
             string Image,
+            List<string> ImagePaths,
             string Id,
             List<ProductPropertiesInput> ProductProperties);
         public class AddProductPayload
@@ -51,6 +57,9 @@ namespace PublicApi.GraphQL.Products
         {
             [GraphQLNonNullType]
             public string PropertyId { get; set; }
+            [GraphQLNonNullType]
+            public string ProductId { get; set; }
+            [GraphQLNonNullType]
             public List<ProductPropertyItemInput> ProductPropertyItems { get; set; }
         }
         public class ProductPropertyItemInput
@@ -69,9 +78,15 @@ namespace PublicApi.GraphQL.Products
 
         [GraphQLDescription("Adding Prepublished product")]
         [Authorize(Roles = new string[] { Infrastructure.Constants.ConstantsAPI.SELLERS })]
-        public async Task<Product> AddPrePublishProduct(AddProductInput input)
+        public async Task<Product> AddPrePublishProduct(AddProductInput input,
+            [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
         {
-            var product = new Product(input.Name, input.CategoryId, input.Description, input.StoreId);
+            if (input == null)
+            {
+                throw new Exception("input was null");
+            }
+            var product = new Product(input.Name, input.CategoryId, input.Description, input.StoreId, currentUser.Claims.First().Value);
+            product.Images = input.ImagePaths.Select(x=>new Image(product.Id, x)).ToList();
 
             var result = await _productRepository.AddAsync(product);
             return result;
@@ -79,52 +94,27 @@ namespace PublicApi.GraphQL.Products
 
         [GraphQLDescription("Adding properties with images to product")]
         [Authorize(Roles = new string[] { Infrastructure.Constants.ConstantsAPI.SELLERS })]
-        public async Task<Product> AddProductAsync(
-               AddProductInput input)
+        public async Task<Product> AddProductPropertiesToProductAsync(string productId,
+               List<ProductPropertiesInput> input)
         {
             try
             {
-                ProductSpecification spec = new ProductSpecification(input.Id);
+                var spec = new ProductSpecification(productId);
                 var product = await _productRepository.FirstOrDefaultAsync(spec);
-                if (product == null)
+                Guard.Against.Null(product, nameof(product));
+                product.SetProductProperties(input.Select(x => new ProductProperty()
                 {
-                    product = new Product(input.Id, input.Name, input.CategoryId, input.Description, input.StoreId, input.ProductProperties
-                    .Select(x => new ProductProperty()
-                    {
-                        PropertyId = x.PropertyId,
-                        ProductPropertyItems = x.ProductPropertyItems
-                            .Select(x => new ProductPropertyItem(x.PropertyItemId, x.Caption, x.PriceNew, x.ImagePath))
-                            .ToList() ?? new List<ProductPropertyItem>()
-                    })
-                    .ToList())
-                    {
-                        Image = input.Image,
-                    };
-                    var result = await _productRepository.AddAsync(product);
-                    return result;
-                }
-                else
-                {
-                    product = new Product(input.Id, input.Name, input.CategoryId, input.Description, input.StoreId, input.ProductProperties
-                       .Select(x => new ProductProperty()
-                       {
-                           PropertyId = x.PropertyId,
-                           ProductPropertyItems = x.ProductPropertyItems
-                               .Select(x => new ProductPropertyItem(x.PropertyItemId, x.Caption, x.PriceNew, x.ImagePath))
-                               .ToList() ?? new List<ProductPropertyItem>()
-                       })
-                       .ToList())
-                    {
-                        PublicationDateTime = product.PublicationDateTime,
-                        Image = input.Image,
-                    };
-                    var result = await _productRepository.UpdateAsync(product);
-                    if (!result)
-                    {
-                        throw new Exception("Не смогли обновить товар попробуйте заново");
-                    }
-                    return product;
-                }
+                    ProductId = x.ProductId,
+                    PropertyId = x.PropertyId,
+                    ProductPropertyItems = x.ProductPropertyItems
+                        .Select(x => new ProductPropertyItem(x.PropertyItemId, x.Caption, x.PriceNew, x.ImagePath, product.Store.SellerId))
+                        .ToList() ?? new List<ProductPropertyItem>()
+                })
+                .ToList());
+                product.SetProductIsActive(true);
+                var result = await _productRepository.UpdateEntryAsync(product);
+                Guard.Against.Default(result, nameof(result));
+                return await _productRepository.FirstOrDefaultAsync(new ProductSpecification(product.Id));
             }
             catch (Exception ex)
             {

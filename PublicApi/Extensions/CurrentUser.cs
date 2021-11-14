@@ -10,10 +10,12 @@ namespace PublicApi.Extensions
     public class CurrentUser
     {
         public ClaimsPrincipal User { get; }
+        public string UserId { get; }
 
         public CurrentUser(ClaimsPrincipal user)
         {
             User = user;
+            UserId = user.Claims.First().Value;
         }
     }
 

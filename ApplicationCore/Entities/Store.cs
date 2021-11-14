@@ -10,11 +10,9 @@ namespace ApplicationCore.Entities
 {
     public class Store : BaseDateTimeEntity
     {
-        public Store()
-        {
-
-        }
-        public Store(string id, string sellerId, string name, float rating)
+        [Obsolete("Uses only for EF Core generating")]
+        public Store() { }
+        public Store(string id, string sellerId, string name, float rating):base(sellerId)
         {
             Id = id;
             Rating = rating;
@@ -27,7 +25,7 @@ namespace ApplicationCore.Entities
         /// <param name="sellerId">Идентфикатор продавца</param>
         /// <param name="name">Имя магазина</param>
         /// <param name="approveDocument">Подтверждающий документ (путь до файла в хранилище)</param>
-        public Store(string sellerId, string name, string approveDocument)
+        public Store(string sellerId, string name, string approveDocument):base(sellerId)
         {
             SellerId = sellerId;
             Name = name;

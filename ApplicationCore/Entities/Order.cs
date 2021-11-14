@@ -9,11 +9,9 @@ namespace ApplicationCore.Entities
 {
     public class Order : BaseDateTimeEntity
     {
-        public Order()
-        {
-
-        }
-        public Order(DateTime publicationDateTime, string addressId, List<OrderItem> items)
+        [Obsolete("Uses only for EF Core generating")]
+        public Order() { }
+        public Order(DateTime publicationDateTime, string addressId, List<OrderItem> items, string userId):base(userId)
         {
             PublicationDateTime = publicationDateTime;
             AddressId = addressId;

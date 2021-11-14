@@ -23,6 +23,12 @@ namespace Infrastructure.Data
         public DbSet<Store> Stores { get; set; }
         public new DbSet<User> Users { get; set; }
         public DbSet<Property> Properties { get; set; }
+        public DbSet<ProductProperty> ProductProperties { get; set; }
+        public DbSet<ProductPropertyItem> ProductPropertyItems { get; set; }
+        public DbSet<CreditCard> CreditCards { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<PropertyItem> PropertyItems { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

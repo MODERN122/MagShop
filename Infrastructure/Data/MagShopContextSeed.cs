@@ -17,7 +17,7 @@ namespace Infrastructure.Data
     {
         #region Define consts
         //Users
-        private const string USER_ID = "admin@microsoft.com" ;
+        private const string USER_ID = "admin@microsoft.com";
         private const string BASKET_ID = "12345";
         private const string CREDIT_CARD_ID = "123";
         //Stores
@@ -57,10 +57,6 @@ namespace Infrastructure.Data
             int retryForAvailability = retry.Value;
             try
             {
-                // TODO: Only run this if using a real database
-                //context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-                //context.Database.Migrate();
                 if (!await context.Users.AnyAsync())
                 {
                     if (!roleManager.Roles.Any() && !userManager.Users.Any())
@@ -111,16 +107,18 @@ namespace Infrastructure.Data
                     await context.Products.AddRangeAsync(
                         GetPrecongifuredProducts());
                     await context.SaveChangesAsync();
-                    await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
+                    await context.Products.AddAsync(new Product("22","Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
-                                .Items.Select(y => (y.Id, y.Caption))
-                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                                .Items
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption,SELLER_ID)).ToList()
                         }
-                    })
+                    }, SELLER_ID)
+                    { Images=new List<Image>() { new Image("22", "https://sun9-54.userapi.com/impg/AiOjSFgShn1Z2PYCIfbb_re4Ivp" +
+                    "c3A132Unu2w/qI6EEjgHAd0.jpg" + "?size=1439x2160&quality=96&sign=3263d89b63287df39a08354aa5269bb4&type=album")} }
                     );
                     await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
@@ -128,10 +126,10 @@ namespace Infrastructure.Data
                         {
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
-                                .Items.Select(y => (y.Id, y.Caption))
-                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                                .Items
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption,SELLER_ID)).ToList()
                         }
-                    })
+                    }, SELLER_ID)
                     );
                     await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
@@ -139,69 +137,69 @@ namespace Infrastructure.Data
                         {
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
-                                .Items.Select(y => (y.Id, y.Caption))
-                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                                .Items
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption,SELLER_ID)).ToList()
                         }
-                    })); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
+                    }, SELLER_ID)); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
-                                .Items.Select(y => (y.Id, y.Caption))
-                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                                .Items
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption,SELLER_ID)).ToList()
                         }
-                    })
+                    }, SELLER_ID)
                     ); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
-                                .Items.Select(y => (y.Id, y.Caption))
-                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                                .Items
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption,SELLER_ID)).ToList()
                         }
-                    })
+                    }, SELLER_ID)
                     ); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
-                                .Items.Select(y => (y.Id, y.Caption))
-                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                                .Items
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption,SELLER_ID)).ToList()
                         }
-                    })
+                    }, SELLER_ID)
                    ); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
-                                .Items.Select(y => (y.Id, y.Caption))
-                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                                .Items
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption,SELLER_ID)).ToList()
                         }
-                    })
+                    }, SELLER_ID)
                     ); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
-                                .Items.Select(y => (y.Id, y.Caption))
-                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                                .Items
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption,SELLER_ID)).ToList()
                         }
-                    })
+                    }, SELLER_ID)
                     ); await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = GetPreconfiguredProperties(PROPERTY_1_ID).First()
-                                .Items.Select(y => (y.Id, y.Caption))
-                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList()
+                                .Items
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption,SELLER_ID)).ToList()
                         }
-                    })
+                    }, SELLER_ID)
                    );
                     await context.SaveChangesAsync();
                 }
@@ -232,74 +230,8 @@ namespace Infrastructure.Data
             }
         }
 
-        private static List<Property> GetPreconfiguredProperties(string propertyId=null)
+        private static List<Property> GetPreconfiguredProperties(string propertyId = null)
         {
-            #region IMAGES
-            var assembly = Assembly.GetExecutingAssembly();
-            Stream resource = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "1.jpg");
-            Stream resource1 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "2.jpg");
-            Stream resource2 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "3.jpg");
-            Stream resource3 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "4.jpg");
-            Stream resource4 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "5.jpg");
-            Stream resource5 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "6.jpg");
-            Stream resource6 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "7.jpg");
-            Stream resource7 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "8.jpg");
-
-
-            MemoryStream ms = new MemoryStream();
-            if (resource != null)
-            {
-                resource.CopyTo(ms);
-            }
-            var image1 = ms.ToArray();
-            if (image1.Length > 0)
-            {
-
-            }
-            if (resource != null)
-            {
-                resource.CopyTo(ms);
-            }
-            var image2 = ms.ToArray();
-            if (image2.Length > 0)
-            {
-
-            }
-
-            var image3 = ms.ToArray();
-            if (image3.Length > 0)
-            {
-
-            }
-
-            var image4 = ms.ToArray();
-            if (image4.Length > 0)
-            {
-
-            }
-
-            var image5 = ms.ToArray();
-            if (image5.Length > 0)
-            {
-
-            }
-            var image6 = ms.ToArray();
-            if (image6.Length > 0)
-            {
-
-            }
-
-            var image7 = ms.ToArray();
-            if (image7.Length > 0)
-            {
-
-            }
-            var image8 = ms.ToArray();
-            if (image8.Length > 0)
-            {
-
-            }
-            #endregion
             Random random = new Random();
             var list = new List<Property>()
             {
@@ -314,7 +246,7 @@ namespace Infrastructure.Data
                     new PropertyItem("7","7"),
                     new PropertyItem("8","8"),
                     new PropertyItem("9","9"),
-                }),
+                },SELLER_ID),
                 new Property(PROPERTY_2_ID,"Типы",
                    new List<PropertyItem>(){
                        new PropertyItem("10","Для голубей"),
@@ -322,14 +254,14 @@ namespace Infrastructure.Data
                        new PropertyItem("13","Для белок"),
                        new PropertyItem("14","Для кошек"),
 
-                   }),
+                   },SELLER_ID),
                 new Property(PROPERTY_3_ID,"Уровень сложности",
                     new List<PropertyItem>(){
                         new PropertyItem("15","Минимальный"),
                         new PropertyItem("16","Нормальный"),
                         new PropertyItem("17","Продвинутый"),
                         new PropertyItem("18","Экспертный"),
-                    })
+                    },SELLER_ID)
             };
             if (propertyId != null)
             {
@@ -358,15 +290,15 @@ namespace Infrastructure.Data
         {
             return new List<Category>()
             {
-                new Category(PARENT_ID, null, "MAIN_CATEGORY", 0),
-                new Category(CATEGORY_1_ID, PARENT_ID, "Электроника", 0.2),
-                new Category(CATEGORY_2_ID, PARENT_ID, "Мужской гардероб", 0.2),
-                new Category(CATEGORY_3_ID, PARENT_ID, "Здоровье", 0.1),
-                new Category("category7", CATEGORY_3_ID, "Лекарства", 0.1),
-                new Category("category8", CATEGORY_3_ID, "Тренажеры", 0.1),
-                new Category(CATEGORY_4_ID, PARENT_ID, "Украшения", 0.2 ),
-                new Category(CATEGORY_5_ID, PARENT_ID, "Строительство", 0.25),
-                new Category(CATEGORY_6_ID, PARENT_ID, "Товары для дома", 0.31)
+                new Category(PARENT_ID, null, "MAIN_CATEGORY", 0,SELLER_ID),
+                new Category(CATEGORY_1_ID, PARENT_ID, "Электроника", 0.2,SELLER_ID),
+                new Category(CATEGORY_2_ID, PARENT_ID, "Мужской гардероб", 0.2,SELLER_ID),
+                new Category(CATEGORY_3_ID, PARENT_ID, "Здоровье", 0.1,SELLER_ID),
+                new Category("category7", CATEGORY_3_ID, "Лекарства", 0.1,SELLER_ID),
+                new Category("category8", CATEGORY_3_ID, "Тренажеры", 0.1,SELLER_ID),
+                new Category(CATEGORY_4_ID, PARENT_ID, "Украшения", 0.2,SELLER_ID ),
+                new Category(CATEGORY_5_ID, PARENT_ID, "Строительство", 0.25,SELLER_ID),
+                new Category(CATEGORY_6_ID, PARENT_ID, "Товары для дома", 0.31,SELLER_ID)
 
             };
         }
@@ -374,76 +306,10 @@ namespace Infrastructure.Data
         #region Products
         private static IEnumerable<Product> GetPrecongifuredProducts()
         {
-            #region IMAGES
-            var assembly = Assembly.GetExecutingAssembly();
-            Stream resource = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "1.jpg");
-            Stream resource1 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "2.jpg");
-            Stream resource2 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "3.jpg");
-            Stream resource3 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "4.jpg");
-            Stream resource4 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "5.jpg");
-            Stream resource5 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "6.jpg");
-            Stream resource6 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "7.jpg");
-            Stream resource7 = assembly.GetManifestResourceStream("Infrastructure.Data.Images." + "8.jpg");
-
-
-            MemoryStream ms = new MemoryStream();
-            if (resource != null)
-            {
-                resource.CopyTo(ms);
-            }
-            var image1 = ms.ToArray();
-            if (image1.Length > 0)
-            {
-
-            }
-            if (resource != null)
-            {
-                resource.CopyTo(ms);
-            }
-            var image2 = ms.ToArray();
-            if (image2.Length > 0)
-            {
-
-            }
-
-            var image3 = ms.ToArray();
-            if (image3.Length > 0)
-            {
-
-            }
-
-            var image4 = ms.ToArray();
-            if (image4.Length > 0)
-            {
-
-            }
-
-            var image5 = ms.ToArray();
-            if (image5.Length > 0)
-            {
-
-            }
-            var image6 = ms.ToArray();
-            if (image6.Length > 0)
-            {
-
-            }
-
-            var image7 = ms.ToArray();
-            if (image7.Length > 0)
-            {
-
-            }
-            var image8 = ms.ToArray();
-            if (image8.Length > 0)
-            {
-
-            }
-            #endregion
             Random random = new Random();
-            Func<string, List<ProductPropertyItem>> func = x=> GetPreconfiguredProperties(x).First()
+            Func<string, List<ProductPropertyItem>> func = x => GetPreconfiguredProperties(x).First()
                                 .Items.Select(y => (y.Id, y.Caption))
-                                .Select(x => new ProductPropertyItem(x.Id, x.Caption)).ToList();
+                                .Select(x => new ProductPropertyItem(x.Id, x.Caption, SELLER_ID)).ToList();
             return new List<Product>()
             {
                 new Product(PRODUCT_1_ID, "Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID,
@@ -454,7 +320,7 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
-                    }),
+                    },SELLER_ID),
 
                 new Product(PRODUCT_2_ID, "Корушка", CATEGORY_6_ID, "Сдлайте все своими руками",
                  STORE_ID, new List<ProductProperty>()
@@ -465,7 +331,7 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_2_ID,
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
-                    }),
+                    },SELLER_ID),
                 new Product(PRODUCT_3_ID, "1с", CATEGORY_5_ID, "Обучитесь программированию на 1с",
                 STORE_ID,new List<ProductProperty>()
                     {
@@ -475,7 +341,7 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
-                    }),
+                    },SELLER_ID),
                 new Product(PRODUCT_4_ID, "Физика", CATEGORY_4_ID, "Обучение основам физики"
 
                 , STORE_ID,new List<ProductProperty>()
@@ -486,7 +352,7 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = func(PROPERTY_2_ID)
                         }
-                    }),
+                    },SELLER_ID),
                 new Product(PRODUCT_5_ID, "Французкий язык", CATEGORY_2_ID, "Научитесь говорить как истинный француз",
                STORE_ID+"1",new List<ProductProperty>()
                     {
@@ -496,7 +362,7 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_3_ID,
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
-                    }),
+                    },SELLER_ID),
                 new Product(PRODUCT_6_ID, "Математика", CATEGORY_1_ID, "Научитесть складывать цифры и не только",
                 STORE_ID+"1",new List<ProductProperty>()
                     {
@@ -506,7 +372,7 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_3_ID,
                             ProductPropertyItems = func(PROPERTY_2_ID)
                         }
-                    }),
+                    },SELLER_ID),
                 new Product(PRODUCT_7_ID, "Русский язык", CATEGORY_2_ID, "Обучат грамматике",
                STORE_ID+"2", new List<ProductProperty>()
                     {
@@ -516,7 +382,7 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_1_ID,
                             ProductPropertyItems = func(PROPERTY_1_ID)
                         }
-                    }),
+                    },SELLER_ID),
                 new Product(PRODUCT_8_ID, "География", CATEGORY_4_ID, "Научат ориентироваться в картах",  STORE_ID+"2", new List<ProductProperty>()
                     {
                         new ProductProperty()
@@ -525,7 +391,7 @@ namespace Infrastructure.Data
                             PropertyId = PROPERTY_2_ID,
                             ProductPropertyItems = func(PROPERTY_3_ID)
                         }
-                    }),
+                    },SELLER_ID),
             };
         }
         #endregion
@@ -551,7 +417,7 @@ namespace Infrastructure.Data
                 orderItems.Add(new OrderItem(2, product, product.ProductProperties.Select(x => x.ProductPropertyItems.First()).ToList()));
             }
             user.AddOrder(
-                new Order(DateTime.Now, user.Addresses.First().AddressId, orderItems));
+                new Order(DateTime.Now, user.Addresses.First().AddressId, orderItems, SELLER_ID));
         }
         #endregion
         #region Users

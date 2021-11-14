@@ -80,8 +80,9 @@ namespace PublicApi
 #if RELEASE
                 x.UseNpgsql(Configuration.GetConnectionString("MagShopDBConnectionDocker")));
 #else
-                x.UseNpgsql(Configuration.GetConnectionString("MagShopDBConnection"));
+                x.UseNpgsql(Configuration.GetConnectionString("MagShopDBConnection"),x=>x.MigrationsAssembly("PublicApi"));
 #endif
+               // x.UseSnakeCaseNamingConvention();
                 x.EnableSensitiveDataLogging();
             });
 

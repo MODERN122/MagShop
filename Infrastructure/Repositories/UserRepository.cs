@@ -30,7 +30,7 @@ namespace Infrastructure.Repositories
             using var context = this._contextFactory.CreateDbContext();
             var token = await _tokenClaimsService.RegisterSellerAsync(userAccess);
 
-            var entity = new Seller()
+            var entity = new Seller(phoneNumber)
             {
                 FirstName = firstName,
                 LastName = lastName,
@@ -59,7 +59,7 @@ namespace Infrastructure.Repositories
             using var context = this._contextFactory.CreateDbContext();
             var token = await _tokenClaimsService.RegisterUserAsync(userAccess);
 
-            var entity = new User()
+            var entity = new User(email)
             {
                 Id = userAccess.Id,
                 FirstName = firstName,
@@ -79,7 +79,7 @@ namespace Infrastructure.Repositories
             using var context = this._contextFactory.CreateDbContext();
             var token = await _tokenClaimsService.RegisterUserAsync(userAccess);
 
-            var entity = new User()
+            var entity = new User(phoneNumber)
             {
                 Id = userAccess.Id,
                 FirstName = firstName,

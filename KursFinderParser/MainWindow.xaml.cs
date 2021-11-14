@@ -158,7 +158,7 @@ namespace kursfinderparser
                 CreateProductRequest product = new CreateProductRequest()
                 {
                     ProductName = course.Name,
-                    Description = course.Description,
+                    Description = course.Description,                    
                     StoreId = "12346",
                     CategoryId = "category5",                    
                     PreviewImage = course.Image,
@@ -167,7 +167,7 @@ namespace kursfinderparser
                         new Property("Продолжительность", new List<PropertyItem>()
                         {
                             //new PropertyItem(course.Duration, double.Parse(new String(course.Price.Where(Char.IsDigit).ToArray())))
-                        })
+                        }, "1")
                     },
                     Url = course.OuterUrl
                 };

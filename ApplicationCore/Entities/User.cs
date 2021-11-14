@@ -10,12 +10,12 @@ using System.Text.Json.Serialization;
 
 namespace ApplicationCore.Entities
 {
+    
     public class User : BaseDateTimeEntity
     {
-        public User()
-        {
-
-        }
+        [Obsolete("Uses only for EF Core generating")]
+        public User() { }
+        public User(string id) : base(id) { }
         public User(string id,
             string firstName,
             string lastName,
@@ -24,7 +24,7 @@ namespace ApplicationCore.Entities
             DateTimeOffset birthDate,
             Basket basket,
             List<CreditCard> creditCards,
-            List<Address> addresses)
+            List<Address> addresses):base(id)
         {
             Id = id;
             FirstName = firstName;

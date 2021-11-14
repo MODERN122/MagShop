@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -78,11 +79,25 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task<bool> UpdateAsync(T entity, CancellationToken token = default)
+        public async Task<bool> UpdateEntryAsync(T entity, CancellationToken token = default)
         {
             using (var context = this._contextFactory.CreateDbContext())
             {
                 context.Entry(entity).State = EntityState.Modified;
+                await context.SaveChangesAsync(token);
+                return true;
+            }
+        }
+        public async Task<bool> UpdateFieldsAsync(T entity, CancellationToken token = default, params Expression<Func<T, object>>[] includeProperties)
+        {
+            using (var context = this._contextFactory.CreateDbContext())
+            {
+                var dbEntry = context.Entry(entity);
+
+                foreach (var includeProperty in includeProperties)
+                {
+                    dbEntry.Property(includeProperty).IsModified = true;
+                }
                 await context.SaveChangesAsync(token);
                 return true;
             }

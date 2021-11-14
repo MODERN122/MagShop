@@ -7,17 +7,18 @@ namespace ApplicationCore.Entities
 {
     public class Property : BaseDateTimeEntity
     {
+        [Obsolete("Uses only for EF Core generating")]
         public Property()
         {
 
         }
-        public Property(string id, string propertyName, List<PropertyItem> propertyItems)
+        public Property(string id, string propertyName, List<PropertyItem> propertyItems, string userId) : base(userId)
         {
             Id = id;
             Name = propertyName;
             Items = propertyItems;
         }
-        public Property(string propertyName, List<PropertyItem> propertyItems)
+        public Property(string propertyName, List<PropertyItem> propertyItems, string userId) : base(userId)
         {
             Name = propertyName;
             Items = propertyItems;
@@ -31,13 +32,15 @@ namespace ApplicationCore.Entities
 
     public class ProductPropertyItem : BaseDateTimeEntity
     {
-        public ProductPropertyItem(string caption, double priceNew, double priceOld)
+        [Obsolete("Uses only for EF Core generating")]
+        public ProductPropertyItem() { }
+        public ProductPropertyItem(string caption, double priceNew, double priceOld, string userId) : base(userId)
         {
             Caption = caption;
             PriceNew = priceNew;
             PriceOld = priceOld;
         }
-        public ProductPropertyItem(string propertyItemId, string caption, double priceNew, string imagePath)
+        public ProductPropertyItem(string propertyItemId, string caption, double priceNew, string imagePath, string userId) : base(userId)
         {
             PropertyItemId = propertyItemId;
             Caption = caption;
@@ -49,7 +52,7 @@ namespace ApplicationCore.Entities
         /// Only for seed data
         /// </summary>
         /// <param name="caption">Caption for labeling propertyItem</param>
-        public ProductPropertyItem(string propertyItemId, string caption)
+        public ProductPropertyItem(string propertyItemId, string caption, string userId) : base(userId)
         {
             Random random = new Random();
             Caption = caption;
