@@ -75,7 +75,6 @@ namespace Infrastructure.Data
                         adminUser = await userManager.FindByNameAsync(adminUser.UserName);
                         await userManager.AddToRoleAsync(adminUser, Constants.ConstantsAPI.ADMINISTRATORS);
 
-
                         await context.Users.AddRangeAsync(
                             GetPreconfiguredUsers(defaultUser.Id, adminUser.Id));
                     }

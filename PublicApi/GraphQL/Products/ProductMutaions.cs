@@ -58,8 +58,6 @@ namespace PublicApi.GraphQL.Products
             [GraphQLNonNullType]
             public string PropertyId { get; set; }
             [GraphQLNonNullType]
-            public string ProductId { get; set; }
-            [GraphQLNonNullType]
             public List<ProductPropertyItemInput> ProductPropertyItems { get; set; }
         }
         public class ProductPropertyItemInput
@@ -76,7 +74,7 @@ namespace PublicApi.GraphQL.Products
         }
 
 
-        [GraphQLDescription("Adding Prepublished product")]
+        [GraphQLDescription("Add Prepublished product")]
         [Authorize(Roles = new string[] { Infrastructure.Constants.ConstantsAPI.SELLERS })]
         public async Task<Product> AddPrePublishProduct(AddProductInput input,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
@@ -86,13 +84,13 @@ namespace PublicApi.GraphQL.Products
                 throw new Exception("input was null");
             }
             var product = new Product(input.Name, input.CategoryId, input.Description, input.StoreId, currentUser.Claims.First().Value);
-            product.Images = input.ImagePaths.Select(x=>new Image(product.Id, x)).ToList();
+            product.Images = input.ImagePaths.Select(x => new Image(product.Id, x)).ToList();
 
             var result = await _productRepository.AddAsync(product);
             return result;
         }
 
-        [GraphQLDescription("Adding properties with images to product")]
+        [GraphQLDescription("Add properties with images to product")]
         [Authorize(Roles = new string[] { Infrastructure.Constants.ConstantsAPI.SELLERS })]
         public async Task<Product> AddProductPropertiesToProductAsync(string productId,
                List<ProductPropertiesInput> input)
@@ -104,7 +102,7 @@ namespace PublicApi.GraphQL.Products
                 Guard.Against.Null(product, nameof(product));
                 product.SetProductProperties(input.Select(x => new ProductProperty()
                 {
-                    ProductId = x.ProductId,
+                    ProductId = productId,
                     PropertyId = x.PropertyId,
                     ProductPropertyItems = x.ProductPropertyItems
                         .Select(x => new ProductPropertyItem(x.PropertyItemId, x.Caption, x.PriceNew, x.ImagePath, product.Store.SellerId))
@@ -115,6 +113,24 @@ namespace PublicApi.GraphQL.Products
                 var result = await _productRepository.UpdateEntryAsync(product);
                 Guard.Against.Default(result, nameof(result));
                 return await _productRepository.FirstOrDefaultAsync(new ProductSpecification(product.Id));
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        [GraphQLDescription("Delete product")]
+        [Authorize(Roles = new string[] { Infrastructure.Constants.ConstantsAPI.SELLERS })]
+        public async Task<bool> DeleteProductAsync(string productId)
+        {
+            try
+            {
+                var spec = new ProductSpecification(productId);
+                var product = await _productRepository.FirstOrDefaultAsync(spec);
+                Guard.Against.Null(product, nameof(product));
+                product.SetProductIsActive(false);
+                var result = await _productRepository.UpdateEntryAsync(product);
+                return result;
             }
             catch (Exception ex)
             {

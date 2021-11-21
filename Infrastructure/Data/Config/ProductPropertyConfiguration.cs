@@ -14,7 +14,8 @@ namespace Infrastructure.Data.Config
             builder.HasKey(x => x.Id);
             builder.HasMany(p => p.ProductPropertyItems)
                 .WithOne(x => x.ProductProperty)
-                .HasForeignKey(x => x.ProductPropertyId);
+                .HasForeignKey(x => x.ProductPropertyId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

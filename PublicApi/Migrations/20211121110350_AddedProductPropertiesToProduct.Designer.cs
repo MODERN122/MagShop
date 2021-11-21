@@ -3,15 +3,17 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace PublicApi.Migrations
 {
     [DbContext(typeof(MagShopContext))]
-    partial class MagShopContextModelSnapshot : ModelSnapshot
+    [Migration("20211121110350_AddedProductPropertiesToProduct")]
+    partial class AddedProductPropertiesToProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -785,13 +787,11 @@ namespace PublicApi.Migrations
                 {
                     b.HasOne("ApplicationCore.Entities.ProductProperty", "ProductProperty")
                         .WithMany("ProductPropertyItems")
-                        .HasForeignKey("ProductPropertyId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ProductPropertyId");
 
                     b.HasOne("ApplicationCore.Entities.PropertyItem", "PropertyItem")
                         .WithMany("ProductPropertyItems")
-                        .HasForeignKey("PropertyItemId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PropertyItemId");
 
                     b.Navigation("ProductProperty");
 

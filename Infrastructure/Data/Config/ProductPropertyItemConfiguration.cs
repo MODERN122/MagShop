@@ -13,7 +13,8 @@ namespace Infrastructure.Data.Config
         {
             builder.HasOne(x => x.PropertyItem)
                 .WithMany(x => x.ProductPropertyItems)
-                .HasForeignKey(x => x.PropertyItemId);
+                .HasForeignKey(x => x.PropertyItemId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -14,6 +14,10 @@ namespace Infrastructure.Data.Config
             builder.HasMany(x => x.Images)
                 .WithOne()
                 .OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(x => x.ProductProperties)
+                .WithOne(x => x.Product)
+                .OnDelete(DeleteBehavior.Cascade);
+                        
         }
     }
 }
