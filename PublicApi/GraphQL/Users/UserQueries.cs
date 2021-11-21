@@ -6,6 +6,7 @@ using AutoMapper;
 using HotChocolate;
 using HotChocolate.AspNetCore.Authorization;
 using HotChocolate.Types;
+using Infrastructure.Constants;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -38,7 +39,7 @@ namespace PublicApi.GraphQL.Users
             return null;
         }
 
-        [Authorize(Roles = new string[] { "Administators" })]
+        [Authorize(Roles = new string[] { ConstantsAPI.ADMINISTRATORS })]
         public async Task<User> GetUserById(
             string id,
             [Service] IAsyncRepository<User> userRepository,

@@ -6,6 +6,7 @@ using HotChocolate;
 using HotChocolate.AspNetCore.Authorization;
 using HotChocolate.Data;
 using HotChocolate.Types;
+using Infrastructure.Constants;
 using Infrastructure.Data;
 using System;
 using System.Collections.Generic;
@@ -75,7 +76,7 @@ namespace PublicApi.GraphQL.Products
 
 
         [GraphQLDescription("Add Prepublished product")]
-        [Authorize(Roles = new string[] { Infrastructure.Constants.ConstantsAPI.SELLERS })]
+        [Authorize(Roles = new string[] { ConstantsAPI.SELLERS })]
         public async Task<Product> AddPrePublishProduct(AddProductInput input,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
         {
@@ -91,7 +92,7 @@ namespace PublicApi.GraphQL.Products
         }
 
         [GraphQLDescription("Add properties with images to product")]
-        [Authorize(Roles = new string[] { Infrastructure.Constants.ConstantsAPI.SELLERS })]
+        [Authorize(Roles = new string[] { ConstantsAPI.SELLERS })]
         public async Task<Product> AddProductPropertiesToProductAsync(string productId,
                List<ProductPropertiesInput> input)
         {
@@ -120,7 +121,8 @@ namespace PublicApi.GraphQL.Products
             }
         }
         [GraphQLDescription("Delete product")]
-        [Authorize(Roles = new string[] { Infrastructure.Constants.ConstantsAPI.SELLERS })]
+        [Authorize(Roles = new string[] { ConstantsAPI.ADMINISTRATORS })]
+        [Authorize(Roles = new string[] { ConstantsAPI.SELLERS })]
         public async Task<bool> DeleteProductAsync(string productId)
         {
             try

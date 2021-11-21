@@ -17,7 +17,8 @@ namespace Infrastructure.Data
     {
         #region Define consts
         //Users
-        private const string USER_ID = "admin@microsoft.com";
+        private const string ADMINISTRATOR_ID = "admin@microsoft.com";
+        private const string USER_ID = "user@microsoft.com";
         private const string BASKET_ID = "12345";
         private const string CREDIT_CARD_ID = "123";
         //Stores
@@ -65,18 +66,23 @@ namespace Infrastructure.Data
                         await roleManager.CreateAsync(new IdentityRole(Constants.ConstantsAPI.SELLERS));
                         await roleManager.CreateAsync(new IdentityRole(Constants.ConstantsAPI.USERS));
 
-                        var defaultUser = new UserAuthAccess(SELLER_ID);
-                        await userManager.CreateAsync(defaultUser, Constants.ConstantsAPI.DEFAULT_PASSWORD);
-                        var user = await userManager.FindByNameAsync(defaultUser.UserName);
-                        await userManager.AddToRoleAsync(user, Constants.ConstantsAPI.SELLERS);
+                        var sellerUser = new UserAuthAccess(SELLER_ID);
+                        await userManager.CreateAsync(sellerUser, Constants.ConstantsAPI.DEFAULT_PASSWORD);
+                        var seller = await userManager.FindByNameAsync(sellerUser.UserName);
+                        await userManager.AddToRoleAsync(seller, Constants.ConstantsAPI.SELLERS);
 
-                        var adminUser = new UserAuthAccess(USER_ID);
+                        var user = new UserAuthAccess(USER_ID);
+                        await userManager.CreateAsync(user, Constants.ConstantsAPI.DEFAULT_PASSWORD);
+                        user = await userManager.FindByNameAsync(user.UserName);
+                        await userManager.AddToRoleAsync(user, Constants.ConstantsAPI.USERS);
+
+                        var adminUser = new UserAuthAccess(ADMINISTRATOR_ID);
                         await userManager.CreateAsync(adminUser, Constants.ConstantsAPI.DEFAULT_PASSWORD);
                         adminUser = await userManager.FindByNameAsync(adminUser.UserName);
                         await userManager.AddToRoleAsync(adminUser, Constants.ConstantsAPI.ADMINISTRATORS);
 
                         await context.Users.AddRangeAsync(
-                            GetPreconfiguredUsers(defaultUser.Id, adminUser.Id));
+                            GetPreconfiguredUsers(seller.Id,user.Id, adminUser.Id));
                     }
 
                     await context.SaveChangesAsync();
@@ -275,7 +281,7 @@ namespace Infrastructure.Data
         private static void AddPreconfiguredBasketItemsToFirstUser(MagShopContext context)
         {
             var user = context.Users.Include(x => x.Basket)
-                    .ThenInclude(x => x.Items).First(x => x.Id == USER_ID);
+                    .ThenInclude(x => x.Items).First(x => x.Id == ADMINISTRATOR_ID);
             var products = context.Products.Where(x => x.StoreId == STORE_ID);
             List<BasketItem> basketItems = new List<BasketItem>();
             foreach (var product in products)
@@ -408,7 +414,7 @@ namespace Infrastructure.Data
         #region Orders
         private static void AddPrecongifuredOrdersToFirstUser(MagShopContext context)
         {
-            var user = context.Users.Find(USER_ID);
+            var user = context.Users.Find(ADMINISTRATOR_ID);
             var products = context.Products.Where(x => x.StoreId == STORE_ID);
             List<OrderItem> orderItems = new List<OrderItem>();
             foreach (var product in products)
@@ -420,11 +426,11 @@ namespace Infrastructure.Data
         }
         #endregion
         #region Users
-        private static IEnumerable<User> GetPreconfiguredUsers(string id, string id1)
+        private static IEnumerable<User> GetPreconfiguredUsers(string sellerId, string userId, string adminId)
         {
             return new List<User>()
             {
-                new User(id,"Дмитрий","Очеретный", "philipskryt2@gmail.ru", "+79026536953", new DateTime(1998,9,24),
+                new User(sellerId,"Дмитрий","Очеретный", "philipskryt2@gmail.ru", "+79026536953", new DateTime(1998,9,24),
                 new Basket(){ Id=BASKET_ID},
                 new List<CreditCard>(){
                     new CreditCard(){ CreditCardId=CREDIT_CARD_ID, CardNumber="12345678"}
@@ -434,10 +440,19 @@ namespace Infrastructure.Data
                     new Address("Pkorova", "23")
                 }),
 
-                new User(id1,"Иван","Иванович", "i.i@mail.ru", "+7988888888", new DateTime(2005,4,27),
+                new User(userId,"Иван","Иванович", "i.i@mail.ru", "+7988888888", new DateTime(2005,4,27),
                 new Basket(){ Id=BASKET_SELLER_ID},
                 new List<CreditCard>(){
                     new CreditCard(){ CreditCardId=CREDIT_CARD_SELLER_ID, CardNumber="12345678"}
+                },
+                new List<Address>()
+                {
+                    new Address("Pkorova", "23")
+                }),
+                new User(adminId,"USer","Userovich", "i.i@mail.ru", "+7988888888", new DateTime(2005,4,27),
+                new Basket(){ Id=BASKET_SELLER_ID+"1"},
+                new List<CreditCard>(){
+                    new CreditCard(){ CreditCardId=CREDIT_CARD_SELLER_ID+"1", CardNumber="12345678"}
                 },
                 new List<Address>()
                 {
