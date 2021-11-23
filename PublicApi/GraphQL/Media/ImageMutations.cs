@@ -28,7 +28,7 @@ namespace PublicApi.GraphQL.Media
             _userRepository = userRepository;
         }
         
-        //[Authorize(Roles = new string[] { ConstantsAPI.SELLERS })]
+        [Authorize(Roles = new string[] { ConstantsAPI.SELLERS, ConstantsAPI.ADMINISTRATORS })]
         public async Task<string> UploadFileAsync(IFile file, string productId, string imageName,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
         {

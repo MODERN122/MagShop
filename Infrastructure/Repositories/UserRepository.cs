@@ -32,6 +32,7 @@ namespace Infrastructure.Repositories
 
             var entity = new Seller(phoneNumber)
             {
+                Id = userAccess.Id,
                 FirstName = firstName,
                 LastName = lastName,
                 BirthDate = birthDate,

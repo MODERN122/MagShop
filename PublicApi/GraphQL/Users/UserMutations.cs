@@ -30,7 +30,7 @@ namespace PublicApi.GraphQL.Users
         public record RegisterUserByPhoneInput(
             string FirstName,
             string LastName,
-            DateTimeOffset BirhDate,
+            DateTimeOffset BirthDate,
             string PhoneNumber,
             string Code);
         public record RegisterUserByGoogleInput(
@@ -43,7 +43,7 @@ namespace PublicApi.GraphQL.Users
         public async Task<RegisterUserPayload> RegisterUserByPhoneAsync(
                RegisterUserByPhoneInput input)
         {
-                var result = await _userRepository.RegisterUserByPhone(input.FirstName, input.LastName, input.BirhDate, input.PhoneNumber, input.Code);
+                var result = await _userRepository.RegisterUserByPhone(input.FirstName, input.LastName, input.BirthDate, input.PhoneNumber, input.Code);
                 return result;
         }
 
@@ -57,7 +57,7 @@ namespace PublicApi.GraphQL.Users
         public async Task<RegisterSellerPayload> RegisterSellerByPhoneAsync(
               RegisterUserByPhoneInput input)
         {
-                var result = await _userRepository.RegisterSellerByPhone(input.FirstName, input.LastName, input.BirhDate, input.PhoneNumber, input.Code);
+                var result = await _userRepository.RegisterSellerByPhone(input.FirstName, input.LastName, input.BirthDate, input.PhoneNumber, input.Code);
                 return result;
         }
         [Authorize(Roles = new string[] { ConstantsAPI.USERS})]
