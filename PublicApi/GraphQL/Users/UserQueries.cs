@@ -23,6 +23,13 @@ namespace PublicApi.GraphQL.Users
     [ExtendObjectType(typeof(Query))]
     public class UserQueries
     {
+        private readonly IAsyncRepository<User> _usersRepository;
+
+        public UserQueries(IAsyncRepository<User> usersRepository)
+        {
+            _usersRepository = usersRepository;
+        }
+
         [Authorize]
         public async Task<User> GetUser(
             [Service] IAsyncRepository<User> userRepository,
@@ -38,6 +45,10 @@ namespace PublicApi.GraphQL.Users
             }
             return null;
         }
+
+        [Authorize(Roles = new[] { ConstantsAPI.ADMINISTRATORS})]
+        public async Task<IEnumerable<User>> GetUsers() =>
+            await _usersRepository.ListAllAsync();
 
         [Authorize(Roles = new string[] { ConstantsAPI.ADMINISTRATORS })]
         public async Task<User> GetUserById(

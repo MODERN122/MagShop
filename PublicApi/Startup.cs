@@ -45,6 +45,8 @@ using Infrastructure.Repositories;
 using HotChocolate.Types;
 using PublicApi.GraphQL.Basket;
 using PublicApi.GraphQL.Media;
+using PublicApi.GraphQL.Stores;
+using PublicApi.GraphQL.Properties;
 
 namespace PublicApi
 {
@@ -182,6 +184,9 @@ namespace PublicApi
                 .AddTypeExtension<BasketMutations>()
                 .AddTypeExtension<ProductMutaions>()
                 .AddTypeExtension<ImageMutations>()
+                .AddTypeExtension<StoreMutations>()
+                .AddTypeExtension<StoreQueries>()
+                .AddTypeExtension<PropertyQueries>()
                 .AddType<UploadType>()
                 .AddHttpRequestInterceptor((context, executor, builder, cancellationToken) =>
                 {

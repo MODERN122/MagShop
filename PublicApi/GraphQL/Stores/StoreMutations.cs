@@ -28,7 +28,7 @@ namespace PublicApi.GraphQL.Stores
         [Authorize(Roles = new[] { Infrastructure.Constants.ConstantsAPI.SELLERS })]
         public record RegisterStoreBySellerInput(
             string Name,
-    [GraphQLType(typeof(NonNullType<UploadType>))]
+    [GraphQLType(typeof(UploadType))]
             List<IFile> ApproveDocument);
         public async Task<Store> RegisterStoreBySeller(RegisterStoreBySellerInput input,
             [Service] UserManager<UserAuthAccess> userManager,

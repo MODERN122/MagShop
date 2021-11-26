@@ -75,7 +75,7 @@ namespace PublicApi.RESTApi.Media
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.ToString());
             }
         }
     }
