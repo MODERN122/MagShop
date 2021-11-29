@@ -25,7 +25,7 @@ namespace PublicApi.GraphQL.Orders
         }
 
         [Authorize(Roles = new[] { ConstantsAPI.ADMINISTRATORS, ConstantsAPI.USERS })]
-        public async Task<Order> GetOrder(string id) =>
+        public async Task<Order> GetOrderById(string id) =>
             await _ordersRepository.GetByIdWithItemsAsync(id);
 
         [Authorize(Roles = new[] { ConstantsAPI.ADMINISTRATORS, ConstantsAPI.USERS })]
