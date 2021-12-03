@@ -6,9 +6,9 @@ using System.Text;
 
 namespace ApplicationCore.GraphQLEndpoints
 {
-    public class RegisterUserPayload
+    public class UserPayload
     {
-        public RegisterUserPayload(User user, string accessToken)
+        public UserPayload(User user, string accessToken)
         {
             User = user;
             AccessToken = accessToken;

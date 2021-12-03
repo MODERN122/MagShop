@@ -43,17 +43,17 @@ namespace Infrastructure.Repositories
             return new RegisterSellerPayload(result as Seller, token);
         }
 
-        public async Task<RegisterUserPayload> RegisterUserByEmail(string firstName, string lastName, DateTimeOffset birthDate, string email)
+        public async Task<UserPayload> RegisterUserByEmail(string firstName, string lastName, DateTimeOffset birthDate, string email)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<RegisterUserPayload> RegisterUserByFacebook(string firstName, string lastName, DateTimeOffset birthDate, string accessToken, string email)
+        public async Task<UserPayload> RegisterUserByFacebook(string firstName, string lastName, DateTimeOffset birthDate, string accessToken, string email)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<RegisterUserPayload> RegisterUserByGoogle(string firstName, string lastName, DateTimeOffset birthDate, string accessToken, string email)
+        public async Task<UserPayload> RegisterUserByGoogle(string firstName, string lastName, DateTimeOffset birthDate, string accessToken, string email)
         {
             var userAccess = new UserAuthAccess(email);
             userAccess.GoogleToken = accessToken;
@@ -67,14 +67,13 @@ namespace Infrastructure.Repositories
                 LastName = lastName,
                 BirthDate = birthDate,
                 Email = email,
-
             };
 
             var result = await AddAsync(entity);
-            return new RegisterUserPayload(result, token);
+            return new UserPayload(result, token);
         }
 
-        public async Task<RegisterUserPayload> RegisterUserByPhone(string firstName, string lastName, DateTimeOffset birthDate, string phoneNumber, string code)
+        public async Task<UserPayload> RegisterUserByPhone(string firstName, string lastName, DateTimeOffset birthDate, string phoneNumber, string code)
         {
             var userAccess = new UserAuthAccess(phoneNumber);
             using var context = this._contextFactory.CreateDbContext();
@@ -90,7 +89,7 @@ namespace Infrastructure.Repositories
 
             };
             var result = await AddAsync(entity);
-            return new RegisterUserPayload(result, token);
+            return new UserPayload(result, token);
         }
         public async Task<bool> AddBasketItem(string userId, string productId)
         {

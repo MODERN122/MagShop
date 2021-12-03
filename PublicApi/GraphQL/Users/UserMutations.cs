@@ -40,14 +40,14 @@ namespace PublicApi.GraphQL.Users
             string AccessToken,
             string Email);
 
-        public async Task<RegisterUserPayload> RegisterUserByPhoneAsync(
+        public async Task<UserPayload> RegisterUserByPhoneAsync(
                RegisterUserByPhoneInput input)
         {
                 var result = await _userRepository.RegisterUserByPhone(input.FirstName, input.LastName, input.BirthDate, input.PhoneNumber, input.Code);
                 return result;
         }
 
-        public async Task<RegisterUserPayload> RegisterUserByGoogleAsync(
+        public async Task<UserPayload> RegisterUserByGoogleAsync(
                RegisterUserByGoogleInput input)
         {
                 var result = await _userRepository.RegisterUserByGoogle(input.FirstName, input.LastName, input.BirhDate, input.AccessToken, input.Email);

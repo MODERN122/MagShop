@@ -25,6 +25,7 @@ namespace PublicApi.GraphQL.Categories
         public async Task<Category> GetCategoryById(string id) =>
             await _categoriesRepository.GetByIdAsync(id);
 
+        //TODO maybe replace to repository
         [UseMagShopContext]
         public async Task<IEnumerable<Category>> GetCategories(string parentId, [ScopedService] MagShopContext context)
         {

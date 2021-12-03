@@ -1,5 +1,7 @@
-﻿using ApplicationCore.Interfaces;
+﻿using ApplicationCore.GraphQLEndpoints;
+using ApplicationCore.Interfaces;
 using ApplicationCore.RESTApi.Authentication;
+using ApplicationCore.Specifications;
 using Ardalis.ApiEndpoints;
 using HotChocolate;
 using HotChocolate.Types;
@@ -18,23 +20,23 @@ namespace PublicApi.GraphQL.Authentication
     [ExtendObjectType(typeof(Mutation))]
     public class AuthenticationMutations
     {
-        public async Task<AuthenticationResponse> AuthenticateByLoginPassword(AuthenticationRequest request, 
+        private IUserRepository _userRepository;
+
+        public AuthenticationMutations(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
+
+        public async Task<UserPayload> AuthenticateByLoginPassword(AuthenticationRequest request, 
             [Service] SignInManager<UserAuthAccess> signInManager,
             [Service] IUserAuthService tokenClaimsService)
         {
-            var response = new AuthenticationResponse(request.CorrelationId());
-
             var result = await signInManager.PasswordSignInAsync(request.UserName, request.Password, false, true);
-
-            response.Result = result.Succeeded;
             if (!result.Succeeded)
-                return null;
-            response.IsLockedOut = result.IsLockedOut;
-            response.IsNotAllowed = result.IsNotAllowed;
-            response.RequiresTwoFactor = result.RequiresTwoFactor;
-            response.Username = request.UserName;
-            response.Token = await tokenClaimsService.GetTokenAsync(request.UserName);
-            return response;
+                throw new MemberAccessException("Пользователь не найден");
+            var token = await tokenClaimsService.GetTokenAsync(request.UserName);
+            var user = await _userRepository.FirstOrDefaultAsync(new UserSpecification(request.UserName));
+            return new UserPayload(user, token);
         }
     }
 }
