@@ -45,7 +45,7 @@ namespace ApplicationCore.RESTApi.Baskets
             try
             {
                 var response = new GetBasketResponse(Guid.NewGuid());
-                var basket = await _userRepository.FirstAsync(id);
+                var basket = await _userRepository.GetBasketAsync(id);
                 Guard.Against.Null(basket, nameof(basket));
                 response.BasketId = basket.Id;
                 response.BasketItems = basket.Items

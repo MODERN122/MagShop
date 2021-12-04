@@ -121,8 +121,7 @@ namespace PublicApi.GraphQL.Products
             }
         }
         [GraphQLDescription("Delete product")]
-        [Authorize(Roles = new string[] { ConstantsAPI.ADMINISTRATORS })]
-        [Authorize(Roles = new string[] { ConstantsAPI.SELLERS })]
+        [Authorize(Roles = new string[] { ConstantsAPI.SELLERS, ConstantsAPI.ADMINISTRATORS })]
         public async Task<bool> DeleteProductAsync(string productId)
         {
             try

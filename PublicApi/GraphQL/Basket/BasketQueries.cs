@@ -25,13 +25,11 @@ namespace PublicApi.GraphQL.Basket
         }
 
         [Authorize(Roles = new[] { Infrastructure.Constants.ConstantsAPI.USERS })]
-        public async Task<ApplicationCore.Entities.Basket> GetBasket(string userId,
+        public async Task<ApplicationCore.Entities.Basket> GetBasket(
             [Service] UserManager<UserAuthAccess> userManager,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
         {
-            var id = currentUser.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name");
-            UserSpecification spec = new UserSpecification(userId);
-            return await _userRepository.FirstAsync(userId);
+            return await _userRepository.GetBasketAsync(currentUser.Claims.First().Value);
         }
 
     }

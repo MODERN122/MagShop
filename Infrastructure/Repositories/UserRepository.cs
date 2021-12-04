@@ -130,7 +130,8 @@ namespace Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
-        public async Task<Basket> FirstAsync(string userId)
+
+        public async Task<Basket> GetBasketAsync(string userId)
         {
             using (var context = this._contextFactory.CreateDbContext())
             {
