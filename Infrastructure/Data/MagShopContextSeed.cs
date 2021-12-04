@@ -56,8 +56,10 @@ namespace Infrastructure.Data
             RoleManager<IdentityRole> roleManager, int? retry = 0)
         {
             int retryForAvailability = retry.Value;
+
             try
             {
+                await context.Database.EnsureCreatedAsync();
                 if (!await context.Users.AnyAsync())
                 {
                     if (!roleManager.Roles.Any() && !userManager.Users.Any())
