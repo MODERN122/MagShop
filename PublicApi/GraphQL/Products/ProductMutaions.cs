@@ -106,7 +106,10 @@ namespace PublicApi.GraphQL.Products
                     ProductId = productId,
                     PropertyId = x.PropertyId,
                     ProductPropertyItems = x.ProductPropertyItems
-                        .Select(x => new ProductPropertyItem(x.PropertyItemId, x.Caption, x.PriceNew, x.ImagePath, product.Store.SellerId))
+                        .Select(x => new ProductPropertyItem(x.PropertyItemId, x.Caption, x.PriceNew, x.ImagePath, product.Store.SellerId)
+                        {
+                            PriceOld = x.PriceOld,
+                        })
                         .ToList() ?? new List<ProductPropertyItem>()
                 })
                 .ToList());

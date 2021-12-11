@@ -116,7 +116,14 @@ namespace ApplicationCore.Entities
                 priceNew += tempPriceNew;
                 priceOld += tempPriceOld;
             }
-            Discount = (int)((priceOld - priceNew) * 100 / priceOld!=0?priceOld:double.MaxValue);
+            if(priceOld > priceNew)
+            {
+                Discount = 0;
+            }
+            else
+            {
+                Discount = (int)((priceOld - priceNew) * 100 / priceOld > 0 ? (priceOld - priceNew) * 100 / priceOld : 0);
+            }
         }
 
     }
