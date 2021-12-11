@@ -45,6 +45,7 @@ namespace PublicApi.GraphQL.Products
             List<string> ImagePaths,
             string Id,
             List<ProductPropertiesInput> ProductProperties);
+
         public class AddProductPayload
         {
             public AddProductPayload(Product product)
@@ -54,6 +55,7 @@ namespace PublicApi.GraphQL.Products
 
             public Product Product { get; }
         }
+
         public class ProductPropertiesInput
         {
             [GraphQLNonNullType]
@@ -61,6 +63,7 @@ namespace PublicApi.GraphQL.Products
             [GraphQLNonNullType]
             public List<ProductPropertyItemInput> ProductPropertyItems { get; set; }
         }
+
         public class ProductPropertyItemInput
         {
             [GraphQLNonNullType]
@@ -73,7 +76,6 @@ namespace PublicApi.GraphQL.Products
             public string ImagePath { get; set; }
             public int PriceOld { get; set; }
         }
-
 
         [GraphQLDescription("Add Prepublished product")]
         [Authorize(Roles = new string[] { ConstantsAPI.SELLERS })]
@@ -123,6 +125,7 @@ namespace PublicApi.GraphQL.Products
                 throw;
             }
         }
+
         [GraphQLDescription("Delete product")]
         [Authorize(Roles = new string[] { ConstantsAPI.SELLERS, ConstantsAPI.ADMINISTRATORS })]
         public async Task<bool> DeleteProductAsync(string productId)
@@ -141,6 +144,7 @@ namespace PublicApi.GraphQL.Products
                 throw;
             }
         }
+
 
     }
 }

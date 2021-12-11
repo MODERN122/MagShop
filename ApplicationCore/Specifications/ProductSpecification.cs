@@ -10,6 +10,7 @@ namespace ApplicationCore.Specifications
     public class ProductSpecification : BaseSpecification<Product>
     {
         public ProductSpecification(int pageIndex, int pageSize) : base(pageIndex, pageSize) { }
+
         public ProductSpecification(string productId) : base(0, 1)
         {
             Query
@@ -22,6 +23,7 @@ namespace ApplicationCore.Specifications
                 Include(p => p.Images);
             Query.Include(p => p.Store);
         }
+
         public ProductSpecification(string categoryId, string storeId, List<string> propertiesId, int pageIndex, int pageSize, int? minDiscount = null) : base(pageIndex, pageSize)
         {
             Query
