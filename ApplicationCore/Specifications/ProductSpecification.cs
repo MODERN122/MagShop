@@ -22,7 +22,7 @@ namespace ApplicationCore.Specifications
                 Include(p => p.Images);
             Query.Include(p => p.Store);
         }
-        public ProductSpecification(string categoryId, string storeId, List<string> propertiesId, int pageIndex, int pageSize) : base(pageIndex, pageSize)
+        public ProductSpecification(string categoryId, string storeId, List<string> propertiesId, int pageIndex, int pageSize, int? minDiscount = null) : base(pageIndex, pageSize)
         {
             Query
                 .Where(p => (string.IsNullOrWhiteSpace(categoryId) || p.CategoryId == categoryId) && (string.IsNullOrWhiteSpace(storeId) || p.StoreId == storeId));
@@ -30,11 +30,14 @@ namespace ApplicationCore.Specifications
             {
                 Query.Where(p => p.Properties.Any(a => propertiesId.Any(z => z == a.Id)));
             }
+            if (minDiscount != null)
+            {
+                Query.Where(p => p.Discount > minDiscount.Value);
+            }
             Query
                 .Include(i => i.Category);
 
-            Query.Include(x => x.ProductProperties).ThenInclude(x => x.Property).ThenInclude(x=>x.Items);
-            
+            Query.Include(x => x.ProductProperties).ThenInclude(x => x.Property).ThenInclude(x=>x.Items);            
         }
     }
 }

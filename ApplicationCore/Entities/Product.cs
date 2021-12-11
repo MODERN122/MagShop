@@ -116,7 +116,7 @@ namespace ApplicationCore.Entities
                 priceNew += tempPriceNew;
                 priceOld += tempPriceOld;
             }
-            if(priceOld > priceNew)
+            if(priceOld <= priceNew)
             {
                 Discount = 0;
             }
