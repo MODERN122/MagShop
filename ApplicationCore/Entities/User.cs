@@ -34,7 +34,7 @@ namespace ApplicationCore.Entities
             CreditCards = creditCards;
             Addresses = addresses;
             Basket = basket;
-            BirthDate = DateTime.Parse(birthDate.ToUniversalTime().ToString());
+            BirthDate = birthDate;
         }
         public string Id { get; set; } = Guid.NewGuid().ToString();
         //Collection product id favorites
@@ -48,7 +48,7 @@ namespace ApplicationCore.Entities
         public List<CreditCard> CreditCards { get; private set; }
         public List<Order> Orders { get; private set; }
         public List<Address> Addresses { get; private set; }
-        public DateTimeOffset BirthDate { get; set; } = DateTimeOffset.UtcNow;
+        public DateTimeOffset BirthDate { get; set; } = DateTimeOffset.Now;
         public Basket Basket { get; set; }
         [JsonIgnore]
         public List<Store> Stores { get; set; }

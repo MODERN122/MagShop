@@ -424,7 +424,7 @@ namespace Infrastructure.Data
                 orderItems.Add(new OrderItem(2, product, product.ProductProperties.Select(x => x.ProductPropertyItems.First()).ToList()));
             }
             user.Orders.Add(
-                new Order(DateTime.UtcNow, user.Addresses.First().AddressId, orderItems, SELLER_ID));
+                new Order(DateTime.Now, user.Addresses.First().AddressId, orderItems, SELLER_ID));
         }
         #endregion
         #region Users
@@ -432,7 +432,7 @@ namespace Infrastructure.Data
         {
             return new List<User>()
             {
-                new User(sellerId,"Дмитрий","Очеретный", "philipskryt2@gmail.ru", "+79026536953", new DateTime(1998,9,24).ToUniversalTime(),
+                new User(sellerId,"Дмитрий","Очеретный", "philipskryt2@gmail.ru", "+79026536953", new DateTime(1998,9,24),
                 new Basket(){ Id=BASKET_ID},
                 new List<CreditCard>(){
                     new CreditCard(){ CreditCardId=CREDIT_CARD_ID, CardNumber="12345678"}
@@ -442,7 +442,7 @@ namespace Infrastructure.Data
                     new Address("Pkorova", "23")
                 }),
 
-                new User(userId,"Иван","Иванович", "i.i@mail.ru", "+7988888888", new DateTime(2005,4,27).ToUniversalTime(),
+                new User(userId,"Иван","Иванович", "i.i@mail.ru", "+7988888888", new DateTime(2005,4,27),
                 new Basket(){ Id=BASKET_SELLER_ID},
                 new List<CreditCard>(){
                     new CreditCard(){ CreditCardId=CREDIT_CARD_SELLER_ID, CardNumber="12345678"}
@@ -451,7 +451,7 @@ namespace Infrastructure.Data
                 {
                     new Address("Pkorova", "23")
                 }),
-                new User(adminId,"USer","Userovich", "i.i@mail.ru", "+7988888888", new DateTime(2005,4,27).ToUniversalTime(),
+                new User(adminId,"USer","Userovich", "i.i@mail.ru", "+7988888888", new DateTime(2005,4,27),
                 new Basket(){ Id=BASKET_SELLER_ID+"1"},
                 new List<CreditCard>(){
                     new CreditCard(){ CreditCardId=CREDIT_CARD_SELLER_ID+"1", CardNumber="12345678"}

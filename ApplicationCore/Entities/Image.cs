@@ -18,6 +18,6 @@ namespace ApplicationCore.Entities
         public Guid Id { get; set; } = Guid.NewGuid();
         public string ProductId { get; set; }
         public string Path { get; set; }
-        public DateTime UploadDateTime { get; set; } = DateTime.UtcNow;
+        public DateTime UploadDateTime { get; set; } = DateTime.Now;
     }
 }

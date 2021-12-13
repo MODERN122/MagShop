@@ -33,7 +33,7 @@ namespace ApplicationCore.GraphQLEndpoints
         public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get;set; }
-        public DateTimeOffset? BirthDate { get; set; }
+        public DateTimeOffset BirthDate { get; set; }
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         [DataType(DataType.PhoneNumber)]
