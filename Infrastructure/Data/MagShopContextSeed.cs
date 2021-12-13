@@ -59,7 +59,8 @@ namespace Infrastructure.Data
 
             try
             {
-                //await context.Database.EnsureCreatedAsync();
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
                 if (!await context.Users.AnyAsync())
                 {
                     if (!roleManager.Roles.Any() && !userManager.Users.Any())
@@ -86,7 +87,6 @@ namespace Infrastructure.Data
                         await context.Users.AddRangeAsync(
                             GetPreconfiguredUsers(seller.Id,user.Id, adminUser.Id));
                     }
-
                     await context.SaveChangesAsync();
                 }
                 if (!await context.Categories.AnyAsync())

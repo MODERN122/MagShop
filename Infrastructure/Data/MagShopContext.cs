@@ -2,6 +2,7 @@
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -33,24 +34,52 @@ namespace Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder); builder.Entity<Product>()
-           .HasMany(p => p.Properties)
-           .WithMany(p => p.Products)
-           .UsingEntity<ProductProperty>(
-               j => j
-                   .HasOne(pt => pt.Property)
-                   .WithMany(t => t.ProductProperties)
-                   .HasForeignKey(pt => pt.PropertyId),
-               j => j
-                   .HasOne(pt => pt.Product)
-                   .WithMany(p => p.ProductProperties)
-                   .HasForeignKey(pt => pt.ProductId),
-               j =>
-               {
-                   j.Property(pt => pt.PublicationDate).HasDefaultValueSql("CURRENT_TIMESTAMP");                  
-               });
-            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());         
-           
+            base.OnModelCreating(builder);
+            var dateTimeConverter = new ValueConverter<DateTime, DateTime>(
+                v => v.ToUniversalTime(),
+                v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+
+            var nullableDateTimeConverter = new ValueConverter<DateTime?, DateTime?>(
+                v => v.HasValue ? v.Value.ToUniversalTime() : v,
+                v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc) : v);
+
+            foreach (var entityType in builder.Model.GetEntityTypes())
+            {
+                if (entityType.IsKeyless)
+                {
+                    continue;
+                }
+
+                foreach (var property in entityType.GetProperties())
+                {
+                    if (property.ClrType == typeof(DateTime))
+                    {
+                        property.SetValueConverter(dateTimeConverter);
+                    }
+                    else if (property.ClrType == typeof(DateTime?))
+                    {
+                        property.SetValueConverter(nullableDateTimeConverter);
+                    }
+                }
+            }
+            builder.Entity<Product>()
+               .HasMany(p => p.Properties)
+               .WithMany(p => p.Products)
+               .UsingEntity<ProductProperty>(
+                   j => j
+                       .HasOne(pt => pt.Property)
+                       .WithMany(t => t.ProductProperties)
+                       .HasForeignKey(pt => pt.PropertyId),
+                   j => j
+                       .HasOne(pt => pt.Product)
+                       .WithMany(p => p.ProductProperties)
+                       .HasForeignKey(pt => pt.ProductId),
+                   j =>
+                   {
+                       j.Property(pt => pt.PublicationDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                   });
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
         }
     }
 }
