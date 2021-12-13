@@ -50,11 +50,6 @@ namespace Infrastructure.Data.Config
             //    u.HasIndex(p => p.FirebaseToken).IsUnique();
             //    u.HasIndex(p => p.OauthToken).IsUnique();
             //});
-
-            builder.Property(p => p.FavoriteProductsId)
-            .HasConversion(
-                v => string.Join(',', v),
-                v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList());
         }
     }
 }

@@ -13,33 +13,32 @@ namespace ApplicationCore.Entities
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public string UserId { get; set; }
-        private readonly List<BasketItem> _items = new List<BasketItem>();
-        public IReadOnlyCollection<BasketItem> Items => _items.AsReadOnly();
+        public List<BasketItem> Items { get; private set; }
 
         public void AddBasketItem(BasketItem basketItem)
         {
-            Guard.Against.Null(basketItem, nameof(_items));
-            var itemDublicate = _items.Find(x => x.ProductId == basketItem.ProductId);
+            Guard.Against.Null(basketItem, nameof(Items));
+            var itemDublicate = Items.Find(x => x.ProductId == basketItem.ProductId);
             if (itemDublicate != null)
             {
                 itemDublicate.AddQuantity(1);
             }
             else
             {
-                _items.Add(basketItem);
+                Items.Add(basketItem);
             }
         }
         public void RemoveBasketItem(BasketItem basketItem)
         {
-            Guard.Against.Null(basketItem, nameof(_items));
-            var item = _items.Find(x => x.ProductId == basketItem.ProductId);
-            _items.Remove(item);
+            Guard.Against.Null(basketItem, nameof(Items));
+            var item = Items.Find(x => x.ProductId == basketItem.ProductId);
+            Items.Remove(item);
         }
         public void SetBasketItems(List<BasketItem> basketItems)
         {
-            Guard.Against.NullOrEmpty(basketItems, nameof(_items));
-            _items.Clear();
-            _items.AddRange(basketItems);
+            Guard.Against.NullOrEmpty(basketItems, nameof(Items));
+            Items.Clear();
+            Items.AddRange(basketItems);
         }
         public Basket()
         {

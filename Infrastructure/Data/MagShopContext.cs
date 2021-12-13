@@ -29,6 +29,7 @@ namespace Infrastructure.Data
         public DbSet<Address> Addresses { get; set; }
         public DbSet<PropertyItem> PropertyItems { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<ChoosenProduct> ChoosenProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

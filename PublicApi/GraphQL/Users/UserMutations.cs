@@ -60,6 +60,7 @@ namespace PublicApi.GraphQL.Users
                 var result = await _userRepository.RegisterSellerByPhone(input.FirstName, input.LastName, input.BirthDate, input.PhoneNumber, input.Code);
                 return result;
         }
+
         [Authorize(Roles = new string[] { ConstantsAPI.USERS})]
         public async Task<bool> AddProductToFavoriteAsync(string productId,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
@@ -67,6 +68,7 @@ namespace PublicApi.GraphQL.Users
             var result = await _userRepository.AddProductToFavoriteAsync(currentUser.Claims.First().Value, productId);
             return result;
         }
+
         [Authorize(Roles = new string[] { ConstantsAPI.USERS })]
         public async Task<bool> RemoveProductFromFavoriteAsync(string productId,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)

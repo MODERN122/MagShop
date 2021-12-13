@@ -18,7 +18,7 @@ namespace ApplicationCore.RESTApi.Products
         public double? PriceNew { get; set; }
         public double? PriceOld { get; set; }
         public string CategoryId { get; set; }
-        public DateTime? DateEndDiscount { get; set; }
+        public DateTime DateEndDiscount { get; set; }
         public List<Image> Images { get; set; }
         public string Description { get; set; }
         public List<Property> Properties { get; set; }

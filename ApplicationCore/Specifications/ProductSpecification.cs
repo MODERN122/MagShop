@@ -18,6 +18,7 @@ namespace ApplicationCore.Specifications
             Query
                 .Include(i => i.Category);
             Query.Include(x => x.ProductProperties).ThenInclude(x => x.ProductPropertyItems);
+            Query.Include(x => x.ChoosenProducts).ThenInclude(x => x.PropertyItemTuples);
             Query.Include(p => p.Properties);
             Query.
                 Include(p => p.Images);
@@ -39,7 +40,7 @@ namespace ApplicationCore.Specifications
             Query
                 .Include(i => i.Category);
 
-            Query.Include(x => x.ProductProperties).ThenInclude(x => x.Property).ThenInclude(x=>x.Items);            
+            Query.Include(x => x.ProductProperties).ThenInclude(x => x.Property).ThenInclude(x=>x.Items);
         }
     }
 }

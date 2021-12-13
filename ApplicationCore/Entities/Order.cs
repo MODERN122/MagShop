@@ -20,14 +20,13 @@ namespace ApplicationCore.Entities
         
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
-        private readonly List<OrderItem> _items = new List<OrderItem>();
-        public IReadOnlyCollection<OrderItem> Items => _items.AsReadOnly();
+        public List<OrderItem> Items { get;private set; }
         public string AddressId { get; set; }
         public Address ShipToAddress { get; set; }
         public double Total()
         {
             var total = 0.0;
-            foreach (var item in _items)
+            foreach (var item in Items)
             {
                 total +=Math.Round(item.UnitPrice.Value * item.Quantity,2);
             }
@@ -35,8 +34,8 @@ namespace ApplicationCore.Entities
         }
         public void AddRangeOrderItems(List<OrderItem> orderItems)
         {
-            Guard.Against.NullOrEmpty(orderItems, nameof(_items));
-            _items.AddRange(orderItems);
+            Guard.Against.NullOrEmpty(orderItems, nameof(Items));
+            Items.AddRange(orderItems);
         }
     }
 

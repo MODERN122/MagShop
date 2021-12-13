@@ -137,21 +137,6 @@ namespace PublicApi.Providers.AwsS3
                     destinationPrefix.Append(destinationParts[i]);
                     destinationPrefix.Append("/");
                 }
-
-                var contToken = "";
-
-                //////ListObjectsV2Response listObjectsResult = null;
-
-                //////var req = new ListObjectsRequest()
-                //////{
-                //////   BucketName = sourceBucket,
-                //////   Prefix = "couriers//", // sourcePrefix.ToString(),
-                //////   Delimiter = "/",
-                //////   MaxKeys = 10,
-                //////};
-
-                //////ListObjectsResponse res = await client.ListObjectsAsync(req);
-
                 var req = new ListObjectsV2Request()
                 {
                     BucketName = sourceBucket,

@@ -6,6 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using ApplicationCore.Interfaces;
 using System.Text.Json.Serialization;
 using System.Linq;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace ApplicationCore.Entities
 {
@@ -76,6 +78,7 @@ namespace ApplicationCore.Entities
         public string Description { get; set; }
         public List<Property> Properties { get; set; }
         public List<ProductProperty> ProductProperties { get; private set; }
+        public List<ChoosenProduct> ChoosenProducts { get; private set; }
         //Not Added while
         //public List<string> Reviews { get; set; }
         public void SetProductIsActive(bool isActive)
@@ -83,15 +86,23 @@ namespace ApplicationCore.Entities
             IsActive = isActive;
         }
 
-        public void SetProductProperties(List<ProductProperty> productProperties)
+        public bool SetProductProperties(List<ProductProperty> productProperties)
         {
             ProductProperties = productProperties;
 
             PriceOld = $"{ProductProperties.Select(x => x.ProductPropertyItems.Min(y => y.PriceOld)).Sum()}" +
             $" - {ProductProperties.Select(x => x.ProductPropertyItems.Max(y => y.PriceOld)).Sum()}";
+            if (PriceOld == "0 - 0")
+            {
+                PriceOld = "";
+            }
             PriceNew = $"{ProductProperties.Select(x => x.ProductPropertyItems.Min(y => y.PriceNew)).Sum()}" +
             $" - {ProductProperties.Select(x => x.ProductPropertyItems.Max(y => y.PriceNew)).Sum()}";
-
+            if (PriceNew == "0 - 0")
+            {
+                PriceNew = "";
+                return false;
+            }
 
             double priceNew = 0;
             double priceOld = 0;
@@ -116,14 +127,16 @@ namespace ApplicationCore.Entities
                 priceNew += tempPriceNew;
                 priceOld += tempPriceOld;
             }
-            if(priceOld <= priceNew)
+            if (priceOld <= priceNew || priceOld == 0)
             {
                 Discount = 0;
             }
             else
             {
-                Discount = (int)((priceOld - priceNew) * 100 / priceOld > 0 ? (priceOld - priceNew) * 100 / priceOld : 0);
+                var discount = (priceOld - priceNew) * 100 / priceOld;
+                Discount = (int)(discount > 0 ? discount : 0);
             }
+            return true;
         }
 
     }

@@ -61,10 +61,10 @@ namespace PublicApi.GraphQL.Products
             [GraphQLNonNullType]
             public string PropertyId { get; set; }
             [GraphQLNonNullType]
-            public List<ProductPropertyItemInput> ProductPropertyItems { get; set; }
+            public List<ProductPropertyIItemInput> ProductPropertyItemsInput { get; set; }
         }
 
-        public class ProductPropertyItemInput
+        public class ProductPropertyIItemInput
         {
             [GraphQLNonNullType]
             public string Caption { get; set; }
@@ -107,7 +107,7 @@ namespace PublicApi.GraphQL.Products
                 {
                     ProductId = productId,
                     PropertyId = x.PropertyId,
-                    ProductPropertyItems = x.ProductPropertyItems
+                    ProductPropertyItems = x.ProductPropertyItemsInput
                         .Select(x => new ProductPropertyItem(x.PropertyItemId, x.Caption, x.PriceNew, x.ImagePath, product.Store.SellerId)
                         {
                             PriceOld = x.PriceOld,
