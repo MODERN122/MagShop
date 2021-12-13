@@ -56,6 +56,7 @@ namespace PublicApi.GraphQL.Interceptors
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
             }
             return ValueTask.CompletedTask;
         }

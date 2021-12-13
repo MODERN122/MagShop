@@ -18,6 +18,6 @@ namespace ApplicationCore.RESTApi.Users
         public List<CreditCard> CreditCards { get; set; }
         public List<Address> Addresses { get; set; }
         [Required]
-        public DateTimeOffset BirthDate { get; set; }
+        public DateTimeOffset? BirthDate { get; set; }
     }
 }

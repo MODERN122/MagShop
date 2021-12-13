@@ -88,6 +88,7 @@ namespace ApplicationCore.RESTApi.Products
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return NotFound();
             }
         }

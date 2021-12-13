@@ -1,9 +1,5 @@
-﻿using ApplicationCore.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace ApplicationCore.Entities
@@ -22,7 +18,7 @@ namespace ApplicationCore.Entities
             "?size=1439x2160&quality=96&sign=3263d89b63287df39a08354aa5269bb4&type=album";
         public string CategoryId { get; set; }
         public Category Category { get; set; }
-        public DateTime DateEndDiscount { get; set; } = DateTime.Now;
+        public DateTime DateEndDiscount { get; set; } = DateTime.UtcNow;
         /// <summary>
         /// Constraint 0.0-5.0
         /// </summary>

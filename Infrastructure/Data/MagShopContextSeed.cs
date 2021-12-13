@@ -59,7 +59,7 @@ namespace Infrastructure.Data
 
             try
             {
-                context.Database.EnsureDeleted();
+                //context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
                 if (!await context.Users.AnyAsync())
                 {
@@ -226,7 +226,7 @@ namespace Infrastructure.Data
             }
             catch (Exception ex)
             {
-                if (retryForAvailability < 10)
+                if (retryForAvailability < 1)
                 {
                     retryForAvailability++;
                     var log = loggerFactory.CreateLogger<MagShopContextSeed>();
@@ -423,8 +423,8 @@ namespace Infrastructure.Data
             {
                 orderItems.Add(new OrderItem(2, product, product.ProductProperties.Select(x => x.ProductPropertyItems.First()).ToList()));
             }
-            user.Orders.Add(
-                new Order(DateTime.Now, user.Addresses.First().AddressId, orderItems, SELLER_ID));
+            context.Orders.Add(
+                new Order(DateTime.UtcNow, user.Addresses.First().AddressId, orderItems, SELLER_ID));
         }
         #endregion
         #region Users
@@ -432,7 +432,7 @@ namespace Infrastructure.Data
         {
             return new List<User>()
             {
-                new User(sellerId,"Дмитрий","Очеретный", "philipskryt2@gmail.ru", "+79026536953", new DateTime(1998,9,24),
+                new User(sellerId,"Дмитрий","Очеретный", "philipskryt2@gmail.ru", "+79026536953", new DateTime(1998,09,24),
                 new Basket(){ Id=BASKET_ID},
                 new List<CreditCard>(){
                     new CreditCard(){ CreditCardId=CREDIT_CARD_ID, CardNumber="12345678"}

@@ -1,8 +1,5 @@
 ﻿using ApplicationCore.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json.Serialization;
 
 namespace ApplicationCore.Entities
 {
@@ -18,6 +15,6 @@ namespace ApplicationCore.Entities
         public Guid Id { get; set; } = Guid.NewGuid();
         public string ProductId { get; set; }
         public string Path { get; set; }
-        public DateTime UploadDateTime { get; set; } = DateTime.Now;
+        public DateTime UploadDateTime { get; set; } = DateTime.UtcNow;
     }
 }

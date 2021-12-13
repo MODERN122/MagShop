@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace PublicApi.Migrations
 {
     [DbContext(typeof(MagShopContext))]
-    [Migration("20211213101836_FixDateTimeNullable2")]
-    partial class FixDateTimeNullable2
+    [Migration("20211213173229_Lol")]
+    partial class Lol
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -105,7 +105,7 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ChangedDateTime")
+                    b.Property<DateTime?>("ChangedDateTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Image")
@@ -202,7 +202,7 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ChangedDateTime")
+                    b.Property<DateTime?>("ChangedDateTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("PublicationDateTime")
@@ -257,7 +257,7 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ChangedDateTime")
+                    b.Property<DateTime?>("ChangedDateTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("DateEndDiscount")
@@ -342,7 +342,7 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ChangedDateTime")
+                    b.Property<DateTime?>("ChangedDateTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ImagePath")
@@ -380,7 +380,7 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ChangedDateTime")
+                    b.Property<DateTime?>("ChangedDateTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
@@ -444,7 +444,7 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ChangedDateTime")
+                    b.Property<DateTime?>("ChangedDateTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
@@ -471,13 +471,13 @@ namespace PublicApi.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset>("BirthDate")
+                    b.Property<DateTime?>("BirthDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ChangedDateTime")
+                    b.Property<DateTime?>("ChangedDateTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
@@ -531,7 +531,7 @@ namespace PublicApi.Migrations
                     b.Property<string>("GoogleToken")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("LastDatetimeAuth")
+                    b.Property<DateTime>("LastDatetimeAuth")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("LockoutEnabled")

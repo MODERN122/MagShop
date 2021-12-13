@@ -24,7 +24,7 @@ namespace Infrastructure.Repositories
             _serviceProvider = serviceProvider;
             _mapper = mapper;
         }
-        public async Task<RegisterSellerPayload> RegisterSellerByPhone(string firstName, string lastName, DateTimeOffset birthDate, string phoneNumber, string code)
+        public async Task<RegisterSellerPayload> RegisterSellerByPhone(string firstName, string lastName, DateTime birthDate, string phoneNumber, string code)
         {
             var userAccess = new UserAuthAccess(phoneNumber);
             using var context = this._contextFactory.CreateDbContext();
@@ -35,25 +35,24 @@ namespace Infrastructure.Repositories
                 Id = userAccess.Id,
                 FirstName = firstName,
                 LastName = lastName,
-                BirthDate = birthDate,
+                BirthDate = birthDate.ToUniversalTime(),
                 PhoneNumber = phoneNumber,
-
             };
             var result = await AddAsync(entity);
             return new RegisterSellerPayload(result as Seller, token);
         }
 
-        public async Task<UserPayload> RegisterUserByEmail(string firstName, string lastName, DateTimeOffset birthDate, string email)
+        public async Task<UserPayload> RegisterUserByEmail(string firstName, string lastName, DateTime birthDate, string email)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<UserPayload> RegisterUserByFacebook(string firstName, string lastName, DateTimeOffset birthDate, string accessToken, string email)
+        public async Task<UserPayload> RegisterUserByFacebook(string firstName, string lastName, DateTime birthDate, string accessToken, string email)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<UserPayload> RegisterUserByGoogle(string firstName, string lastName, DateTimeOffset birthDate, string accessToken, string email)
+        public async Task<UserPayload> RegisterUserByGoogle(string firstName, string lastName, DateTime birthDate, string accessToken, string email)
         {
             var userAccess = new UserAuthAccess(email);
             userAccess.GoogleToken = accessToken;
@@ -65,7 +64,7 @@ namespace Infrastructure.Repositories
                 Id = userAccess.Id,
                 FirstName = firstName,
                 LastName = lastName,
-                BirthDate = birthDate,
+                BirthDate = birthDate.ToUniversalTime(),
                 Email = email,
             };
 
@@ -73,7 +72,7 @@ namespace Infrastructure.Repositories
             return new UserPayload(result, token);
         }
 
-        public async Task<UserPayload> RegisterUserByPhone(string firstName, string lastName, DateTimeOffset birthDate, string phoneNumber, string code)
+        public async Task<UserPayload> RegisterUserByPhone(string firstName, string lastName, DateTime birthDate, string phoneNumber, string code)
         {
             var userAccess = new UserAuthAccess(phoneNumber);
             using var context = this._contextFactory.CreateDbContext();
@@ -84,7 +83,7 @@ namespace Infrastructure.Repositories
                 Id = userAccess.Id,
                 FirstName = firstName,
                 LastName = lastName,
-                BirthDate = birthDate,
+                BirthDate = birthDate.ToUniversalTime(),
                 PhoneNumber = phoneNumber,
 
             };
@@ -158,7 +157,7 @@ namespace Infrastructure.Repositories
         }
         public async Task<bool> AddProductToFavoriteAsync(string userId, string productId)
         {
-            using (var context = this._contextFactory.CreateDbContext())
+            using (var context = _contextFactory.CreateDbContext())
             {
                 var user = await context.Set<User>().FirstOrDefaultAsync(x => x.Id == userId);
                 Guard.Against.Null(user, nameof(user));

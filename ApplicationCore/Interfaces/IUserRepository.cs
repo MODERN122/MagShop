@@ -10,12 +10,12 @@ namespace ApplicationCore.Interfaces
     public interface IUserRepository : IAsyncRepository<User>
     {
 
-        Task<UserPayload> RegisterUserByEmail(string firstName, string lastName, DateTimeOffset birthDate, string email);
-        Task<UserPayload> RegisterUserByPhone(string firstName, string lastName, DateTimeOffset birthDate, string phoneNumber, string code);
-        Task<UserPayload> RegisterUserByGoogle(string firstName, string lastName, DateTimeOffset birthDate, string accessToken, string email);
-        Task<UserPayload> RegisterUserByFacebook(string firstName, string lastName, DateTimeOffset birthDate, string accessToken, string email);
+        Task<UserPayload> RegisterUserByEmail(string firstName, string lastName, DateTime birthDate, string email);
+        Task<UserPayload> RegisterUserByPhone(string firstName, string lastName, DateTime birthDate, string phoneNumber, string code);
+        Task<UserPayload> RegisterUserByGoogle(string firstName, string lastName, DateTime birthDate, string accessToken, string email);
+        Task<UserPayload> RegisterUserByFacebook(string firstName, string lastName, DateTime birthDate, string accessToken, string email);
 
-        Task<RegisterSellerPayload> RegisterSellerByPhone(string firstName, string lastName, DateTimeOffset birthDate, string phoneNumber, string code);
+        Task<RegisterSellerPayload> RegisterSellerByPhone(string firstName, string lastName, DateTime birthDate, string phoneNumber, string code);
 
         Task<bool> AddBasketItem(string userId, string productId);
         Task<bool> RemoveBasketItem(string userId, string productId);

@@ -30,13 +30,13 @@ namespace PublicApi.GraphQL.Users
         public record RegisterUserByPhoneInput(
             string FirstName,
             string LastName,
-            DateTimeOffset BirthDate,
+            DateTime BirthDate,
             string PhoneNumber,
             string Code);
         public record RegisterUserByGoogleInput(
             string FirstName,
             string LastName,
-            DateTimeOffset BirhDate,
+            DateTime BirhDate,
             string AccessToken,
             string Email);
 

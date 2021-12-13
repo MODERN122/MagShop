@@ -122,6 +122,7 @@ namespace PublicApi.GraphQL.Products
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 throw;
             }
         }
@@ -141,6 +142,7 @@ namespace PublicApi.GraphQL.Products
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 throw;
             }
         }

@@ -88,6 +88,7 @@ namespace PublicApi
                // x.UseSnakeCaseNamingConvention();
                 x.EnableSensitiveDataLogging();
             });
+            //AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
             services.AddScoped(x => x.GetRequiredService<IDbContextFactory<MagShopContext>>().CreateDbContext());
 
@@ -213,6 +214,7 @@ namespace PublicApi
                     }
                     catch (Exception ex)
                     {
+                        Console.WriteLine(ex);
                     }
                     return ValueTask.CompletedTask;
                 });

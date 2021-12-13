@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace PublicApi.Migrations
 {
     [DbContext(typeof(MagShopContext))]
-    [Migration("20211213115053_FixDateTimeNullable3")]
-    partial class FixDateTimeNullable3
+    [Migration("20211213134138_FixDateTimeNullable1")]
+    partial class FixDateTimeNullable1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -105,8 +105,8 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ChangedDateTime")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("ChangedDateTime")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Image")
                         .HasColumnType("text");
@@ -118,7 +118,7 @@ namespace PublicApi.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("PublicationDateTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<double>("Weight")
                         .HasColumnType("double precision");
@@ -182,7 +182,7 @@ namespace PublicApi.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UploadDateTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -202,11 +202,11 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ChangedDateTime")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("ChangedDateTime")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("PublicationDateTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UserId")
                         .HasColumnType("text");
@@ -257,11 +257,11 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ChangedDateTime")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("ChangedDateTime")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DateEndDiscount")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -285,7 +285,7 @@ namespace PublicApi.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("PublicationDateTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<double>("Rating")
                         .HasColumnType("double precision");
@@ -319,7 +319,7 @@ namespace PublicApi.Migrations
 
                     b.Property<DateTime>("PublicationDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.HasKey("Id");
@@ -342,8 +342,8 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ChangedDateTime")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("ChangedDateTime")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("ImagePath")
                         .HasColumnType("text");
@@ -361,7 +361,7 @@ namespace PublicApi.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("PublicationDateTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -380,14 +380,14 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ChangedDateTime")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("ChangedDateTime")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("PublicationDateTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -444,14 +444,14 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ChangedDateTime")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("ChangedDateTime")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("PublicationDateTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<float>("Rating")
                         .HasColumnType("real");
@@ -471,14 +471,14 @@ namespace PublicApi.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset>("BirthDate")
+                    b.Property<DateTimeOffset?>("BirthDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ChangedDateTime")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("ChangedDateTime")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
                         .HasColumnType("text");
@@ -496,7 +496,7 @@ namespace PublicApi.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("PublicationDateTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -531,8 +531,8 @@ namespace PublicApi.Migrations
                     b.Property<string>("GoogleToken")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("LastDatetimeAuth")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime>("LastDatetimeAuth")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");

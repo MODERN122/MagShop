@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace PublicApi.Migrations
 {
     [DbContext(typeof(MagShopContext))]
-    [Migration("20211213090353_FixDateTimeNullable")]
+    [Migration("20211213132244_FixDateTimeNullable")]
     partial class FixDateTimeNullable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -105,7 +105,7 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("ChangedDateTime")
+                    b.Property<DateTime>("ChangedDateTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Image")
@@ -202,7 +202,7 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("ChangedDateTime")
+                    b.Property<DateTime>("ChangedDateTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("PublicationDateTime")
@@ -257,10 +257,10 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("ChangedDateTime")
+                    b.Property<DateTime>("ChangedDateTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime?>("DateEndDiscount")
+                    b.Property<DateTime>("DateEndDiscount")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
@@ -317,7 +317,7 @@ namespace PublicApi.Migrations
                     b.Property<string>("PropertyId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("PublicationDate")
+                    b.Property<DateTime>("PublicationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
@@ -342,7 +342,7 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("ChangedDateTime")
+                    b.Property<DateTime>("ChangedDateTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ImagePath")
@@ -380,7 +380,7 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("ChangedDateTime")
+                    b.Property<DateTime>("ChangedDateTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
@@ -444,7 +444,7 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("ChangedDateTime")
+                    b.Property<DateTime>("ChangedDateTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
@@ -477,7 +477,7 @@ namespace PublicApi.Migrations
                     b.Property<string>("ChangedByUserId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("ChangedDateTime")
+                    b.Property<DateTime>("ChangedDateTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")

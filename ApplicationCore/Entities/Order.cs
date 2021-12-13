@@ -13,14 +13,14 @@ namespace ApplicationCore.Entities
         public Order() { }
         public Order(DateTime publicationDateTime, string addressId, List<OrderItem> items, string userId):base(userId)
         {
-            PublicationDateTime = publicationDateTime;
+            PublicationDateTime = publicationDateTime.ToUniversalTime();
             AddressId = addressId;
             AddRangeOrderItems(items);
         }
         
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
-        public List<OrderItem> Items { get;private set; }
+        public List<OrderItem> Items { get;private set; } = new List<OrderItem>(){ };  
         public string AddressId { get; set; }
         public Address ShipToAddress { get; set; }
         public double Total()
@@ -47,7 +47,7 @@ namespace ApplicationCore.Entities
         }
         public OrderItem(int quantity, Product product, List<ProductPropertyItem> propertyItems)
         {
-            UnitPrice = propertyItems.First(x=>x.PriceNew!=null).PriceNew;
+            UnitPrice = propertyItems.First().PriceNew;
             Product = product;
             SetQuantity(quantity);
         }

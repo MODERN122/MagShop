@@ -25,6 +25,6 @@ namespace Infrastructure.Identity
         public string FacebookToken { get; set; }
         public string GoogleToken { get; set; }
         public string OauthToken { get; set; }
-        public DateTime? LastDatetimeAuth { get; set; } = DateTime.Now;
+        public DateTime LastDatetimeAuth { get; set; } = DateTime.UtcNow;
     }
 }
