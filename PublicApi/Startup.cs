@@ -10,6 +10,7 @@ using Infrastructure.Data;
 using Infrastructure.Identity;
 using Infrastructure.UrlConfiguration;
 using MediatR;
+using Npgsql.NodaTime;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -82,7 +83,7 @@ namespace PublicApi
 #if RELEASE
                 x.UseNpgsql(Configuration.GetConnectionString("MagShopDBConnectionDocker")));
 #else
-                x.UseNpgsql(Configuration.GetConnectionString("MagShopDBConnection"),x=>x.MigrationsAssembly("PublicApi"));
+                x.UseNpgsql(Configuration.GetConnectionString("MagShopDBConnection"),x=>x.MigrationsAssembly("PublicApi").UseNodaTime());
 #endif
                // x.UseSnakeCaseNamingConvention();
                 x.EnableSensitiveDataLogging();
