@@ -197,7 +197,8 @@ namespace PublicApi
                         // Decode token
                         var authHeader = context.Request.Headers.Single(p => p.Key == "Authorization");
                         var tokenHandler = new JwtSecurityTokenHandler();
-                        var tokenStr = string.Join("", authHeader.Value.First().Skip(7));
+                        var tokenHeader = authHeader.Value.First();
+                        var tokenStr = string.Join("", tokenHeader.Skip(7));
                         var key = Encoding.ASCII.GetBytes(ConstantsAPI.JWT_SECRET_KEY);
 
                         var tokenValidationParameters = new TokenValidationParameters
@@ -207,6 +208,10 @@ namespace PublicApi
                             ValidateIssuer = false,
                             ValidateAudience = false
                         };
+                        if (tokenStr == null || tokenStr.Length==0)
+                        {
+                            return ValueTask.CompletedTask;
+                        }
                         var token = tokenHandler.ValidateToken(tokenStr, tokenValidationParameters, out var validToken);
                         JwtSecurityToken validJwt = validToken as JwtSecurityToken;
                         context.User = token;
@@ -215,6 +220,7 @@ namespace PublicApi
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex);
+                        return ValueTask.FromException(ex);
                     }
                     return ValueTask.CompletedTask;
                 });
