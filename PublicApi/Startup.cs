@@ -194,6 +194,10 @@ namespace PublicApi
                 {
                     try
                     {
+                        if (!context.Request.Headers.ContainsKey("Authorization"))
+                        {
+                            return ValueTask.CompletedTask;
+                        }
                         // Decode token
                         var authHeader = context.Request.Headers.Single(p => p.Key == "Authorization");
                         var tokenHandler = new JwtSecurityTokenHandler();
