@@ -3,6 +3,10 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
+	
+    <ItemGroup>
+        <ProjectCapability Include="CSharp;Managed;ClassDesigner" />
+    </ItemGroup>
 
   <ItemGroup>
     <None Remove="Data\Images\1.jpg" />

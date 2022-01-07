@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ApplicationCore.Entities.BaseDateTimeEntity" Collapsed="true">
+    <Position X="15.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAACAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Entities\BaseDateTimeEntity.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ApplicationCore.Entities.Category" Collapsed="true">
+    <Position X="15.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAIAAAAAAAAQAACAAABAAAgAAAAAgAAQ=</HashCode>
+      <FileName>Entities\Category.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Entities.Order" Collapsed="true">
+    <Position X="22.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACAAAAAAAACAgAAAAAAAAAAEAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Order.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Entities.Product" Collapsed="true">
+    <Position X="13.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgABAAEEAAAAAAQCEAABCAAgAACAACAAA=</HashCode>
+      <FileName>Entities\Product.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Entities.ProductPreview" Collapsed="true">
+    <Position X="13.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAgAAAAAEEAQAAAAAABEAAAAAAQAACAA=</HashCode>
+      <FileName>Entities\ProductPreview.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Entities.Property" Collapsed="true">
+    <Position X="18" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAACAAAAAAAAAQAQAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Entities\Property.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Entities.ProductPropertyItem" Collapsed="true">
+    <Position X="20.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAABAAAAAgAIAAAAEAAAAATAAAAAAAIAA=</HashCode>
+      <FileName>Entities\Property.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Entities.Seller" Collapsed="true">
+    <Position X="11.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Seller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Entities.Store" Collapsed="true">
+    <Position X="9" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAAAAAAAAAAAAAAAQAAAAAAQEAAAAAAQAACAA=</HashCode>
+      <FileName>Entities\Store.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Entities.User" Collapsed="true">
+    <Position X="11.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFCAEAACGBAgAAAAAAAQAQgAAAAAAAAAAAAAQIAAAg=</HashCode>
+      <FileName>Entities\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.RESTApi.Authentication.AuthenticationRequest" Collapsed="true">
+    <Position X="10" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAQAAAAAAAAA=</HashCode>
+      <FileName>RestEndpoints\Authentication\Authenticate.Request.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.RESTApi.Authentication.AuthenticationResponse" Collapsed="true">
+    <Position X="25.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAARQAAAAAAAAAIAAAAABAAA=</HashCode>
+      <FileName>RestEndpoints\Authentication\Authenticate.Response.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Base.BaseMessage" Collapsed="true">
+    <Position X="25.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RestEndpoints\Base\BaseMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Base.BaseRequest" Collapsed="true">
+    <Position X="15.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RestEndpoints\Base\BaseRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Base.BaseResponse" Collapsed="true">
+    <Position X="32.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RestEndpoints\Base\BaseResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.RESTApi.Baskets.GetBasketRequest" Collapsed="true">
+    <Position X="19" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RestEndpoints\Baskets\GetBasket.Request.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.RESTApi.Baskets.GetBasketResponse" Collapsed="true">
+    <Position X="41.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RestEndpoints\Baskets\GetBasket.Response.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.RESTApi.Products.CreateProductRequest" Collapsed="true">
+    <Position X="12.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAgAgAAAAAAEAAAAAAAAAAACAAAAAAKAAA=</HashCode>
+      <FileName>RestEndpoints\Products\CreateProduct.Request.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.RESTApi.Products.CreateProductResponse" Collapsed="true">
+    <Position X="28" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RestEndpoints\Products\CreateProduct.Response.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.RESTApi.Products.DeleteUserResponse" Collapsed="true">
+    <Position X="32.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RestEndpoints\Products\Delete.Response.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.RESTApi.Products.GetProductResponse" Collapsed="true">
+    <Position X="34.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RestEndpoints\Products\GetProduct.Response.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.RESTApi.Products.GetProductsRequest" Collapsed="true">
+    <Position X="16.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAEAAAAAAAAAAAAAAAEAAAABA=</HashCode>
+      <FileName>RestEndpoints\Products\GetProducts.Request.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.RESTApi.Products.GetProductsResponse" Collapsed="true">
+    <Position X="39.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>RestEndpoints\Products\GetProducts.Response.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.RESTApi.Products.PutProductRequest" Collapsed="true">
+    <Position X="21.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACCAAAAAAgAhAAAAAEAAAAAAEAABAAAAAAAAAKAAA=</HashCode>
+      <FileName>RestEndpoints\Products\Update.Request.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.RESTApi.Products.PutProductResponse" Collapsed="true">
+    <Position X="23.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RestEndpoints\Products\Update.Response.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.RESTApi.Users.CreateUserRequest" Collapsed="true">
+    <Position X="14.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAEAAACAAAAAAAAAAQAQAAAAAAAACAAAAAAIAAAg=</HashCode>
+      <FileName>RestEndpoints\Users\CreateUser.Request.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.RESTApi.Users.CreateUserResponse" Collapsed="true">
+    <Position X="30.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABCAEAAACAAAQAAAAAAQAQAAAAAAAAAAAAAAAIBAAg=</HashCode>
+      <FileName>RestEndpoints\Users\CreateUser.Response.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.RESTApi.Users.GetUserResponse" Collapsed="true">
+    <Position X="37" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RestEndpoints\Users\GetUserResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Specifications.BaseSpecification&lt;T&gt;" Collapsed="true">
+    <Position X="11" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\BaseSpecification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Specifications.OrderSpecification" Collapsed="true">
+    <Position X="13.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\OrderSpecification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Specifications.ProductSpecification" Collapsed="true">
+    <Position X="8.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProductSpecification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Specifications.StoreSpecification" Collapsed="true">
+    <Position X="11" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\StoreSpecification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Entities.Basket" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="27.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABCAAAAAAAACAAABAAAAAgAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Entities\Basket.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ApplicationCore.Entities.BasketItem" Collapsed="true">
+    <Position X="29.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FAACAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAggAAAAAA=</HashCode>
+      <FileName>Entities\BasketItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Entities.ChoosenProduct" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="32.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACAAAAAQAAAAAAAAAAAAAAACAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Entities\ChoosenProduct.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ApplicationCore.Entities.PropertyItemTuple" Collapsed="true">
+    <Position X="32.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAEAAABAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ChoosenProduct.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Entities.Image" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="32.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACAgAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Image.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ApplicationCore.Entities.OrderItem" Collapsed="true">
+    <Position X="27.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAggAAAAAA=</HashCode>
+      <FileName>Entities\Order.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Entities.ProductProperty" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="29.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAICAAAAAAAAAAAAAAAAAAAAAAAAkAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Entities\ProductProperty.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ApplicationCore.Entities.PropertyItem" Collapsed="true">
+    <Position X="31" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAkAAACAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Property.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Entities.Address" Collapsed="true">
+    <Position X="25.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAIAAAAAAAAAAAAAAABAAIAQAAAAAA=</HashCode>
+      <FileName>Entities\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Entities.CreditCard" Collapsed="true">
+    <Position X="25.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Exceptions.InvalidOperationException" Collapsed="true">
+    <Position X="25.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\Exceptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.GraphQLEndpoints.UserPayload" Collapsed="true">
+    <Position X="29.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GraphQLEndpoints\Users.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.GraphQLEndpoints.RegisterSellerPayload" Collapsed="true">
+    <Position X="27.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>GraphQLEndpoints\Users.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.GraphQLEndpoints.EditUserInput" Collapsed="true">
+    <Position X="27.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAACAAAAAAAAAAQAQAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>GraphQLEndpoints\Users.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.RESTApi.Baskets.BasketItemResponse" Collapsed="true">
+    <Position X="31" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>RestEndpoints\Baskets\GetBasket.Response.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.RESTApi.Users.IdentityError" Collapsed="true">
+    <Position X="31" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RestEndpoints\Users\CreateUser.Response.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.RESTApi.EndpointUrlConstants" Collapsed="true">
+    <Position X="29.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIgAAAAAAAAAAAABAAAAAAIAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RestEndpoints\EndpointRoutingUrl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Specifications.PropertySpecification" Collapsed="true">
+    <Position X="25.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\PropertySpecification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationCore.Specifications.UserSpecification" Collapsed="true">
+    <Position X="31" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\UserSpecification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="ApplicationCore.Interfaces.IAsyncRepository&lt;T&gt;" Collapsed="true">
+    <Position X="17.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAQAAAAAAACAEAAAgAIAAAAQAAAAAAIIE=</HashCode>
+      <FileName>Interfaces\IAsyncRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ApplicationCore.Interfaces.IOrderRepository" Collapsed="true">
+    <Position X="18.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IOrderRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ApplicationCore.Interfaces.IUserRepository" Collapsed="true">
+    <Position X="16.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEIBgAAAAAAQBABgAAACAAAAAAAAAEAIEAAAAAA=</HashCode>
+      <FileName>Interfaces\IUserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ApplicationCore.Interfaces.IAggregateRoot" Collapsed="true">
+    <Position X="25.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IAggregateRoot.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ApplicationCore.Interfaces.IAppLogger&lt;T&gt;" Collapsed="true">
+    <Position X="27.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IAppLogger.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ApplicationCore.Interfaces.IEmailSender" Collapsed="true">
+    <Position X="29.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Interfaces\IEmailSender.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ApplicationCore.Interfaces.IFileSystem" Collapsed="true">
+    <Position X="31" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IFileSystem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ApplicationCore.Interfaces.IOrderService" Collapsed="true">
+    <Position X="32.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IOrderService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ApplicationCore.Interfaces.IUriComposer" Collapsed="true">
+    <Position X="25.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IUriComposer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

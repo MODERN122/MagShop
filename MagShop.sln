@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2E632424-176A-40F7-A16E-6FC8300213A4}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		Diagram.cd = Diagram.cd
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{127A4C6B-D1ED-4D45-8C3E-C6C82054D6E4}"
