@@ -2,17 +2,11 @@
 using ApplicationCore.Interfaces;
 using ApplicationCore.RESTApi.Authentication;
 using ApplicationCore.Specifications;
-using Ardalis.ApiEndpoints;
 using HotChocolate;
 using HotChocolate.Types;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace PublicApi.GraphQL.Authentication

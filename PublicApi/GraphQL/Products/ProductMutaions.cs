@@ -19,11 +19,11 @@ namespace PublicApi.GraphQL.Products
     [ExtendObjectType(typeof(Mutation))]
     public class ProductMutaions
     {
-        private IAsyncRepository<Product> _productRepository;
+        private IProductRepository _productRepository;
         private IAsyncRepository<ProductProperty> _productPropertyRepository;
 
         public ProductMutaions(
-            IAsyncRepository<Product> productRepository,
+            IProductRepository productRepository,
             IAsyncRepository<ProductProperty> productPropertyRepository)
         {
             _productRepository = productRepository;
@@ -116,9 +116,10 @@ namespace PublicApi.GraphQL.Products
                 })
                 .ToList());
                 product.SetProductIsActive(true);
-                var result = await _productRepository.UpdateEntryAsync(product);
+                var result = await _productRepository.UpdateProductAsync(product);
                 Guard.Against.Default(result, nameof(result));
-                return await _productRepository.FirstOrDefaultAsync(new ProductSpecification(product.Id));
+                var updatedProduct = await _productRepository.FirstOrDefaultAsync(new ProductSpecification(product.Id));
+                return updatedProduct;
             }
             catch (Exception ex)
             {

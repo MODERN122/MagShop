@@ -30,7 +30,7 @@ namespace Infrastructure.Repositories
 
         public virtual async Task<T> GetByIdAsync(string id)
         {
-            using (var context = this._contextFactory.CreateDbContext())
+            using (var context = _contextFactory.CreateDbContext())
             {
                 return await context.Set<T>().FindAsync(id);
             }
@@ -38,7 +38,7 @@ namespace Infrastructure.Repositories
 
         public async Task<IReadOnlyList<T>> ListAllAsync()
         {
-            using (var context = this._contextFactory.CreateDbContext())
+            using (var context = _contextFactory.CreateDbContext())
             {
                 return await context.Set<T>().ToListAsync();
             }
@@ -46,7 +46,7 @@ namespace Infrastructure.Repositories
 
         public async Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec)
         {
-            using (var context = this._contextFactory.CreateDbContext())
+            using (var context = _contextFactory.CreateDbContext())
             {
                 var specificationResult = ApplySpecification(spec, context);
                 return await specificationResult.ToListAsync();
@@ -55,7 +55,7 @@ namespace Infrastructure.Repositories
 
         public async Task<int> CountAsync(ISpecification<T> spec)
         {
-            using (var context = this._contextFactory.CreateDbContext())
+            using (var context = _contextFactory.CreateDbContext())
             {
                 var specificationResult = ApplySpecification(spec, context);
                 return await specificationResult.CountAsync();
@@ -64,7 +64,7 @@ namespace Infrastructure.Repositories
 
         public async Task<T> AddAsync(T entity, CancellationToken token = default)
         {
-            using (var context = this._contextFactory.CreateDbContext())
+            using (var context = _contextFactory.CreateDbContext())
             {
                 var result = await context.Set<T>().AddAsync(entity);
                 var resInt = await context.SaveChangesAsync(token);
@@ -81,16 +81,16 @@ namespace Infrastructure.Repositories
 
         public async Task<bool> UpdateEntryAsync(T entity, CancellationToken token = default)
         {
-            using (var context = this._contextFactory.CreateDbContext())
+            using (var context = _contextFactory.CreateDbContext())
             {
                 context.Entry(entity).State = EntityState.Modified;
-                await context.SaveChangesAsync(token);
-                return true;
+                var result = await context.SaveChangesAsync(token);
+                return result > 0;
             }
         }
         public async Task<bool> UpdateFieldsAsync(T entity, CancellationToken token = default, params Expression<Func<T, object>>[] includeProperties)
         {
-            using (var context = this._contextFactory.CreateDbContext())
+            using (var context = _contextFactory.CreateDbContext())
             {
                 var dbEntry = context.Entry(entity);
 
@@ -105,7 +105,7 @@ namespace Infrastructure.Repositories
 
         public async Task DeleteAsync(T entity, CancellationToken token = default)
         {
-            using (var context = this._contextFactory.CreateDbContext())
+            using (var context = _contextFactory.CreateDbContext())
             {
                 context.Set<T>().Remove(entity);
                 await context.SaveChangesAsync(token);
@@ -113,7 +113,7 @@ namespace Infrastructure.Repositories
         }
         public async Task<T> FirstAsync(ISpecification<T> spec)
         {
-            using (var context = this._contextFactory.CreateDbContext())
+            using (var context = _contextFactory.CreateDbContext())
             {
                 var specificationResult = ApplySpecification(spec, context);
                 return await specificationResult.FirstAsync();
@@ -122,7 +122,7 @@ namespace Infrastructure.Repositories
 
         public async Task<T> FirstOrDefaultAsync(ISpecification<T> spec)
         {
-            using (var context = this._contextFactory.CreateDbContext())
+            using (var context = _contextFactory.CreateDbContext())
             {
                 var specificationResult = ApplySpecification(spec, context);
                 return await specificationResult.FirstOrDefaultAsync();
@@ -130,8 +130,8 @@ namespace Infrastructure.Repositories
         }
         protected IQueryable<T> ApplySpecification(ISpecification<T> spec, MagShopContext context)
         {
-                var evaluator = new SpecificationEvaluator<T>();
-                return evaluator.GetQuery(context.Set<T>().AsSplitQuery(), spec);
+            var evaluator = new SpecificationEvaluator<T>();
+            return evaluator.GetQuery(context.Set<T>().AsSplitQuery(), spec);
         }
 
     }
