@@ -43,25 +43,25 @@ namespace PublicApi.GraphQL.Users
         public async Task<UserPayload> RegisterUserByPhoneAsync(
                RegisterUserByPhoneInput input)
         {
-                var result = await _userRepository.RegisterUserByPhone(input.FirstName, input.LastName, input.BirthDate, input.PhoneNumber, input.Code);
-                return result;
+            var result = await _userRepository.RegisterUserByPhone(input.FirstName, input.LastName, input.BirthDate, input.PhoneNumber, input.Code);
+            return result;
         }
 
         public async Task<UserPayload> RegisterUserByGoogleAsync(
                RegisterUserByGoogleInput input)
         {
-                var result = await _userRepository.RegisterUserByGoogle(input.FirstName, input.LastName, input.BirhDate, input.AccessToken, input.Email);
-                return result;
+            var result = await _userRepository.RegisterUserByGoogle(input.FirstName, input.LastName, input.BirhDate, input.AccessToken, input.Email);
+            return result;
         }
 
         public async Task<RegisterSellerPayload> RegisterSellerByPhoneAsync(
               RegisterUserByPhoneInput input)
         {
-                var result = await _userRepository.RegisterSellerByPhone(input.FirstName, input.LastName, input.BirthDate, input.PhoneNumber, input.Code);
-                return result;
+            var result = await _userRepository.RegisterSellerByPhone(input.FirstName, input.LastName, input.BirthDate, input.PhoneNumber, input.Code);
+            return result;
         }
 
-        [Authorize(Roles = new string[] { ConstantsAPI.USERS})]
+        [Authorize(Roles = new string[] { ConstantsAPI.USERS, ConstantsAPI.ADMINISTRATORS })]
         public async Task<bool> AddProductToFavoriteAsync(string productId,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
         {
@@ -69,7 +69,7 @@ namespace PublicApi.GraphQL.Users
             return result;
         }
 
-        [Authorize(Roles = new string[] { ConstantsAPI.USERS })]
+        [Authorize(Roles = new string[] { ConstantsAPI.USERS, ConstantsAPI.ADMINISTRATORS })]
         public async Task<bool> RemoveProductFromFavoriteAsync(string productId,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
         {

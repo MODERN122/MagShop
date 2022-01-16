@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PublicApi.GraphQL.Authentication
 {
-    [ExtendObjectType(typeof(Query))]
+    [ExtendObjectType(typeof(Mutation))]
     public class AuthenticationMutations
     {
         private IUserRepository _userRepository;
