@@ -11,18 +11,21 @@ namespace ApplicationCore.Specifications
     {
         public ProductSpecification(int pageIndex, int pageSize) : base(pageIndex, pageSize) { }
 
-        public ProductSpecification(string productId) : base(0, 1)
+        public ProductSpecification(string productId, bool isBaseEntity = false) : base(0, 1)
         {
             Query
                 .Where(p => p.Id == productId);
-            Query
-                .Include(i => i.Category);
-            Query.Include(x => x.ProductProperties).ThenInclude(x => x.ProductPropertyItems);
-            Query.Include(x => x.ChoosenProducts).ThenInclude(x => x.PropertyItemTuples);
-            Query.Include(p => p.Properties);
-            Query.
-                Include(p => p.Images);
-            Query.Include(p => p.Store);
+            if (!isBaseEntity)
+            {
+                Query
+                    .Include(i => i.Category);
+                Query.Include(x => x.ProductProperties).ThenInclude(x => x.ProductPropertyItems);
+                Query.Include(x => x.ChoosenProducts).ThenInclude(x => x.PropertyItemTuples);
+                Query.Include(p => p.Properties);
+                Query.
+                    Include(p => p.Images);
+                Query.Include(p => p.Store);
+            }
         }
 
         public ProductSpecification(string categoryId, string storeId, List<string> propertiesId, int pageIndex, int pageSize, int? minDiscount = null) : base(pageIndex, pageSize)

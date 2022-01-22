@@ -39,12 +39,7 @@ namespace PublicApi.GraphQL.Products
             [GraphQLNonNullType]
             string CategoryId,
             [GraphQLNonNullType]
-            string Description,
-            [GraphQLNonNullType]
-            string Image,
-            List<string> ImagePaths,
-            string Id,
-            List<ProductPropertiesInput> ProductProperties);
+            string Description);
 
         public class AddProductPayload
         {
@@ -87,7 +82,6 @@ namespace PublicApi.GraphQL.Products
                 throw new Exception("input was null");
             }
             var product = new Product(input.Name, input.CategoryId, input.Description, input.StoreId, currentUser.Claims.First().Value);
-            product.Images = input.ImagePaths.Select(x => new Image(product.Id, x)).ToList();
 
             var result = await _productRepository.AddAsync(product);
             return result;
@@ -103,6 +97,10 @@ namespace PublicApi.GraphQL.Products
                 var spec = new ProductSpecification(productId);
                 var product = await _productRepository.FirstOrDefaultAsync(spec);
                 Guard.Against.Null(product, nameof(product));
+                if(product.Image==null || product.Image.Length == 0)
+                {
+                    throw new Exception("Need add photos before adding properties!");
+                }
                 product.SetProductProperties(input.Select(x => new ProductProperty()
                 {
                     ProductId = productId,

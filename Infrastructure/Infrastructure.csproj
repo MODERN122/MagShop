@@ -9,28 +9,6 @@
     </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Data\Images\1.jpg" />
-    <None Remove="Data\Images\2.jpg" />
-    <None Remove="Data\Images\3.jpg" />
-    <None Remove="Data\Images\4.jpg" />
-    <None Remove="Data\Images\5.jpg" />
-    <None Remove="Data\Images\6.jpg" />
-    <None Remove="Data\Images\7.jpg" />
-    <None Remove="Data\Images\8.jpg" />
-    <None Remove="Data\Images\и.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Data\Images\1.jpg" />
-    <EmbeddedResource Include="Data\Images\2.jpg" />
-    <EmbeddedResource Include="Data\Images\4.jpg" />
-    <EmbeddedResource Include="Data\Images\5.jpg" />
-    <EmbeddedResource Include="Data\Images\6.jpg" />
-    <EmbeddedResource Include="Data\Images\7.jpg" />
-    <EmbeddedResource Include="Data\Images\8.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Ardalis.Specification" Version="4.1.0" />
     <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="4.1.0" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />
@@ -47,14 +25,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ApplicationCore\ApplicationCore.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Data\Images\3.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\Images\Categories\" />
   </ItemGroup>
 
 </Project>

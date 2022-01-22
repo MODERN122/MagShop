@@ -43,7 +43,7 @@ namespace PublicApi.RESTApi.Media
         [SwaggerOperation(
             Summary = "Creates a new Image Product",
             Description = "Creates a new Image Product",
-            OperationId = "imageProducts.create",
+            OperationId = "imageProduct.create",
             Tags = new[] { "ImageProductsEndpoints" })
         ]
         public override async Task<ActionResult<CreateImageProductResponse>> HandleAsync([FromForm] CreateImageProductRequest request, CancellationToken cancellationToken)
@@ -56,21 +56,21 @@ namespace PublicApi.RESTApi.Media
                 {
                     return BadRequest("Изображение пустое");
                 }
-                var product = await _itemRepository.FirstOrDefaultAsync(new ProductSpecification(request.ProductId));
+                var product = await _itemRepository.FirstOrDefaultAsync(new ProductSpecification(request.ProductId, true));
                 if (product == null)
                 {
                     return BadRequest("Товар не найден");
                 }
                 var result = await Provider.UploadFromStream(stream, request.ImageName.Split('.').Last(), $"image/{product.StoreId}/{product.Id}");
                 var image = new Image(request.ProductId, result);
-                var res = await _imageRepository.AddAsync(image);
+                var res = await _imageRepository.AddAsync(image, cancellationToken);
                 if (res!=null)
                 {
                     return Ok(new CreateImageProductResponse(Guid.NewGuid()) { ImagePath = res.Path });
                 }
                 else
                 {
-                    return BadRequest("Ошибка обновления изображения товара");
+                    return BadRequest("Ошибка добавления изображения товара");
                 }
             }
             catch (Exception ex)
