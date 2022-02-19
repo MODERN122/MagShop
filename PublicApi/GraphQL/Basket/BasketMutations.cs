@@ -23,13 +23,34 @@ namespace PublicApi.GraphQL.Basket
             _userRepository = userRepository;
         }
 
-        [Authorize(Roles = new[] { Infrastructure.Constants.ConstantsAPI.USERS })]
-        public async Task<bool> AddBasketItem(string productId,
+        [Authorize(Roles = new[] { Infrastructure.Constants.ConstantsAPI.USERS, Infrastructure.Constants.ConstantsAPI.ADMINISTRATORS })]
+        public async Task<List<ApplicationCore.Entities.BasketItem>> AddBasketItem(string productId,
             [Service] UserManager<UserAuthAccess> userManager,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
         {
             var id = currentUser.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name");
-            return await _userRepository.AddBasketItem(id, productId);
+           var basket = await _userRepository.AddBasketItem(id, productId);
+            return basket?.Items;
+        }
+
+        [Authorize(Roles = new[] { Infrastructure.Constants.ConstantsAPI.USERS, Infrastructure.Constants.ConstantsAPI.ADMINISTRATORS })]
+        public async Task<List<ApplicationCore.Entities.BasketItem>> RemoveBasketItem(string productId,
+            [Service] UserManager<UserAuthAccess> userManager,
+            [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
+        {
+            var id = currentUser.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name");
+            var basket = await _userRepository.RemoveBasketItem(id, productId);
+            return basket?.Items;
+        }
+
+        [Authorize(Roles = new[] { Infrastructure.Constants.ConstantsAPI.USERS, Infrastructure.Constants.ConstantsAPI.ADMINISTRATORS })]
+        public async Task<List<ApplicationCore.Entities.BasketItem>> SubstractBasketItem(string productId,
+            [Service] UserManager<UserAuthAccess> userManager,
+            [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
+        {
+            var id = currentUser.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name");
+            var basket = await _userRepository.SubstractBasketItem(id, productId);
+            return basket?.Items;
         }
     }
 }

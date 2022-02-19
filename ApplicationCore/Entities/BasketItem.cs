@@ -25,7 +25,27 @@ namespace ApplicationCore.Entities
         public void AddQuantity(int quantity)
         {
             Guard.Against.OutOfRange(quantity, nameof(quantity), 0, int.MaxValue);
-            Quantity += quantity;
+            if (Quantity + quantity <= 999)
+            {
+                Quantity += quantity;
+            }
+            else
+            {
+                Quantity = 999;
+            }
+        }
+        public void SubstractQuantity(int quantity)
+        {
+            Guard.Against.OutOfRange(quantity, nameof(quantity), 0, int.MaxValue);
+            if (Quantity >= quantity)
+            {
+                Quantity -= quantity;
+            }
+            else
+            {
+                Quantity = 0;
+            }
+            
         }
 
         public void SetQuantity(int quantity)

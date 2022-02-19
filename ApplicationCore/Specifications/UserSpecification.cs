@@ -17,7 +17,8 @@ namespace ApplicationCore.Specifications
             Query.Where(x => x.Id == userId)
                 .Include(x=>x.Basket)
                 .ThenInclude(x => x.Items)
-                .ThenInclude(x => x.Product);
+                .ThenInclude(x => x.Product)
+                .ThenInclude(x=>x.Category);
         }
     }
 }

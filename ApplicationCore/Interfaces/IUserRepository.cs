@@ -17,8 +17,9 @@ namespace ApplicationCore.Interfaces
 
         Task<RegisterSellerPayload> RegisterSellerByPhone(string firstName, string lastName, DateTime birthDate, string phoneNumber, string code);
 
-        Task<bool> AddBasketItem(string userId, string productId);
-        Task<bool> RemoveBasketItem(string userId, string productId);
+        Task<Basket> AddBasketItem(string userId, string productId);
+        Task<Basket> RemoveBasketItem(string userId, string productId);
+        Task<Basket> SubstractBasketItem(string userId, string productId);
         Task<Basket> AddBasketAsync(string userId);
         Task<Basket> GetBasketAsync(string userId);
         Task<bool> AddProductToFavoriteAsync(string userId, string productId);

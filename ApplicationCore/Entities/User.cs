@@ -73,6 +73,14 @@ namespace ApplicationCore.Entities
         {
             Basket.AddBasketItem(basketItem);
         }
+        public void SubstractItemFromBasket(BasketItem basketItem)
+        {
+            Basket.SubstractBasketItem(basketItem);
+        }
+        public void RemoveItemFromBasket(BasketItem basketItem)
+        {
+            Basket.RemoveBasketItem(basketItem);
+        }
         public bool AddProductToFavorite(string productId)
         {
             if (this.FavoriteProductsId.Contains(productId))

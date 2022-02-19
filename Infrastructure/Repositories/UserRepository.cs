@@ -90,7 +90,7 @@ namespace Infrastructure.Repositories
             var result = await AddAsync(entity);
             return new UserPayload(result, token);
         }
-        public async Task<bool> AddBasketItem(string userId, string productId)
+        public async Task<Basket> AddBasketItem(string userId, string productId)
         {
             using (var context = this._contextFactory.CreateDbContext())
             {
@@ -115,18 +115,69 @@ namespace Infrastructure.Repositories
 
                     }
                     await context.SaveChangesAsync();
-                    return true;
+                    return await GetBasketAsync(userId);
                 }
-                else
+                throw new Exception("ProductNotFound!");
+            }
+        }
+        public async Task<Basket> SubstractBasketItem(string userId, string productId)
+        {
+            using (var context = this._contextFactory.CreateDbContext())
+            {
+                var user = await context.Users.Include(x => x.Basket)
+                   .ThenInclude(x => x.Items).FirstAsync(x => x.Id == userId);
+                var product = await context.Products.FirstAsync(x => x.Id == productId);
+                if (product != null)
                 {
-                    return false;
+                    if (user.Basket != null)
+                    {
+                        user.SubstractItemFromBasket(new BasketItem(1, product));
+                    }
+                    else
+                    {
+                        var basket = await AddBasketAsync(user.Id);
+                        if (basket != null)
+                        {
+                            user = await context.Users.Include(x => x.Basket)
+                                .ThenInclude(x => x.Items).FirstAsync(x => x.Id == userId);
+                        }
+
+                    }
+                    await context.SaveChangesAsync();
+                    return await GetBasketAsync(userId);
                 }
+                throw new Exception("ProductNotFound!");
             }
         }
 
-        public Task<bool> RemoveBasketItem(string userId, string productId)
+        public async Task<Basket> RemoveBasketItem(string userId, string productId)
         {
-            throw new NotImplementedException();
+            using (var context = this._contextFactory.CreateDbContext())
+            {
+                var user = await context.Users.Include(x => x.Basket)
+                   .ThenInclude(x => x.Items).FirstAsync(x => x.Id == userId);
+                var product = await context.Products.FirstAsync(x => x.Id == productId);
+                if (product != null)
+                {
+                    if (user.Basket != null)
+                    {
+                        user.RemoveItemFromBasket(new BasketItem(1, product));
+                    }
+                    else
+                    {
+                        var basket = await AddBasketAsync(user.Id);
+                        if (basket != null)
+                        {
+                            user = await context.Users.Include(x => x.Basket)
+                                .ThenInclude(x => x.Items).FirstAsync(x => x.Id == userId);
+                        }
+
+                    }
+                    await context.SaveChangesAsync();
+                    return await GetBasketAsync(userId);
+                }
+                throw new Exception("ProductNotFound!");
+            }
         }
 
         public async Task<Basket> GetBasketAsync(string userId)
@@ -155,6 +206,7 @@ namespace Infrastructure.Repositories
                 return basket;
             }
         }
+
         public async Task<bool> AddProductToFavoriteAsync(string userId, string productId)
         {
             using (var context = _contextFactory.CreateDbContext())

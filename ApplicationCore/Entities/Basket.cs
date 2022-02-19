@@ -13,7 +13,7 @@ namespace ApplicationCore.Entities
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public string UserId { get; set; }
-        public List<BasketItem> Items { get; private set; }
+        public List<BasketItem> Items { get; private set; } = new List<BasketItem>();
 
         public void AddBasketItem(BasketItem basketItem)
         {
@@ -26,6 +26,16 @@ namespace ApplicationCore.Entities
             else
             {
                 Items.Add(basketItem);
+            }
+        }
+        public void SubstractBasketItem(BasketItem basketItem)
+        {
+
+            Guard.Against.Null(basketItem, nameof(Items));
+            var itemDublicate = Items.Find(x => x.ProductId == basketItem.ProductId);
+            if (itemDublicate != null)
+            {
+                itemDublicate.SubstractQuantity(1);
             }
         }
         public void RemoveBasketItem(BasketItem basketItem)
