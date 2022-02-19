@@ -217,8 +217,10 @@ namespace Infrastructure.Data
                     await context.SaveChangesAsync();
                 }
 
-                if (await context.Users.Include(x => x.Basket)
-                    .ThenInclude(x => x.Items).FirstAsync() != null)
+                var users = await context.Users.Include(x => x.Basket)
+                    .ThenInclude(x => x.Items).ToListAsync();
+
+                if (!users.Any(x=>x.Basket?.Items.Count>0))
                 {
                     AddPreconfiguredBasketItemsToFirstUser(context);
                     await context.SaveChangesAsync();
