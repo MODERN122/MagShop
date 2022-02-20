@@ -28,6 +28,15 @@ namespace ApplicationCore.Specifications
             }
         }
 
+        public ProductSpecification(string[] ids) : base(0, ids.Length)
+        {
+            Query.Where(x => ids.Contains(x.Id));
+            Query
+                .Include(i => i.Category);
+
+            Query.Include(x => x.ProductProperties).ThenInclude(x => x.Property).ThenInclude(x => x.Items);
+        }
+
         public ProductSpecification(string categoryId, string storeId, List<string> propertiesId, int pageIndex, int pageSize, int? minDiscount = null) : base(pageIndex, pageSize)
         {
             Query
@@ -43,7 +52,7 @@ namespace ApplicationCore.Specifications
             Query
                 .Include(i => i.Category);
 
-            Query.Include(x => x.ProductProperties).ThenInclude(x => x.Property).ThenInclude(x=>x.Items);
+            Query.Include(x => x.ProductProperties).ThenInclude(x => x.Property).ThenInclude(x => x.Items);
         }
     }
 }
