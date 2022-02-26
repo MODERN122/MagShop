@@ -124,8 +124,7 @@ namespace Infrastructure.Data
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption,SELLER_ID)).ToList()
                         }
                     }, SELLER_ID)
-                    { Images=new List<Image>() { new Image("22", "https://sun9-54.userapi.com/impg/AiOjSFgShn1Z2PYCIfbb_re4Ivp" +
-                    "c3A132Unu2w/qI6EEjgHAd0.jpg" + "?size=1439x2160&quality=96&sign=3263d89b63287df39a08354aa5269bb4&type=album")} }
+                   
                     );
                     await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {

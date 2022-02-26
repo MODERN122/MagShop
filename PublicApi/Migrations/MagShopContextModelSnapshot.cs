@@ -50,7 +50,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Basket", b =>
@@ -67,7 +67,7 @@ namespace PublicApi.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Baskets");
+                    b.ToTable("Baskets", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.BasketItem", b =>
@@ -92,7 +92,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("BasketItems");
+                    b.ToTable("BasketItems", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Category", b =>
@@ -125,7 +125,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.ChoosenProduct", b =>
@@ -146,7 +146,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ChoosenProducts");
+                    b.ToTable("ChoosenProducts", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.CreditCard", b =>
@@ -164,7 +164,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CreditCards");
+                    b.ToTable("CreditCards", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Image", b =>
@@ -186,7 +186,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Order", b =>
@@ -215,7 +215,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.OrderItem", b =>
@@ -241,7 +241,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Product", b =>
@@ -301,7 +301,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("StoreId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.ProductProperty", b =>
@@ -326,7 +326,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("ProductProperties");
+                    b.ToTable("ProductProperties", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.ProductPropertyItem", b =>
@@ -367,7 +367,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("PropertyItemId");
 
-                    b.ToTable("ProductPropertyItems");
+                    b.ToTable("ProductPropertyItems", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Property", b =>
@@ -389,7 +389,7 @@ namespace PublicApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Properties");
+                    b.ToTable("Properties", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.PropertyItem", b =>
@@ -407,7 +407,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("PropertyItems");
+                    b.ToTable("PropertyItems", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.PropertyItemTuple", b =>
@@ -428,7 +428,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("ChoosenProductId");
 
-                    b.ToTable("PropertyItemTuple");
+                    b.ToTable("PropertyItemTuple", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Store", b =>
@@ -461,7 +461,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("SellerId");
 
-                    b.ToTable("Stores");
+                    b.ToTable("Stores", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.User", b =>
@@ -498,7 +498,7 @@ namespace PublicApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Infrastructure.Identity.UserAuthAccess", b =>

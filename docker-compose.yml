@@ -19,8 +19,8 @@ services:
     db:
         image: "postgres" # use latest official postgres version
         environment:
-            POSTGRES_DB: MagShopDB
+            POSTGRES_DB: magshop_docker
             POSTGRES_USER: misha
             POSTGRES_PASSWORD: <p@SSw0rd34>
         ports:
-            - "5432:5432"
+            - "6543:5432"

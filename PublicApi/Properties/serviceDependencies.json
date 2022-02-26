@@ -2,7 +2,7 @@
   "dependencies": {
     "npgsql2": {
       "type": "npgsql",
-      "connectionId": "MagShopDBConnection"
+      "connectionId": "MagShopDBConnectionDocker"
     }
   }
 }
