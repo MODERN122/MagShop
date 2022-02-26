@@ -82,16 +82,21 @@ namespace PublicApi
             services.AddPooledDbContextFactory<MagShopContext>(x =>
             {
 #if RELEASE
-                x.UseNpgsql(Configuration.GetConnectionString("MagShopDBConnectionDocker")));
+                x.UseNpgsql(Configuration.GetConnectionString("MagShopDBConnectionDocker"));
 #else
-                x.UseNpgsql(Configuration.GetConnectionString("MagShopDBConnection"),x=>x.MigrationsAssembly("PublicApi").UseNodaTime());
+                x.UseNpgsql(Configuration.GetConnectionString("MagShopDBConnectionDocker"), x => x.MigrationsAssembly("PublicApi").UseNodaTime());
 #endif
-               // x.UseSnakeCaseNamingConvention();
+                // x.UseSnakeCaseNamingConvention();
                 x.EnableSensitiveDataLogging();
             });
             //AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
             services.AddScoped(x => x.GetRequiredService<IDbContextFactory<MagShopContext>>().CreateDbContext());
+
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
             services.AddMemoryCache();
 
@@ -213,7 +218,7 @@ namespace PublicApi
                             ValidateIssuer = false,
                             ValidateAudience = false
                         };
-                        if (tokenStr == null || tokenStr.Length==0)
+                        if (tokenStr == null || tokenStr.Length == 0)
                         {
                             return ValueTask.CompletedTask;
                         }

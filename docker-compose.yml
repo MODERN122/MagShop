@@ -9,12 +9,7 @@ services:
         depends_on:
             - "db"
         ports:
-         - "80:80"
-    #db:
-    #    image: postgres
-    #    restart: always
-    #    environment:
-    #      POSTGRES_PASSWORD: example
+         - "8000:80"
 
     adminer:
         image: adminer
@@ -25,7 +20,7 @@ services:
         image: "postgres" # use latest official postgres version
         environment:
             POSTGRES_DB: MagShopDB
-            POSTGRES_USER: <p@SSw0rd34>
-            POSTGRES_PASSWORD: misha
+            POSTGRES_USER: misha
+            POSTGRES_PASSWORD: <p@SSw0rd34>
         ports:
             - "5432:5432"
