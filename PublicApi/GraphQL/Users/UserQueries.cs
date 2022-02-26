@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
 using ApplicationCore.RESTApi.Users;
+using ApplicationCore.Specifications;
 using Ardalis.GuardClauses;
 using AutoMapper;
 using HotChocolate;
@@ -32,7 +33,6 @@ namespace PublicApi.GraphQL.Users
 
         [Authorize]
         public async Task<User> GetUser(
-            [Service] IAsyncRepository<User> userRepository,
             [Service] IHttpContextAccessor contextAccessor,
             [Service] UserManager<UserAuthAccess> userManager,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
@@ -40,13 +40,13 @@ namespace PublicApi.GraphQL.Users
             UserAuthAccess userAuth = await userManager.FindByNameAsync(currentUser.Claims.First().Value);
             if (userAuth != null)
             {
-                var user = await userRepository.GetByIdAsync(userAuth.Id);
+                var user = await _usersRepository.FirstOrDefaultAsync(new UserSpecification(userAuth.UserName));
                 return user;
             }
             return null;
         }
 
-        [Authorize(Roles = new[] { ConstantsAPI.ADMINISTRATORS})]
+        [Authorize(Roles = new[] { ConstantsAPI.ADMINISTRATORS })]
         public async Task<IEnumerable<User>> GetUsers() =>
             await _usersRepository.ListAllAsync();
 

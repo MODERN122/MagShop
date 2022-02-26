@@ -10,17 +10,3 @@ services:
             - "db"
         ports:
          - "8000:80"
-
-    adminer:
-        image: adminer
-        restart: always
-        ports:
-          - 8080:8080
-    db:
-        image: "postgres" # use latest official postgres version
-        environment:
-            POSTGRES_DB: magshop_docker
-            POSTGRES_USER: misha
-            POSTGRES_PASSWORD: <p@SSw0rd34>
-        ports:
-            - "6543:5432"
