@@ -42,9 +42,7 @@ jobs:
         registry: https://publicapi20220226161756.azurecr.io/
         username: ${{ secrets.AzureAppService_ContainerUsername_5ad7eea8a9c943eca1f068bf3cde2ef3 }}
         password: ${{ secrets.AzureAppService_ContainerPassword_70fc71d7e3f942fb93d82f15bb1f877c }}
-
-    - run: |
-       echo "REPO=${{ GITHUB_REPOSITORY,, }}" >>${GITHUB_ENV}
+        
     - name: Build and push container image to registry
       uses: docker/build-push-action@v2
       with:
