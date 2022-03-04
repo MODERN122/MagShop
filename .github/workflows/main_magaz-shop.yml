@@ -44,7 +44,7 @@ jobs:
       with:
         context: ./PublicApi/
         push: true
-        tags: publicapi20220226161756.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_5ad7eea8a9c943eca1f068bf3cde2ef3 }}/publicapi:${{ github.sha }}
+        tags: publicapi20220226161756.azurecr.io/publicapi:${{ github.sha }}
         file: ./PublicApi/Dockerfile
 
   deploy:
