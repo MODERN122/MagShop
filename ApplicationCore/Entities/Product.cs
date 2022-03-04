@@ -69,7 +69,7 @@ namespace ApplicationCore.Entities
             SetProductProperties(productProperties);
         }
         public bool IsActive { get; private set; } = false;
-        public List<Image> Images { get; set; }
+        public List<ProductImage> Images { get; set; }
         public string PriceNew { get; private set; }
         public string PriceOld { get; private set; }
         public int Discount { get; private set; }

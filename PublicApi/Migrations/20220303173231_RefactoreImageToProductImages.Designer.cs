@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace PublicApi.Migrations
 {
     [DbContext(typeof(MagShopContext))]
-    partial class MagShopContextModelSnapshot : ModelSnapshot
+    [Migration("20220303173231_RefactoreImageToProductImages")]
+    partial class RefactoreImageToProductImages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,7 +52,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Addresses", (string)null);
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Basket", b =>
@@ -67,7 +69,7 @@ namespace PublicApi.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Baskets", (string)null);
+                    b.ToTable("Baskets");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.BasketItem", b =>
@@ -92,7 +94,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("BasketItems", (string)null);
+                    b.ToTable("BasketItems");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Category", b =>
@@ -125,7 +127,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.ChoosenProduct", b =>
@@ -146,7 +148,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ChoosenProducts", (string)null);
+                    b.ToTable("ChoosenProducts");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.CreditCard", b =>
@@ -164,7 +166,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CreditCards", (string)null);
+                    b.ToTable("CreditCards");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Order", b =>
@@ -193,7 +195,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.OrderItem", b =>
@@ -219,7 +221,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Product", b =>
@@ -279,7 +281,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("StoreId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.ProductImage", b =>
@@ -301,7 +303,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages", (string)null);
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.ProductProperty", b =>
@@ -326,7 +328,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("ProductProperties", (string)null);
+                    b.ToTable("ProductProperties");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.ProductPropertyItem", b =>
@@ -367,7 +369,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("PropertyItemId");
 
-                    b.ToTable("ProductPropertyItems", (string)null);
+                    b.ToTable("ProductPropertyItems");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Property", b =>
@@ -389,7 +391,7 @@ namespace PublicApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Properties", (string)null);
+                    b.ToTable("Properties");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.PropertyItem", b =>
@@ -407,7 +409,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("PropertyItems", (string)null);
+                    b.ToTable("PropertyItems");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.PropertyItemTuple", b =>
@@ -428,7 +430,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("ChoosenProductId");
 
-                    b.ToTable("PropertyItemTuple", (string)null);
+                    b.ToTable("PropertyItemTuple");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Store", b =>
@@ -461,7 +463,7 @@ namespace PublicApi.Migrations
 
                     b.HasIndex("SellerId");
 
-                    b.ToTable("Stores", (string)null);
+                    b.ToTable("Stores");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.User", b =>
@@ -498,7 +500,7 @@ namespace PublicApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Infrastructure.Identity.UserAuthAccess", b =>

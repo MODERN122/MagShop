@@ -5,6 +5,9 @@
       "suggestion": "true",
       "type": "mssql",
       "connectionId": "IdentityConnection"
+    },
+    "secrets1": {
+      "type": "secrets.user"
     }
   }
 }

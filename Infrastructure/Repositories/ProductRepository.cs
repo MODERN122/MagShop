@@ -34,8 +34,8 @@ namespace Infrastructure.Repositories
                 await context.ProductProperties.AddRangeAsync(product.ProductProperties);
                 context.ChoosenProducts.RemoveRange(productOld.ChoosenProducts);
                 await context.ChoosenProducts.AddRangeAsync(product.ChoosenProducts);
-                context.Images.RemoveRange(productOld.Images);
-                await context.Images.AddRangeAsync(product.Images);
+                context.ProductImages.RemoveRange(productOld.Images);
+                await context.ProductImages.AddRangeAsync(product.Images);
                 context.Entry(product.Store).CurrentValues.SetValues(product.Store);
 
                 var result = await context.SaveChangesAsync();

@@ -3,11 +3,11 @@ using System;
 
 namespace ApplicationCore.Entities
 {
-    public class Image : IAggregateRoot
+    public class ProductImage : IAggregateRoot
     {
         [Obsolete("Uses only for EfCore generating")]
-        public Image() { }
-        public Image(string productId, string path)
+        public ProductImage() { }
+        public ProductImage(string productId, string path)
         {
             ProductId = productId;
             Path = path;

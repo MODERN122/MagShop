@@ -24,12 +24,12 @@ namespace PublicApi.RESTApi.Media
     public class CreateImageProduct : BaseAsyncEndpoint.WithRequest<CreateImageProductRequest>.WithResponse<CreateImageProductResponse>
     {
         private readonly IAsyncRepository<Product> _itemRepository;
-        private readonly IAsyncRepository<Image> _imageRepository;
+        private readonly IAsyncRepository<ProductImage> _imageRepository;
         private readonly UserManager<UserAuthAccess> _userManager;
         private readonly IMapper _mapper;
 
         public CreateImageProduct(IAsyncRepository<Product> itemRepository,
-            IAsyncRepository<Image> imageRepository,
+            IAsyncRepository<ProductImage> imageRepository,
             UserManager<UserAuthAccess> userManager,
             IMapper mapper)
         {
@@ -62,7 +62,7 @@ namespace PublicApi.RESTApi.Media
                     return BadRequest("Товар не найден");
                 }
                 var result = await Provider.UploadFromStream(stream, request.ImageName.Split('.').Last(), $"image/{product.StoreId}/{product.Id}");
-                var image = new Image(request.ProductId, result);
+                var image = new ProductImage(request.ProductId, result);
                 var res = await _imageRepository.AddAsync(image, cancellationToken);
                 if (res!=null)
                 {

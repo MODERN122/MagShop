@@ -60,7 +60,8 @@ namespace Infrastructure.Data
             try
             {
                 //context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+                //context.Database.EnsureCreated();
+                context.Database.Migrate();
                 if (!await context.Users.AnyAsync())
                 {
                     if (!roleManager.Roles.Any() && !userManager.Users.Any())

@@ -30,7 +30,7 @@ namespace Infrastructure.Data
         public DbSet<CreditCard> CreditCards { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<PropertyItem> PropertyItems { get; set; }
-        public DbSet<Image> Images { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ChoosenProduct> ChoosenProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

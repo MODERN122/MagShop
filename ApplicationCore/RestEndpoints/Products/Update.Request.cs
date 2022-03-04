@@ -14,12 +14,12 @@ namespace ApplicationCore.RESTApi.Products
         [JsonPropertyName("id")]
         public string Id { get; set; }
         public string ProductName { get; set; }
-        public Image PreviewImage { get; set; }
+        public ProductImage PreviewImage { get; set; }
         public double? PriceNew { get; set; }
         public double? PriceOld { get; set; }
         public string CategoryId { get; set; }
         public DateTime? DateEndDiscount { get; set; }
-        public List<Image> Images { get; set; }
+        public List<ProductImage> Images { get; set; }
         public string Description { get; set; }
         public List<Property> Properties { get; set; }
     }
