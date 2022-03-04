@@ -42,7 +42,6 @@ jobs:
     - name: Build and push container image to registry
       uses: docker/build-push-action@v2
       with:
-        context: ./PublicApi/
         push: true
         tags: publicapi20220226161756.azurecr.io/publicapi:${{ github.sha }}
         file: ./PublicApi/Dockerfile
