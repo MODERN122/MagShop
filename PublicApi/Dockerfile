@@ -5,7 +5,6 @@ WORKDIR /app
 EXPOSE 80/tcp
 #
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
 COPY ["PublicApi/PublicApi.csproj", "PublicApi/"]
 COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
 COPY ["ApplicationCore/ApplicationCore.csproj", "ApplicationCore/"]
