@@ -5,13 +5,12 @@ WORKDIR /app
 EXPOSE 80/tcp
 #
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
 COPY ["PublicApi/PublicApi.csproj", "PublicApi/"]
 COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
 COPY ["ApplicationCore/ApplicationCore.csproj", "ApplicationCore/"]
 RUN dotnet restore "PublicApi/PublicApi.csproj"
 COPY . .
-WORKDIR "/src/PublicApi"
+WORKDIR "/PublicApi"
 RUN dotnet build "PublicApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
