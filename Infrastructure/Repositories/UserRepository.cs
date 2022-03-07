@@ -125,7 +125,8 @@ namespace Infrastructure.Repositories
             using (var context = this._contextFactory.CreateDbContext())
             {
                 var user = await context.Users.Include(x => x.Basket)
-                   .ThenInclude(x => x.Items).FirstAsync(x => x.Id == userId);
+                   .ThenInclude(x => x.Items)
+                   .FirstAsync(x => x.Id == userId);
                 var product = await context.Products.FirstAsync(x => x.Id == productId);
                 if (product != null)
                 {
