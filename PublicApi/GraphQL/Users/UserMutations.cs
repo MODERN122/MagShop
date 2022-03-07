@@ -77,7 +77,8 @@ namespace PublicApi.GraphQL.Users
             return result;
         }
 
-        [Authorize(Roles = new string[] { ConstantsAPI.USERS, ConstantsAPI.SELLERS })]
+        [GraphQLDescription("If value in field equal null or doesnt including it will be ignore.")]
+        [Authorize(Roles = new string[] { ConstantsAPI.USERS, ConstantsAPI.SELLERS, ConstantsAPI.ADMINISTRATORS })]
         public async Task<User> EditUserAsync(EditUserInput userNew, [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
         {
             if (currentUser.Claims.First().Value != userNew.Id)

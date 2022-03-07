@@ -255,18 +255,19 @@ namespace Infrastructure.Repositories
 
         public async Task<User> EditUserAsync(EditUserInput userNew)
         {
-            using var context = this._contextFactory.CreateDbContext();
-            var user = await context.Set<User>().FirstOrDefaultAsync(x => x.Id == userNew.Id);
-            if (user!=null)
+            using (var context = this._contextFactory.CreateDbContext())
             {
-                _mapper.Map(userNew, user);
-                context.Users.Update(user);
-                await context.SaveChangesAsync();
-                user = await context.Set<User>().FirstOrDefaultAsync(x => x.Id == userNew.Id);
-                return user;
+                var user = await context.Set<User>().FirstOrDefaultAsync(x => x.Id == userNew.Id);
+                if (user != null)
+                {
+                    _mapper.Map(userNew, user);
+                    context.Users.Update(user);
+                    await context.SaveChangesAsync();
+                    user = await context.Set<User>().FirstOrDefaultAsync(x => x.Id == userNew.Id);
+                    return user;
+                }
+                return default;
             }
-            return default;
         }
-
     }
 }
