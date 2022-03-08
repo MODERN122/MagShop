@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using System;
+using System.Collections.Generic;
 
 namespace ApplicationCore.Entities
 {
@@ -8,6 +9,7 @@ namespace ApplicationCore.Entities
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public int Quantity { get; private set; }
         public string ProductId { get; private set; }
+        public List<string> SelectedProductPropertyItemIds { get; set; } = new List<string>();
         public Product Product { get; set; }
         public string BasketId { get; private set; }
 
@@ -15,11 +17,21 @@ namespace ApplicationCore.Entities
         {
 
         }
+
         public BasketItem(int quantity, Product product)
         {
             Product = product;
             ProductId = product.Id;
             SetQuantity(quantity);
+        }
+
+        public BasketItem(int quantity, Product product, List<string> selectedProductPropertyItemIds)
+        {
+            Product = product;
+            ProductId = product.Id;
+            SetQuantity(quantity);
+            
+            SelectedProductPropertyItemIds = selectedProductPropertyItemIds;
         }
 
         public void AddQuantity(int quantity)

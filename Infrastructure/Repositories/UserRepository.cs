@@ -8,6 +8,8 @@ using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
@@ -120,19 +122,67 @@ namespace Infrastructure.Repositories
                 throw new Exception("ProductNotFound!");
             }
         }
-        public async Task<Basket> SubstractBasketItem(string userId, string productId)
+
+        public async Task<Basket> AddBasketItem(string userId, string productId, List<string> selectedProductPropertyItemIds)
         {
             using (var context = this._contextFactory.CreateDbContext())
             {
                 var user = await context.Users.Include(x => x.Basket)
                    .ThenInclude(x => x.Items)
                    .FirstAsync(x => x.Id == userId);
-                var product = await context.Products.FirstAsync(x => x.Id == productId);
+                var product = await context.Products
+                    .Include(x=>x.ProductProperties)
+                    .ThenInclude(x=>x.ProductPropertyItems)
+                    .FirstAsync(x => x.Id == productId);
                 if (product != null)
+                {
+                    var productPropertyItemGroups = product.ProductProperties.Select(x => x.ProductPropertyItems.Select(y => y.Id));
+                    var productPropertyItemIds = new List<string>();
+                    foreach (var productPropertyItemGroup in productPropertyItemGroups)
+                    {
+                        productPropertyItemIds.AddRange(productPropertyItemGroup);
+                    }
+                    var enteredProductPropertyItemIds = selectedProductPropertyItemIds.Where(x => productPropertyItemIds.Contains(x)).ToList();
+
+                    if (enteredProductPropertyItemIds.Count == 0)
+                    {
+                        throw new Exception("Selected product property item ids were not found in product");
+                    }
+
+                    if (user.Basket != null)
+                    {
+                        user.AddItemToBasket(new BasketItem(1, product, enteredProductPropertyItemIds));
+                    }
+                    else
+                    {
+                        var basket = await AddBasketAsync(user.Id);
+                        if (basket != null)
+                        {
+                            user = await context.Users.Include(x => x.Basket)
+                                .ThenInclude(x => x.Items).FirstAsync(x => x.Id == userId);
+                            user.AddItemToBasket(new BasketItem(1, product, enteredProductPropertyItemIds));
+                        }
+
+                    }
+                    await context.SaveChangesAsync();
+                    return await GetBasketAsync(userId);
+                }
+                throw new Exception("ProductNotFound!");
+            }
+        }
+        public async Task<Basket> SubstractBasketItem(string userId, string basketItemId)
+        {
+            using (var context = this._contextFactory.CreateDbContext())
+            {
+                var user = await context.Users.Include(x => x.Basket)
+                   .ThenInclude(x => x.Items)
+                   .FirstAsync(x => x.Id == userId);
+                var basketItem = await context.BasketItems.Include(x=>x.Product).FirstAsync(x => x.Id == basketItemId);
+                if (basketItem != null)
                 {
                     if (user.Basket != null)
                     {
-                        user.SubstractItemFromBasket(new BasketItem(1, product));
+                        user.SubstractItemFromBasket(basketItem);
                     }
                     else
                     {
@@ -151,18 +201,18 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task<Basket> RemoveBasketItem(string userId, string productId)
+        public async Task<Basket> RemoveBasketItem(string userId, string basketItemId)
         {
             using (var context = this._contextFactory.CreateDbContext())
             {
                 var user = await context.Users.Include(x => x.Basket)
                    .ThenInclude(x => x.Items).FirstAsync(x => x.Id == userId);
-                var product = await context.Products.FirstAsync(x => x.Id == productId);
-                if (product != null)
+                var basketItem = await context.BasketItems.FirstAsync(x => x.Id == basketItemId);
+                if (basketItem != null)
                 {
                     if (user.Basket != null)
                     {
-                        user.RemoveItemFromBasket(new BasketItem(1, product));
+                        user.RemoveItemFromBasket(basketItem);
                     }
                     else
                     {

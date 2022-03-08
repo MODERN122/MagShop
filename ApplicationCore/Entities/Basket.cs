@@ -18,10 +18,26 @@ namespace ApplicationCore.Entities
         public void AddBasketItem(BasketItem basketItem)
         {
             Guard.Against.Null(basketItem, nameof(Items));
-            var itemDublicate = Items.Find(x => x.ProductId == basketItem.ProductId);
-            if (itemDublicate != null)
+            var itemDublicates = Items.Where(x => x.ProductId == basketItem.ProductId).ToList();
+            if (itemDublicates.Count>0)
             {
-                itemDublicate.AddQuantity(1);
+                var itemDublicate = itemDublicates.FirstOrDefault(x => x.SelectedProductPropertyItemIds.All(x => basketItem.SelectedProductPropertyItemIds.Contains(x)));
+                if (itemDublicate!=null)
+                {
+                    var index = Items.IndexOf(itemDublicate);
+
+                    if (index < 0)
+                    {
+                        throw new Exception("Cant get index of item dublicate!");
+                    }
+
+                    Items[index].AddQuantity(1);
+                }
+                else
+                {
+                    //Items.Remove(itemDublicate);
+                    Items.Add(basketItem);
+                }
             }
             else
             {
@@ -32,7 +48,7 @@ namespace ApplicationCore.Entities
         {
 
             Guard.Against.Null(basketItem, nameof(Items));
-            var itemDublicate = Items.Find(x => x.ProductId == basketItem.ProductId);
+            var itemDublicate = Items.Find(x => x.Id == basketItem.Id);
             if (itemDublicate != null)
             {
                 itemDublicate.SubstractQuantity(1);
@@ -41,7 +57,7 @@ namespace ApplicationCore.Entities
         public void RemoveBasketItem(BasketItem basketItem)
         {
             Guard.Against.Null(basketItem, nameof(Items));
-            var item = Items.Find(x => x.ProductId == basketItem.ProductId);
+            var item = Items.Find(x => x.Id == basketItem.Id);
             Items.Remove(item);
         }
         public void SetBasketItems(List<BasketItem> basketItems)
