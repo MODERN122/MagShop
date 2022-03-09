@@ -61,7 +61,7 @@ namespace PublicApi.GraphQL.Users
             return result;
         }
 
-        [Authorize(Roles = new string[] { ConstantsAPI.USERS, ConstantsAPI.ADMINISTRATORS })]
+        [Authorize(Roles = new string[] { ConstantsAPI.USERS})]
         public async Task<bool> AddProductToFavoriteAsync(string productId,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
         {
@@ -69,7 +69,7 @@ namespace PublicApi.GraphQL.Users
             return result;
         }
 
-        [Authorize(Roles = new string[] { ConstantsAPI.USERS, ConstantsAPI.ADMINISTRATORS })]
+        [Authorize(Roles = new string[] { ConstantsAPI.USERS })]
         public async Task<bool> RemoveProductFromFavoriteAsync(string productId,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
         {

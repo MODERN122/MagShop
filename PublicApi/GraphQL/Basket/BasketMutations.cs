@@ -23,7 +23,7 @@ namespace PublicApi.GraphQL.Basket
             _userRepository = userRepository;
         }
 
-        [Authorize(Roles = new[] { Infrastructure.Constants.ConstantsAPI.USERS, Infrastructure.Constants.ConstantsAPI.ADMINISTRATORS })]
+        [Authorize(Roles = new[] { Infrastructure.Constants.ConstantsAPI.USERS})]
         public async Task<List<ApplicationCore.Entities.BasketItem>> AddBasketItem(string productId,
             [Service] UserManager<UserAuthAccess> userManager,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser,
@@ -36,7 +36,7 @@ namespace PublicApi.GraphQL.Basket
             return basket?.Items;
         }
 
-        [Authorize(Roles = new[] { Infrastructure.Constants.ConstantsAPI.USERS, Infrastructure.Constants.ConstantsAPI.ADMINISTRATORS })]
+        [Authorize(Roles = new[] { Infrastructure.Constants.ConstantsAPI.USERS })]
         public async Task<List<ApplicationCore.Entities.BasketItem>> RemoveBasketItem(string basketItemId,
             [Service] UserManager<UserAuthAccess> userManager,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
@@ -46,7 +46,7 @@ namespace PublicApi.GraphQL.Basket
             return basket?.Items;
         }
 
-        [Authorize(Roles = new[] { Infrastructure.Constants.ConstantsAPI.USERS, Infrastructure.Constants.ConstantsAPI.ADMINISTRATORS })]
+        [Authorize(Roles = new[] { Infrastructure.Constants.ConstantsAPI.USERS })]
         public async Task<List<ApplicationCore.Entities.BasketItem>> SubstractBasketItem(string basketItemId,
             [Service] UserManager<UserAuthAccess> userManager,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)

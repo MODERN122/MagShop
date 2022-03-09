@@ -28,7 +28,7 @@ namespace PublicApi.GraphQL.Orders
         public async Task<Order> GetOrderById(string id) =>
             await _ordersRepository.GetByIdWithItemsAsync(id);
 
-        [Authorize(Roles = new[] { ConstantsAPI.ADMINISTRATORS, ConstantsAPI.USERS })]
+        [Authorize(Roles = new[] {ConstantsAPI.USERS })]
         public async Task<IEnumerable<Order>> GetOrders(int pageIndex = 0, int pageSize = 20)
         {
             OrderSpecification productSpecification = new OrderSpecification(pageIndex, pageSize);

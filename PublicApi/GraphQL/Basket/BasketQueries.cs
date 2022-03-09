@@ -24,7 +24,7 @@ namespace PublicApi.GraphQL.Basket
             _userRepository = userRepository;
         }
 
-        [Authorize(Roles = new[] { Infrastructure.Constants.ConstantsAPI.USERS, Infrastructure.Constants.ConstantsAPI.ADMINISTRATORS })]
+        [Authorize(Roles = new[] { Infrastructure.Constants.ConstantsAPI.USERS })]
         public async Task<ApplicationCore.Entities.Basket> GetBasket(
             [Service] UserManager<UserAuthAccess> userManager,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
