@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace PublicApi.Migrations
 {
     [DbContext(typeof(MagShopContext))]
-    partial class MagShopContextModelSnapshot : ModelSnapshot
+    [Migration("20220320130633_AddIsDefault")]
+    partial class AddIsDefault
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,9 +55,6 @@ namespace PublicApi.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Street")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Title")
                         .HasColumnType("text");
 
                     b.Property<string>("UserId")

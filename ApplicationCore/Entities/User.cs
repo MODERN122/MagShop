@@ -140,6 +140,7 @@ namespace ApplicationCore.Entities
             Apartment = apartment;
         }
         public string Id { get; set; } = Guid.NewGuid().ToString();
+        public bool IsDefault { get; set; } 
         public string Country { get; set; }
         public string Region { get; set; }
         public string City { get; set; }
@@ -149,6 +150,7 @@ namespace ApplicationCore.Entities
         public string Apartment { get; set; }
         public int? Floor { get; set; }
         public string ZipCode { get; set; }
+        public string Title { get;set; }
     }
 
 
@@ -160,6 +162,7 @@ namespace ApplicationCore.Entities
         public string Id { get; set; }
         [DataType(DataType.CreditCard)]
         public string CardNumber { get; set; }
+        public bool IsDefault { get; set; }
 
     }
 }
