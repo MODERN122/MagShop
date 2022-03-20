@@ -139,11 +139,15 @@ namespace ApplicationCore.Entities
             Street = street;
             Apartment = apartment;
         }
-        public string AddressId { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Country { get; set; }
+        public string Region { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
         public string House { get; set; }
+        public string Housing { get; set; }
         public string Apartment { get; set; }
+        public int? Floor { get; set; }
         public string ZipCode { get; set; }
     }
 
@@ -153,8 +157,9 @@ namespace ApplicationCore.Entities
         public CreditCard()
         {
         }
-        public string CreditCardId { get; set; }
+        public string Id { get; set; }
         [DataType(DataType.CreditCard)]
         public string CardNumber { get; set; }
+
     }
 }
