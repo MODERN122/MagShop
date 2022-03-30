@@ -186,6 +186,7 @@ namespace PublicApi
                 .AddTypeExtension<BasketQueries>()
                 .AddTypeExtension<ProductQueries>()
                 .AddTypeExtension<OrderQueries>()
+                .AddTypeExtension<OrderMutations>()
                 .AddTypeExtension<CategoryQueries>()
                 .AddTypeExtension<AuthenticationMutations>()
                 .AddTypeExtension<UserMutations>()
@@ -270,7 +271,7 @@ namespace PublicApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
+            }); 
         }
     }
 }

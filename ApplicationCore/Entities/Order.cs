@@ -11,15 +11,19 @@ namespace ApplicationCore.Entities
     {
         [Obsolete("Uses only for EF Core generating")]
         public Order() { }
-        public Order(DateTime publicationDateTime, string addressId, List<OrderItem> items, string userId):base(userId)
+        public Order(string addressId, List<OrderItem> items, string userId, string transactionId):base(userId)
         {
-            PublicationDateTime = publicationDateTime.ToUniversalTime();
+            TransactionId = transactionId;
+            UserId = userId;
             AddressId = addressId;
             AddRangeOrderItems(items);
-        }
-        
+            TotalPrice = Total();
+        }        
         public string Id { get; set; } = Guid.NewGuid().ToString();
-
+        public string UserId { get; set; }
+        public double TotalPrice { get;set; }
+        public User User { get; set; } 
+        public string TransactionId { get; set; }
         public List<OrderItem> Items { get;private set; } = new List<OrderItem>(){ };  
         public string AddressId { get; set; }
         public Address ShipToAddress { get; set; }
@@ -28,7 +32,7 @@ namespace ApplicationCore.Entities
             var total = 0.0;
             foreach (var item in Items)
             {
-                total +=Math.Round(item.UnitPrice.Value * item.Quantity,2);
+                total +=Math.Round(item.UnitPrice * item.Quantity,2);
             }
             return total;
         }
@@ -45,18 +49,20 @@ namespace ApplicationCore.Entities
         {
 
         }
-        public OrderItem(int quantity, Product product, List<ProductPropertyItem> propertyItems)
+        public OrderItem(int quantity, Product product, List<ProductPropertyItem> selectedPropertyItems)
         {
-            UnitPrice = propertyItems.First().PriceNew;
-            Product = product;
+            UnitPrice = selectedPropertyItems.Select(x=>x.PriceNew).Sum();
+            SelectedProductPropertyItemIds = selectedPropertyItems.Select(x=>x.Id).ToList();
+            ProductId = product.Id;
             SetQuantity(quantity);
         }
         public string Id { get; set; } = Guid.NewGuid().ToString();
-        public double? UnitPrice { get; private set; }
+        public string OrderId { get; set; }
+        public double UnitPrice { get; private set; }
         public int Quantity { get; private set; }
-        public string ProductId { get; set; }
+        public string ProductId { get; private set; }
+        public List<string> SelectedProductPropertyItemIds { get; set; } = new List<string>();
         public Product Product { get; set; }
-
         public void SetQuantity(int quantity)
         {
             Guard.Against.OutOfRange(quantity, nameof(quantity), 0, int.MaxValue);

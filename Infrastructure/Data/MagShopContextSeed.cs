@@ -418,7 +418,7 @@ namespace Infrastructure.Data
         #region Orders
         private static void AddPrecongifuredOrdersToFirstUser(MagShopContext context)
         {
-            var user = context.Users.Find(ADMINISTRATOR_ID);
+            var user = context.Users.Find(USER_ID);
             var products = context.Products.Where(x => x.StoreId == STORE_ID);
             List<OrderItem> orderItems = new List<OrderItem>();
             foreach (var product in products)
@@ -426,7 +426,7 @@ namespace Infrastructure.Data
                 orderItems.Add(new OrderItem(2, product, product.ProductProperties.Select(x => x.ProductPropertyItems.First()).ToList()));
             }
             context.Orders.Add(
-                new Order(DateTime.UtcNow, user.Addresses.First().Id, orderItems, SELLER_ID));
+                new Order(user.Addresses.First().Id, orderItems, USER_ID, "transaction_id"));
         }
         #endregion
         #region Users

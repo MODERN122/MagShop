@@ -8,6 +8,6 @@ namespace ApplicationCore.Interfaces
 {
     public interface IOrderRepository : IAsyncRepository<Order>
     {
-        Task<Order> GetByIdWithItemsAsync(string orderId);
+        Task<Order> CreateOrder(List<string> basketItemIds, string transactionId, string addressId, string userId);
     }
 }
