@@ -38,8 +38,8 @@ namespace PublicApi.GraphQL.Orders
             int pageIndex = 0, int pageSize = 20)
         {
             var id = currentUser.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name");
-            OrderSpecification productSpecification = new OrderSpecification(userId: id, pageIndex: pageIndex, pageSize: pageSize);
-            var orders = await _ordersRepository.ListAsync(productSpecification);
+            OrderSpecification orderSpecification = new OrderSpecification(userId: id, pageIndex: pageIndex, pageSize: pageSize);
+            var orders = await _ordersRepository.ListAsync(orderSpecification);
             return orders;
         }
     }

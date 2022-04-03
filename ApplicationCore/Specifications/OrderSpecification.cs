@@ -35,6 +35,7 @@ namespace ApplicationCore.Specifications
             //    .Include(x => x.Items)
             //    .ThenInclude(x => x.Product)
             //    .ThenInclude(x => x.Category);
+
             //Query.Include(x => x.Basket)
             //    .ThenInclude(x => x.Items)
             //    .ThenInclude(x => x.Product)
