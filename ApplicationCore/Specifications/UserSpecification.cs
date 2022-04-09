@@ -25,10 +25,11 @@ namespace ApplicationCore.Specifications
                 .ThenInclude(x => x.ProductProperties)
                 .ThenInclude(x => x.ProductPropertyItems);
 
-            //Query.Include(x => x.Basket)
-            //    .ThenInclude(x => x.Items)
-            //    .ThenInclude(x => x.Product)
-            //    .ThenInclude(x => x.Category);
+            Query.Include(x => x.Basket)
+                .ThenInclude(x => x.Items)
+                .ThenInclude(x => x.Product)
+                .ThenInclude(x => x.Category);
+
             //Query.Include(x => x.Basket)
             //    .ThenInclude(x => x.Items)
             //    .ThenInclude(x => x.Product)
