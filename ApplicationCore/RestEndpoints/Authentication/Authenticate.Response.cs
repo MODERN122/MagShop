@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Base;
+using ApplicationCore.GraphQLEndpoints;
 using System;
 
 namespace ApplicationCore.RESTApi.Authentication
@@ -13,7 +14,7 @@ namespace ApplicationCore.RESTApi.Authentication
         {
         }
         public bool Result { get; set; } = false;
-        public string Token { get; set; } = string.Empty;
+        public Token Token { get; set; }
         public string Username { get; set; } = string.Empty;
         public bool IsLockedOut { get; set; } = false;
         public bool IsNotAllowed { get; set; } = false;
