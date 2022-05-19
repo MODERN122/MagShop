@@ -42,5 +42,5 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true        
-        tags: cr.selcloud.ru/magaz-shop/PublicApi:${{ github.sha }}
+        tags: cr.selcloud.ru/magaz-shop/public-api:${{ github.sha }}
         file: ./PublicApi/Dockerfile
