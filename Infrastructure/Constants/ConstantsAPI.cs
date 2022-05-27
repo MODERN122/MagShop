@@ -7,6 +7,7 @@ namespace Infrastructure.Constants
     public static class ConstantsAPI
     {
         public const string USERS = "Users";
+
         public const string ADMINISTRATORS = "Administrators";
         public const string SELLERS = "Sellers";
         public const string DEFAULT_PASSWORD = "p@SSw0rd";

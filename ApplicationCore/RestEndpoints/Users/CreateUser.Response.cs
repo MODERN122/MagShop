@@ -3,7 +3,6 @@ using ApplicationCore.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using ApplicationCore.GraphQLEndpoints;
 
 namespace ApplicationCore.RESTApi.Users
 {
@@ -13,7 +12,7 @@ namespace ApplicationCore.RESTApi.Users
         {
 
         }
-        public Token Token { get; set; }
+        public string Token { get; set; }
         public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

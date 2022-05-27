@@ -5,7 +5,6 @@ using ApplicationCore.Specifications;
 using HotChocolate;
 using HotChocolate.Types;
 using Infrastructure.Identity;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Threading.Tasks;
@@ -22,7 +21,7 @@ namespace PublicApi.GraphQL.Authentication
             _userRepository = userRepository;
         }
 
-        public async Task<UserPayload> AuthenticateByLoginPassword(AuthenticationRequest request,
+        public async Task<UserPayload> AuthenticateByLoginPassword(AuthenticationRequest request, 
             [Service] SignInManager<UserAuthAccess> signInManager,
             [Service] IUserAuthService tokenClaimsService)
         {
@@ -32,14 +31,6 @@ namespace PublicApi.GraphQL.Authentication
             var token = await tokenClaimsService.GetTokenAsync(request.UserName);
             var user = await _userRepository.FirstOrDefaultAsync(new UserSpecification(request.UserName));
             return new UserPayload(user, token);
-        }
-
-        [AllowAnonymous]
-        public async Task<Token> RefreshTokenAsync(Token token,
-            [Service] IUserAuthService tokenClaimsService)
-        {
-            var newToken = await tokenClaimsService.RefreshTokenAsync(token.RefreshToken);
-            return newToken;
         }
     }
 }
