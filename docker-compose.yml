@@ -8,5 +8,3 @@ services:
             dockerfile: PublicApi/Dockerfile
         ports:
          - "8000:80"
-        extra_hosts:
-         - "host.docker.internal:172.17.0.1/16"
