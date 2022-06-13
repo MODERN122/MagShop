@@ -20,7 +20,6 @@ namespace ProductRecommender
             jsonString = jsonString.Replace('\n', ',');
             var reviewsSrc = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ReviewModel>>("[" + jsonString + "]");
             MLContext mlContext = new MLContext();
-            //reviewsSrc = reviewsSrc.Take(1000).ToList();
             int countTest = reviewsSrc.Count() / 5;
             var data = mlContext.Data.LoadFromEnumerable(reviewsSrc);
             TrainTestData splitDataView = mlContext.Data.TrainTestSplit(data, 0.2);
@@ -30,28 +29,7 @@ namespace ProductRecommender
             var model = TrainModel(mlContext, splitDataView.TrainSet);
             EvaluateModel(mlContext, splitDataView.TestSet, model);
             UseModelForSinglePrediction(mlContext, model, reviewsSrc);
-
-
-            //var badReviews = reviewsSrc.Where(x => x.overall < 4);
-            //var goodReviews = reviewsSrc.Where(x => x.overall > 3);
-            //Console.WriteLine("Count bad reviews = " + badReviews.Count());
-            //Console.WriteLine("Count good reviews = " + goodReviews.Count());
-
-            //var trainDataViewBad = mlContext.Data.LoadFromEnumerable(badReviews);
-            //var testDataViewBad = mlContext.Data.LoadFromEnumerable(badReviews.Take(badReviews.Count()/5));
-            //var trainDataViewGood = mlContext.Data.LoadFromEnumerable(goodReviews);
-            //var testDataViewGood = mlContext.Data.LoadFromEnumerable(goodReviews.Take(goodReviews.Count()/5));
-
-            //Console.WriteLine("Train and evaluate context with bad overall reviews");
-            //var badModel = TrainModel(mlContext, trainDataViewBad);
-            //EvaluateModel(mlContext, testDataViewBad, badModel);
-
-            //Console.WriteLine("Train and evaluate context with good overall reviews");
-            //var goodModel = TrainModel(mlContext, trainDataViewGood);
-            //EvaluateModel(mlContext, testDataViewGood, goodModel);
-
         }
-
 
         private static ITransformer TrainModel(MLContext mlContext, IDataView trainDataView)
         {
