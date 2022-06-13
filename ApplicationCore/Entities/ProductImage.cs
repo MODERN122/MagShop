@@ -16,5 +16,6 @@ namespace ApplicationCore.Entities
         public string ProductId { get; set; }
         public string Path { get; set; }
         public DateTime UploadDateTime { get; set; } = DateTime.UtcNow;
+        public Product Product { get; set; }
     }
 }

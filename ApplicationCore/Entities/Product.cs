@@ -69,16 +69,16 @@ namespace ApplicationCore.Entities
             SetProductProperties(productProperties);
         }
         public bool IsActive { get; private set; } = false;
-        public List<ProductImage> Images { get; set; }
+        public List<ProductImage> Images { get; set; } = new List<ProductImage>();
         public string PriceNew { get; private set; }
         public string PriceOld { get; private set; }
         public int Discount { get; private set; }
         //Constraint 1.0-3.0
         public double Weight { get; set; }
         public string Description { get; set; }
-        public List<Property> Properties { get; set; }
-        public List<ProductProperty> ProductProperties { get; private set; }
-        public List<ChoosenProduct> ChoosenProducts { get; private set; }
+        public List<Property> Properties { get; set; } = new List<Property>();
+        public List<ProductProperty> ProductProperties { get; private set; } = new List<ProductProperty>();
+        public List<ChoosenProduct> ChoosenProducts { get; private set; } = new List<ChoosenProduct>();
         //Not Added while
         //public List<string> Reviews { get; set; }
         public void SetProductIsActive(bool isActive)

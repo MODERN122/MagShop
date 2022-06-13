@@ -215,7 +215,7 @@ namespace Infrastructure.Data
                 {
                     AddPrecongifuredOrdersToFirstUser(context);
                     await context.SaveChangesAsync();
-                }
+                }             
 
                 var users = await context.Users.Include(x => x.Basket)
                     .ThenInclude(x => x.Items).ToListAsync();
