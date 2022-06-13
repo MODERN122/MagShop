@@ -8,26 +8,33 @@ namespace ApplicationCore.GraphQLEndpoints
 {
     public class UserPayload
     {
-        public UserPayload(User user, string accessToken)
+        public UserPayload(User user, Token token)
         {
             User = user;
-            AccessToken = accessToken;
+            Token = token;
         }
 
         public User User { get; }
-        public string AccessToken { get; }
+        public Token Token { get; }
     }
     public class RegisterSellerPayload
     {
-        public RegisterSellerPayload(Seller seller, string accessToken)
+        public RegisterSellerPayload(Seller seller, Token token)
         {
             Seller = seller;
-            AccessToken = accessToken;
+            Token = token;
         }
 
         public Seller Seller { get; }
-        public string AccessToken { get; }
+        public Token Token { get; }
     }
+
+    public class Token
+    {
+        public string AccessToken { get; set;}
+        public string RefreshToken { get; set; }
+    }
+
     public class EditUserInput
     {
         public string Id { get; set; }

@@ -1,4 +1,5 @@
-﻿using Infrastructure.Identity;
+﻿using ApplicationCore.GraphQLEndpoints;
+using Infrastructure.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,8 +9,9 @@ namespace ApplicationCore.Interfaces
 {
     public interface IUserAuthService
     {
-        Task<string> GetTokenAsync(string userName);
-        Task<string> RegisterUserAsync(UserAuthAccess userAccess);
-        Task<string> RegisterSellerAsync(UserAuthAccess userAccess);
+        Task<Token> GetTokenAsync(string userName);
+        Task<Token> RefreshTokenAsync(string refreshToken);
+        Task<Token> RegisterUserAsync(UserAuthAccess userAccess);
+        Task<Token> RegisterSellerAsync(UserAuthAccess userAccess);
     }
 }
