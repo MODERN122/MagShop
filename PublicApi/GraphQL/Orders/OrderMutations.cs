@@ -27,18 +27,19 @@ namespace PublicApi.GraphQL.Orders
             _ordersRepository = orderRepository;
         }
 
-        [Authorize(Roles = new[] { Infrastructure.Constants.ConstantsAPI.USERS })]
+        [Authorize(Roles = new[] { ConstantsAPI.USERS })]
         public async Task<Order> CreateOrder(List<string> basketItemIds,
             string transactionId,
+            string creditCardId,
             string addressId,
             [Service] UserManager<UserAuthAccess> userManager,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
         {
             var id = currentUser.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name");
-            return await _ordersRepository.CreateOrder(basketItemIds, transactionId, addressId, id);
+            return await _ordersRepository.CreateOrder(basketItemIds, transactionId, creditCardId, addressId, id);
         }
 
-        [Authorize(Roles = new[] { Infrastructure.Constants.ConstantsAPI.USERS })]
+        [Authorize(Roles = new[] { ConstantsAPI.USERS })]
         public async Task<IEnumerable<Order>> RemoveOrder(string orderId,
             [Service] UserManager<UserAuthAccess> userManager,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)

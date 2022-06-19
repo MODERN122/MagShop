@@ -86,7 +86,7 @@ namespace Infrastructure.Data
                         await userManager.AddToRoleAsync(adminUser, Constants.ConstantsAPI.ADMINISTRATORS);
 
                         await context.Users.AddRangeAsync(
-                            GetPreconfiguredUsers(seller.Id,user.Id, adminUser.Id));
+                            GetPreconfiguredUsers(seller.Id, user.Id, adminUser.Id));
                     }
                     await context.SaveChangesAsync();
                 }
@@ -115,7 +115,7 @@ namespace Infrastructure.Data
                     await context.Products.AddRangeAsync(
                         GetPrecongifuredProducts());
                     await context.SaveChangesAsync();
-                    await context.Products.AddAsync(new Product("22","Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
+                    await context.Products.AddAsync(new Product("22", "Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
                         new ProductProperty()
                         {
@@ -125,7 +125,7 @@ namespace Infrastructure.Data
                                 .Select(x => new ProductPropertyItem(x.Id, x.Caption,SELLER_ID)).ToList()
                         }
                     }, SELLER_ID)
-                   
+
                     );
                     await context.Products.AddAsync(new Product("Биология", CATEGORY_3_ID, "Обучит науке о живых организмах", STORE_ID, new List<ProductProperty>()
                     {
@@ -215,12 +215,12 @@ namespace Infrastructure.Data
                 {
                     AddPrecongifuredOrdersToFirstUser(context);
                     await context.SaveChangesAsync();
-                }             
+                }
 
                 var users = await context.Users.Include(x => x.Basket)
                     .ThenInclude(x => x.Items).ToListAsync();
 
-                if (!users.Any(x=>x.Basket?.Items.Count>0))
+                if (!users.Any(x => x.Basket?.Items.Count > 0))
                 {
                     AddPreconfiguredBasketItemsToFirstUser(context);
                     await context.SaveChangesAsync();
@@ -416,17 +416,29 @@ namespace Infrastructure.Data
         }
         #endregion
         #region Orders
-        private static void AddPrecongifuredOrdersToFirstUser(MagShopContext context)
+        private static async Task AddPrecongifuredOrdersToFirstUser(MagShopContext context)
         {
-            var user = context.Users.Find(USER_ID);
-            var products = context.Products.Where(x => x.StoreId == STORE_ID);
+            var user = context.Users.Include(_ => _.CreditCards).Include(_=>_.Addresses).First(_ => _.Id == USER_ID);
+            var products = context.Products.Include(_=>_.ProductProperties).ThenInclude(_=>_.ProductPropertyItems).Where(x => x.StoreId == STORE_ID);
             List<OrderItem> orderItems = new List<OrderItem>();
             foreach (var product in products)
             {
-                orderItems.Add(new OrderItem(2, product, product.ProductProperties.Select(x => x.ProductPropertyItems.First()).ToList()));
+                var productProperties = product.ProductProperties.Select(x => x.ProductPropertyItems.First()).ToList();
+                orderItems.Add(new OrderItem(2, product, productProperties));
             }
-            context.Orders.Add(
-                new Order(user.Addresses.First().Id, orderItems, USER_ID, "transaction_id"));
+            var newTrans = new Transaction("transaction_id", PaymentType.TinkoffAcquiring, 2450.2);
+            var transaction = context.Transactions.Add(newTrans);
+            context.SaveChanges();
+            var creditCard = user.CreditCards.FirstOrDefault();
+            if(creditCard == null)
+            {
+                creditCard = context.CreditCards.Add(new CreditCard() { CardNumber = "1234-1221-5435-5325",IsDefault = true}).Entity;
+                context.SaveChanges();
+            }
+            var order = context.Orders.Add(
+                new Order(user.Addresses.First().Id, orderItems, USER_ID, transaction.Entity.Id, creditCard?.Id));
+            //context.SaveChanges();
+
         }
         #endregion
         #region Users

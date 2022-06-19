@@ -15,7 +15,10 @@ namespace Infrastructure.Data.Config
 
             navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
 
-            builder.HasOne(o => o.ShipToAddress);
+            builder.HasOne(o => o.ShipToAddress).WithMany().HasForeignKey(k => k.AddressId);
+            builder.HasOne(o => o.CreditCard).WithMany().HasForeignKey(k => k.CreditCardId);
+            builder.HasOne(o => o.Transaction).WithMany().HasForeignKey(k => k.TransactionId);
+
 
             //builder.HasMany(x => x.Items)
             //    .WithOne()

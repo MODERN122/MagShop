@@ -66,6 +66,8 @@ namespace ApplicationCore.Entities
             Items.Clear();
             Items.AddRange(basketItems);
         }
+
+        [Obsolete("Uses only for EF Core generating")]
         public Basket()
         {
 

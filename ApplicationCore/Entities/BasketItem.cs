@@ -13,6 +13,7 @@ namespace ApplicationCore.Entities
         public Product Product { get; set; }
         public string BasketId { get; private set; }
 
+        [Obsolete("Uses only for EF Core generating")]
         public BasketItem()
         {
 

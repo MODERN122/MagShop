@@ -46,6 +46,12 @@ namespace ApplicationCore.Specifications
                 .ThenInclude(x => x.Product)
                 .ThenInclude(p => p.Properties);
 
+            Query
+                .Include(x => x.CreditCard);
+
+            Query
+                .Include(x=>x.Transaction);
+
             //Query
             //    .Include(x => x.Items)
             //    .ThenInclude(x => x.Product)

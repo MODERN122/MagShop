@@ -17,7 +17,7 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public async Task<Order> CreateOrder(List<string> basketItemIds, string transactionId, string addressId, string userId)
+        public async Task<Order> CreateOrder(List<string> basketItemIds, string transactionId, string creditCardId, string addressId, string userId)
         {
             using (var context = _contextFactory.CreateDbContext())
             {
@@ -38,7 +38,7 @@ namespace Infrastructure.Repositories
                     items.Add(orderItem);                
                 }
                 
-                var order = new Order(orderAddress.Id, items, userId, transactionId);
+                var order = new Order(orderAddress.Id, items, userId, transactionId, creditCardId);
                 
                 await context.AddAsync(order);
                 await context.SaveChangesAsync();

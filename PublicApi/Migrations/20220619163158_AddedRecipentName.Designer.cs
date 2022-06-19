@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace PublicApi.Migrations
 {
     [DbContext(typeof(MagShopContext))]
-    partial class MagShopContextModelSnapshot : ModelSnapshot
+    [Migration("20220619163158_AddedRecipentName")]
+    partial class AddedRecipentName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,9 +210,6 @@ namespace PublicApi.Migrations
                     b.Property<DateTime?>("ChangedDateTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("CreditCardId")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("PublicationDateTime")
                         .HasColumnType("timestamp with time zone");
 
@@ -226,10 +225,6 @@ namespace PublicApi.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
-
-                    b.HasIndex("CreditCardId");
-
-                    b.HasIndex("TransactionId");
 
                     b.HasIndex("UserId");
 
@@ -505,34 +500,6 @@ namespace PublicApi.Migrations
                     b.HasIndex("SellerId");
 
                     b.ToTable("Stores");
-                });
-
-            modelBuilder.Entity("ApplicationCore.Entities.Transaction", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ChangedByUserId")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("ChangedDateTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<double>("PaymentAmount")
-                        .HasColumnType("double precision");
-
-                    b.Property<int>("PaymentTypeId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("PublicationDateTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("TransactionOwnId")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.User", b =>
@@ -849,23 +816,11 @@ namespace PublicApi.Migrations
                         .WithMany()
                         .HasForeignKey("AddressId");
 
-                    b.HasOne("ApplicationCore.Entities.CreditCard", "CreditCard")
-                        .WithMany()
-                        .HasForeignKey("CreditCardId");
-
-                    b.HasOne("ApplicationCore.Entities.Transaction", "Transaction")
-                        .WithMany()
-                        .HasForeignKey("TransactionId");
-
                     b.HasOne("ApplicationCore.Entities.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId");
 
-                    b.Navigation("CreditCard");
-
                     b.Navigation("ShipToAddress");
-
-                    b.Navigation("Transaction");
 
                     b.Navigation("User");
                 });

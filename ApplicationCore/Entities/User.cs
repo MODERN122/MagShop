@@ -141,6 +141,7 @@ namespace ApplicationCore.Entities
         }
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public bool IsDefault { get; set; } 
+        public string RecipentName { get; set; }
         public string Country { get; set; }
         public string Region { get; set; }
         public string City { get; set; }
