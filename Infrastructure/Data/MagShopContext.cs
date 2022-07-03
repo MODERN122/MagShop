@@ -29,7 +29,9 @@ namespace Infrastructure.Data
         public DbSet<ProductProperty> ProductProperties { get; set; }
         public DbSet<ProductPropertyItem> ProductPropertyItems { get; set; }
         public DbSet<CreditCard> CreditCards { get; set; }
+        public DbSet<UserCreditCard> UserCreditCards { get; set; }
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<UserAddress> UserAddresses { get; set; }
         public DbSet<PropertyItem> PropertyItems { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ChoosenProduct> ChoosenProducts { get; set; }

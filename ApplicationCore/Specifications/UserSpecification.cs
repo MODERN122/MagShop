@@ -16,8 +16,10 @@ namespace ApplicationCore.Specifications
         {
             Query.Where(x => x.Id == userId);
 
-            Query.Include(x => x.Addresses);
-            Query.Include(x=>x.CreditCards);
+            Query.Include(x => x.UserAddresses)
+                .ThenInclude(x=>x.Address);
+            Query.Include(x=>x.UserCreditCards)
+                .ThenInclude(x=>x.CreditCard);
 
             Query.Include(x => x.Basket)
                 .ThenInclude(x => x.Items)

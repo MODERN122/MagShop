@@ -12,19 +12,23 @@ namespace ApplicationCore.Entities
     {
         [Obsolete("Uses only for EF Core generating")]
         public Order() { }
-        public Order(string addressId, List<OrderItem> items, string userId, string transactionId, string creditCardId) : base(userId)
+        public Order(string addressId, List<OrderItem> items, string userId, string transactionId, 
+            string creditCardId, string deliveryCourierId)
+            : base(userId)
         {
             TransactionId = transactionId;
             UserId = userId;
             AddressId = addressId;
             AddRangeOrderItems(items);
             TotalPrice = Total();
-            CreditCardId = creditCardId;            
+            CreditCardId = creditCardId;   
+            DeliveryCourierId = deliveryCourierId;
         }
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public string UserId { get; set; }
         public double TotalPrice { get; set; }
         public User User { get; set; }
+        public string DeliveryCourierId { get; set; }
         public string CreditCardId { get; set; }
         public CreditCard CreditCard { get; set; }
         public string TransactionId { get; set; }

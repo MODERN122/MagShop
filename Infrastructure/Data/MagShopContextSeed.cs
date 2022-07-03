@@ -418,7 +418,7 @@ namespace Infrastructure.Data
         #region Orders
         private static async Task AddPrecongifuredOrdersToFirstUser(MagShopContext context)
         {
-            var user = context.Users.Include(_ => _.CreditCards).Include(_=>_.Addresses).First(_ => _.Id == USER_ID);
+            var user = context.Users.Include(_ => _.UserCreditCards).Include(_=>_.UserAddresses).First(_ => _.Id == USER_ID);
             var products = context.Products.Include(_=>_.ProductProperties).ThenInclude(_=>_.ProductPropertyItems).Where(x => x.StoreId == STORE_ID);
             List<OrderItem> orderItems = new List<OrderItem>();
             foreach (var product in products)
@@ -429,16 +429,20 @@ namespace Infrastructure.Data
             var newTrans = new Transaction("transaction_id", PaymentType.TinkoffAcquiring, 2450.2);
             var transaction = context.Transactions.Add(newTrans);
             context.SaveChanges();
-            var creditCard = user.CreditCards.FirstOrDefault();
-            if(creditCard == null)
+            var userCreditCard = user.UserCreditCards.FirstOrDefault();
+            if(userCreditCard == null)
             {
-                creditCard = context.CreditCards.Add(new CreditCard() { CardNumber = "1234-1221-5435-5325",IsDefault = true}).Entity;
+                var creditCard = context.CreditCards.Add(new CreditCard() { CardNumber = "1234-1221-5435-5325",IsDefault = true}).Entity;
+                userCreditCard = context.UserCreditCards.Add(new UserCreditCard(user.Id, creditCard.Id)).Entity;
                 context.SaveChanges();
             }
-            var order = context.Orders.Add(
-                new Order(user.Addresses.First().Id, orderItems, USER_ID, transaction.Entity.Id, creditCard?.Id));
-            //context.SaveChanges();
+            userCreditCard.CreditCard.Id = Guid.NewGuid().ToString();
 
+            var orderCreditCard = context.CreditCards.Add(userCreditCard.CreditCard);
+            context.SaveChanges();
+
+            var order = context.Orders.Add(
+                new Order(user.UserAddresses.First().Id, orderItems, USER_ID, transaction.Entity.Id, "defaultCourierId", userCreditCard?.Id));
         }
         #endregion
         #region Users

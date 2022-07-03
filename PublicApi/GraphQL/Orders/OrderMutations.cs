@@ -32,11 +32,13 @@ namespace PublicApi.GraphQL.Orders
             string transactionId,
             string creditCardId,
             string addressId,
+            string deliveryCourierId,
+            double paymentAmount,
             [Service] UserManager<UserAuthAccess> userManager,
             [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
         {
             var id = currentUser.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name");
-            return await _ordersRepository.CreateOrder(basketItemIds, transactionId, creditCardId, addressId, id);
+            return await _ordersRepository.CreateOrder(basketItemIds, transactionId, creditCardId, addressId, deliveryCourierId, paymentAmount, id);
         }
 
         [Authorize(Roles = new[] { ConstantsAPI.USERS })]

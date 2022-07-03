@@ -31,8 +31,8 @@ namespace ApplicationCore.Entities
             LastName = lastName;
             Email = email;
             PhoneNumber = phoneNumber;
-            CreditCards = creditCards;
-            Addresses = addresses;
+            UserCreditCards = creditCards.Select(_=>new UserCreditCard(Id, _.Id)).ToList();
+            UserAddresses = addresses.Select(_ => new UserAddress(Id, _.Id)).ToList();
             Basket = basket;
             BirthDate = birthDate.ToUniversalTime();
         }
@@ -45,9 +45,12 @@ namespace ApplicationCore.Entities
         public string Email { get; set; }
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
-        public List<CreditCard> CreditCards { get; private set; }
+        public List<UserCreditCard> UserCreditCards { get; private set; }
+        public List<CreditCard> CreditCards { get { return UserCreditCards?.Select(_ => _.CreditCard).ToList() ?? new List<CreditCard>(); } set { } }
         public List<Order> Orders { get; private set; }
-        public List<Address> Addresses { get; private set; }
+        public List<UserAddress> UserAddresses { get; private set; }
+        public List<Address> Addresses { get { return UserAddresses?.Select(_ => _.Address).ToList() ?? new List<Address>(); } set { } }
+
         public DateTime? BirthDate { get; set; }
         public Basket Basket { get; set; }
         [JsonIgnore]
@@ -154,6 +157,35 @@ namespace ApplicationCore.Entities
         public string Title { get;set; }
     }
 
+    public class UserCreditCard : BaseDateTimeEntity
+    {
+        [Obsolete("Uses only for EF Core generating")]
+        public UserCreditCard() { }
+        public UserCreditCard(string userId, string creditCardId) : base(userId)
+        {
+            UserId = userId;
+            CreditCardId = creditCardId;
+        }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string UserId { get; set; }
+        public CreditCard CreditCard { get; set; }
+        public string CreditCardId { get; set; }
+    }
+
+    public class UserAddress : BaseDateTimeEntity
+    {
+        [Obsolete("Uses only for EF Core generating")]
+        public UserAddress() { }
+        public UserAddress(string userId, string addressId) : base(userId)
+        {
+            UserId = userId;
+            AddressId = addressId;
+        }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string UserId { get; set; }
+        public Address Address { get; set; }
+        public string AddressId { get; set; }
+    }
 
     public class CreditCard
     {

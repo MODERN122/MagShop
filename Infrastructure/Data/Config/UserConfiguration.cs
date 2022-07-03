@@ -25,6 +25,10 @@ namespace Infrastructure.Data.Config
                 .WithOne(x => x.Seller)
                 .HasForeignKey(x => x.SellerId)
                 .OnDelete(DeleteBehavior.ClientCascade);
+            builder.HasMany(x => x.UserCreditCards)
+                .WithOne()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             //builder.OwnsMany(p => p.Addresses, u =>
             //{
