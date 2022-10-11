@@ -31,14 +31,16 @@ namespace ApplicationCore.Entities
             LastName = lastName;
             Email = email;
             PhoneNumber = phoneNumber;
-            UserCreditCards = creditCards.Select(_=>new UserCreditCard(Id, _.Id)).ToList();
+            UserCreditCards = creditCards.Select(_ => new UserCreditCard(Id, _.Id)).ToList();
             UserAddresses = addresses.Select(_ => new UserAddress(Id, _.Id)).ToList();
+            CreditCards = creditCards;
+            Addresses = addresses;
             Basket = basket;
             BirthDate = birthDate.ToUniversalTime();
         }
         public string Id { get; set; } = Guid.NewGuid().ToString();
         //Collection product id favorites
-        public List<string> FavoriteProductsId { get; private set; } = new List<string>();
+        public List<string> FavoriteProductIds { get; private set; } = new List<string>();
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [DataType(DataType.EmailAddress)]
@@ -46,10 +48,10 @@ namespace ApplicationCore.Entities
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
         public List<UserCreditCard> UserCreditCards { get; private set; }
-        public List<CreditCard> CreditCards { get { return UserCreditCards?.Select(_ => _.CreditCard).ToList() ?? new List<CreditCard>(); } set { } }
+        public List<CreditCard> CreditCards { get; set; }
         public List<Order> Orders { get; private set; }
         public List<UserAddress> UserAddresses { get; private set; }
-        public List<Address> Addresses { get { return UserAddresses?.Select(_ => _.Address).ToList() ?? new List<Address>(); } set { } }
+        public List<Address> Addresses { get; set; }
 
         public DateTime? BirthDate { get; set; }
         public Basket Basket { get; set; }
@@ -86,25 +88,25 @@ namespace ApplicationCore.Entities
         }
         public bool AddProductToFavorite(string productId)
         {
-            if (this.FavoriteProductsId.Contains(productId))
+            if (this.FavoriteProductIds.Contains(productId))
             {
                 return false;
             }
             else
             {
-                this.FavoriteProductsId.Add(productId);
+                this.FavoriteProductIds.Add(productId);
                 return true;
             }
         }
         public bool RemoveProductFromFavorite(string productId)
         {
-            if (!this.FavoriteProductsId.Contains(productId))
+            if (!this.FavoriteProductIds.Contains(productId))
             {
                 return false;
             }
             else
             {
-                this.FavoriteProductsId.Remove(productId);
+                this.FavoriteProductIds.Remove(productId);
                 return true;
             }
         }
@@ -143,7 +145,7 @@ namespace ApplicationCore.Entities
             Apartment = apartment;
         }
         public string Id { get; set; } = Guid.NewGuid().ToString();
-        public bool IsDefault { get; set; } 
+        public bool IsDefault { get; set; }
         public string RecipentName { get; set; }
         public string Country { get; set; }
         public string Region { get; set; }
@@ -154,7 +156,7 @@ namespace ApplicationCore.Entities
         public string Apartment { get; set; }
         public int? Floor { get; set; }
         public string ZipCode { get; set; }
-        public string Title { get;set; }
+        public string Title { get; set; }
     }
 
     public class UserCreditCard : BaseDateTimeEntity
@@ -192,7 +194,7 @@ namespace ApplicationCore.Entities
         public CreditCard()
         {
         }
-        public string Id { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
         [DataType(DataType.CreditCard)]
         public string CardNumber { get; set; }
         public bool IsDefault { get; set; }

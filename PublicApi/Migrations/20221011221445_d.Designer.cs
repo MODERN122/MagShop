@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace PublicApi.Migrations
 {
     [DbContext(typeof(MagShopContext))]
-    [Migration("20220703080103_AddUserCreditCardsTable")]
-    partial class AddUserCreditCardsTable
+    [Migration("20221011221445_d")]
+    partial class d
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -557,8 +557,8 @@ namespace PublicApi.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<List<string>>("FavoriteProductsId")
-                        .HasColumnType("text[]");
+                    b.Property<string>("FavoriteProductIds")
+                        .HasColumnType("text");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
@@ -575,6 +575,35 @@ namespace PublicApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("ApplicationCore.Entities.UserAddress", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("AddressId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ChangedByUserId")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ChangedDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("PublicationDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserAddresses");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.UserCreditCard", b =>
@@ -1002,6 +1031,19 @@ namespace PublicApi.Migrations
                     b.Navigation("Seller");
                 });
 
+            modelBuilder.Entity("ApplicationCore.Entities.UserAddress", b =>
+                {
+                    b.HasOne("ApplicationCore.Entities.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
+                    b.HasOne("ApplicationCore.Entities.User", null)
+                        .WithMany("UserAddresses")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Address");
+                });
+
             modelBuilder.Entity("ApplicationCore.Entities.UserCreditCard", b =>
                 {
                     b.HasOne("ApplicationCore.Entities.CreditCard", "CreditCard")
@@ -1131,6 +1173,8 @@ namespace PublicApi.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Stores");
+
+                    b.Navigation("UserAddresses");
 
                     b.Navigation("UserCreditCards");
                 });

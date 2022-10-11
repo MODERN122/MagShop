@@ -60,16 +60,20 @@ namespace Infrastructure.Data
             try
             {
                 //context.Database.EnsureDeleted();
-                //context.Database.EnsureCreated();
-                context.Database.Migrate();
+                context.Database.EnsureCreated();
+                //context.Database.Migrate();
                 if (!await context.Users.AnyAsync())
                 {
-                    if (!roleManager.Roles.Any() && !userManager.Users.Any())
+                    if (!roleManager.Roles.Any())
                     {
                         await roleManager.CreateAsync(new IdentityRole(Constants.ConstantsAPI.ADMINISTRATORS));
                         await roleManager.CreateAsync(new IdentityRole(Constants.ConstantsAPI.SELLERS));
                         await roleManager.CreateAsync(new IdentityRole(Constants.ConstantsAPI.USERS));
+                        await context.SaveChangesAsync();
+                    }
 
+                    if (!userManager.Users.Any())
+                    {
                         var sellerUser = new UserAuthAccess(SELLER_ID);
                         await userManager.CreateAsync(sellerUser, Constants.ConstantsAPI.DEFAULT_PASSWORD);
                         var seller = await userManager.FindByNameAsync(sellerUser.UserName);
@@ -85,10 +89,10 @@ namespace Infrastructure.Data
                         adminUser = await userManager.FindByNameAsync(adminUser.UserName);
                         await userManager.AddToRoleAsync(adminUser, Constants.ConstantsAPI.ADMINISTRATORS);
 
-                        await context.Users.AddRangeAsync(
-                            GetPreconfiguredUsers(seller.Id, user.Id, adminUser.Id));
+                        var preUsers = GetPreconfiguredUsers(seller.Id, user.Id, adminUser.Id);
+                        await context.Users.AddRangeAsync(preUsers);
+                        await context.SaveChangesAsync();
                     }
-                    await context.SaveChangesAsync();
                 }
                 if (!await context.Categories.AnyAsync())
                 {
@@ -416,10 +420,10 @@ namespace Infrastructure.Data
         }
         #endregion
         #region Orders
-        private static async Task AddPrecongifuredOrdersToFirstUser(MagShopContext context)
+        private static void AddPrecongifuredOrdersToFirstUser(MagShopContext context)
         {
-            var user = context.Users.Include(_ => _.UserCreditCards).Include(_=>_.UserAddresses).First(_ => _.Id == USER_ID);
-            var products = context.Products.Include(_=>_.ProductProperties).ThenInclude(_=>_.ProductPropertyItems).Where(x => x.StoreId == STORE_ID);
+            var user = context.Users.Include(_ => _.UserCreditCards).Include(_ => _.UserAddresses).FirstOrDefault(_ => _.Id == USER_ID);
+            var products = context.Products.Include(_ => _.ProductProperties).ThenInclude(_ => _.ProductPropertyItems).Where(x => x.StoreId == STORE_ID);
             List<OrderItem> orderItems = new List<OrderItem>();
             foreach (var product in products)
             {
@@ -430,10 +434,11 @@ namespace Infrastructure.Data
             var transaction = context.Transactions.Add(newTrans);
             context.SaveChanges();
             var userCreditCard = user.UserCreditCards.FirstOrDefault();
-            if(userCreditCard == null)
+            if (userCreditCard == null || userCreditCard.CreditCard == null)
             {
-                var creditCard = context.CreditCards.Add(new CreditCard() { CardNumber = "1234-1221-5435-5325",IsDefault = true}).Entity;
+                var creditCard = context.CreditCards.Add(new CreditCard() { CardNumber = "1234-1221-5435-5325", IsDefault = true }).Entity;
                 userCreditCard = context.UserCreditCards.Add(new UserCreditCard(user.Id, creditCard.Id)).Entity;
+                userCreditCard.CreditCard = creditCard;
                 context.SaveChanges();
             }
             userCreditCard.CreditCard.Id = Guid.NewGuid().ToString();
@@ -442,7 +447,9 @@ namespace Infrastructure.Data
             context.SaveChanges();
 
             var order = context.Orders.Add(
-                new Order(user.UserAddresses.First().Id, orderItems, USER_ID, transaction.Entity.Id, "defaultCourierId", userCreditCard?.Id));
+                new Order(user.UserAddresses.First().Address.Id, orderItems, USER_ID, transaction.Entity.Id,  userCreditCard?.CreditCard.Id, "defaultCourierId"));
+
+            context.SaveChanges();
         }
         #endregion
         #region Users

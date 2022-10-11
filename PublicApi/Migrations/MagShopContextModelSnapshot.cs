@@ -555,8 +555,8 @@ namespace PublicApi.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<List<string>>("FavoriteProductsId")
-                        .HasColumnType("text[]");
+                    b.Property<string>("FavoriteProductIds")
+                        .HasColumnType("text");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("text");

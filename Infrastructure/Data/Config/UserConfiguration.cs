@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Newtonsoft.Json;
 
 namespace Infrastructure.Data.Config
 {
@@ -29,6 +32,11 @@ namespace Infrastructure.Data.Config
                 .WithOne()
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.ClientCascade);
+            
+            builder.Property(x=>x.FavoriteProductIds)
+                .HasConversion(
+                    v => JsonConvert.SerializeObject(v),
+                    v => JsonConvert.DeserializeObject<List<string>>(v));
 
             //builder.OwnsMany(p => p.Addresses, u =>
             //{

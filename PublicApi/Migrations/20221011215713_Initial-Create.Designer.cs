@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace PublicApi.Migrations
 {
     [DbContext(typeof(MagShopContext))]
-    [Migration("20220320131406_AddedTitleAddress")]
-    partial class AddedTitleAddress
+    [Migration("20221011215713_Initial-Create")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,6 +50,9 @@ namespace PublicApi.Migrations
 
                     b.Property<bool>("IsDefault")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("RecipentName")
+                        .HasColumnType("text");
 
                     b.Property<string>("Region")
                         .HasColumnType("text");
@@ -207,8 +210,20 @@ namespace PublicApi.Migrations
                     b.Property<DateTime?>("ChangedDateTime")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("CreditCardId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DeliveryCourierId")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("PublicationDateTime")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("TransactionId")
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .HasColumnType("text");
@@ -216,6 +231,10 @@ namespace PublicApi.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("CreditCardId");
+
+                    b.HasIndex("TransactionId");
 
                     b.HasIndex("UserId");
 
@@ -235,6 +254,9 @@ namespace PublicApi.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
+
+                    b.Property<List<string>>("SelectedProductPropertyItemIds")
+                        .HasColumnType("text[]");
 
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("numeric(18,2)");
@@ -490,6 +512,34 @@ namespace PublicApi.Migrations
                     b.ToTable("Stores");
                 });
 
+            modelBuilder.Entity("ApplicationCore.Entities.Transaction", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ChangedByUserId")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ChangedDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<double>("PaymentAmount")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("PaymentTypeId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("PublicationDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("TransactionOwnId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Transactions");
+                });
+
             modelBuilder.Entity("ApplicationCore.Entities.User", b =>
                 {
                     b.Property<string>("Id")
@@ -507,8 +557,8 @@ namespace PublicApi.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<List<string>>("FavoriteProductsId")
-                        .HasColumnType("text[]");
+                    b.Property<string>("FavoriteProductIds")
+                        .HasColumnType("text");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
@@ -525,6 +575,64 @@ namespace PublicApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("ApplicationCore.Entities.UserAddress", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("AddressId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ChangedByUserId")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ChangedDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("PublicationDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserAddresses");
+                });
+
+            modelBuilder.Entity("ApplicationCore.Entities.UserCreditCard", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ChangedByUserId")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ChangedDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreditCardId")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("PublicationDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreditCardId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserCreditCards");
                 });
 
             modelBuilder.Entity("Infrastructure.Identity.UserAuthAccess", b =>
@@ -804,11 +912,25 @@ namespace PublicApi.Migrations
                         .WithMany()
                         .HasForeignKey("AddressId");
 
-                    b.HasOne("ApplicationCore.Entities.User", null)
+                    b.HasOne("ApplicationCore.Entities.CreditCard", "CreditCard")
+                        .WithMany()
+                        .HasForeignKey("CreditCardId");
+
+                    b.HasOne("ApplicationCore.Entities.Transaction", "Transaction")
+                        .WithMany()
+                        .HasForeignKey("TransactionId");
+
+                    b.HasOne("ApplicationCore.Entities.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId");
 
+                    b.Navigation("CreditCard");
+
                     b.Navigation("ShipToAddress");
+
+                    b.Navigation("Transaction");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.OrderItem", b =>
@@ -843,10 +965,12 @@ namespace PublicApi.Migrations
 
             modelBuilder.Entity("ApplicationCore.Entities.ProductImage", b =>
                 {
-                    b.HasOne("ApplicationCore.Entities.Product", null)
+                    b.HasOne("ApplicationCore.Entities.Product", "Product")
                         .WithMany("Images")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.ProductProperty", b =>
@@ -905,6 +1029,33 @@ namespace PublicApi.Migrations
                         .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.Navigation("Seller");
+                });
+
+            modelBuilder.Entity("ApplicationCore.Entities.UserAddress", b =>
+                {
+                    b.HasOne("ApplicationCore.Entities.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
+                    b.HasOne("ApplicationCore.Entities.User", null)
+                        .WithMany("UserAddresses")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("ApplicationCore.Entities.UserCreditCard", b =>
+                {
+                    b.HasOne("ApplicationCore.Entities.CreditCard", "CreditCard")
+                        .WithMany()
+                        .HasForeignKey("CreditCardId");
+
+                    b.HasOne("ApplicationCore.Entities.User", null)
+                        .WithMany("UserCreditCards")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
+
+                    b.Navigation("CreditCard");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1022,6 +1173,10 @@ namespace PublicApi.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Stores");
+
+                    b.Navigation("UserAddresses");
+
+                    b.Navigation("UserCreditCards");
                 });
 #pragma warning restore 612, 618
         }

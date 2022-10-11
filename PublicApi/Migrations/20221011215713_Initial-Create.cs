@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+
+#nullable disable
 
 namespace PublicApi.Migrations
 {
@@ -31,7 +34,7 @@ namespace PublicApi.Migrations
                     FacebookToken = table.Column<string>(type: "text", nullable: true),
                     GoogleToken = table.Column<string>(type: "text", nullable: true),
                     OauthToken = table.Column<string>(type: "text", nullable: true),
-                    LastDatetimeAuth = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    LastDatetimeAuth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -61,8 +64,8 @@ namespace PublicApi.Migrations
                     Name = table.Column<string>(type: "text", nullable: true),
                     Image = table.Column<string>(type: "text", nullable: true),
                     Weight = table.Column<double>(type: "double precision", nullable: false),
-                    PublicationDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    ChangedDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    PublicationDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ChangedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ChangedByUserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -81,8 +84,8 @@ namespace PublicApi.Migrations
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
-                    PublicationDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    ChangedDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    PublicationDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ChangedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ChangedByUserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -91,18 +94,35 @@ namespace PublicApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Transactions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    TransactionOwnId = table.Column<string>(type: "text", nullable: true),
+                    PaymentTypeId = table.Column<int>(type: "integer", nullable: false),
+                    PaymentAmount = table.Column<double>(type: "double precision", nullable: false),
+                    PublicationDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ChangedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ChangedByUserId = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transactions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
-                    FavoriteProductsId = table.Column<string>(type: "text", nullable: true),
+                    FavoriteProductIds = table.Column<string>(type: "text", nullable: true),
                     FirstName = table.Column<string>(type: "text", nullable: true),
                     LastName = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
                     PhoneNumber = table.Column<string>(type: "text", nullable: true),
-                    BirthDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    PublicationDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    ChangedDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    PublicationDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ChangedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ChangedByUserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -239,23 +259,29 @@ namespace PublicApi.Migrations
                 name: "Addresses",
                 columns: table => new
                 {
-                    AddressId = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    IsDefault = table.Column<bool>(type: "boolean", nullable: false),
+                    RecipentName = table.Column<string>(type: "text", nullable: true),
+                    Country = table.Column<string>(type: "text", nullable: true),
+                    Region = table.Column<string>(type: "text", nullable: true),
                     City = table.Column<string>(type: "text", nullable: true),
                     Street = table.Column<string>(type: "text", nullable: true),
                     House = table.Column<string>(type: "text", nullable: true),
+                    Housing = table.Column<string>(type: "text", nullable: true),
                     Apartment = table.Column<string>(type: "text", nullable: true),
+                    Floor = table.Column<int>(type: "integer", nullable: true),
                     ZipCode = table.Column<string>(type: "text", nullable: true),
+                    Title = table.Column<string>(type: "text", nullable: true),
                     UserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Addresses", x => x.AddressId);
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Addresses_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -280,19 +306,19 @@ namespace PublicApi.Migrations
                 name: "CreditCards",
                 columns: table => new
                 {
-                    CreditCardId = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     CardNumber = table.Column<string>(type: "text", nullable: true),
+                    IsDefault = table.Column<bool>(type: "boolean", nullable: false),
                     UserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CreditCards", x => x.CreditCardId);
+                    table.PrimaryKey("PK_CreditCards", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CreditCards_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -304,8 +330,8 @@ namespace PublicApi.Migrations
                     Rating = table.Column<float>(type: "real", nullable: false),
                     SellerId = table.Column<string>(type: "text", nullable: true),
                     ApproveDocument = table.Column<string>(type: "text", nullable: true),
-                    PublicationDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    ChangedDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    PublicationDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ChangedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ChangedByUserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -315,8 +341,33 @@ namespace PublicApi.Migrations
                         name: "FK_Stores_Users_SellerId",
                         column: x => x.SellerId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserAddresses",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<string>(type: "text", nullable: true),
+                    AddressId = table.Column<string>(type: "text", nullable: true),
+                    PublicationDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ChangedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ChangedByUserId = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserAddresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserAddresses_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Addresses",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_UserAddresses_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -324,10 +375,14 @@ namespace PublicApi.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
-                    AddressId = table.Column<string>(type: "text", nullable: true),
                     UserId = table.Column<string>(type: "text", nullable: true),
-                    PublicationDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    ChangedDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    TotalPrice = table.Column<double>(type: "double precision", nullable: false),
+                    DeliveryCourierId = table.Column<string>(type: "text", nullable: true),
+                    CreditCardId = table.Column<string>(type: "text", nullable: true),
+                    TransactionId = table.Column<string>(type: "text", nullable: true),
+                    AddressId = table.Column<string>(type: "text", nullable: true),
+                    PublicationDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ChangedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ChangedByUserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -337,14 +392,48 @@ namespace PublicApi.Migrations
                         name: "FK_Orders_Addresses_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Addresses",
-                        principalColumn: "AddressId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Orders_CreditCards_CreditCardId",
+                        column: x => x.CreditCardId,
+                        principalTable: "CreditCards",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Orders_Transactions_TransactionId",
+                        column: x => x.TransactionId,
+                        principalTable: "Transactions",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Orders_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserCreditCards",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<string>(type: "text", nullable: true),
+                    CreditCardId = table.Column<string>(type: "text", nullable: true),
+                    PublicationDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ChangedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ChangedByUserId = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserCreditCards", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserCreditCards_CreditCards_CreditCardId",
+                        column: x => x.CreditCardId,
+                        principalTable: "CreditCards",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_UserCreditCards_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -358,13 +447,13 @@ namespace PublicApi.Migrations
                     Discount = table.Column<int>(type: "integer", nullable: false),
                     Weight = table.Column<double>(type: "double precision", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
-                    PublicationDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    ChangedDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    PublicationDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ChangedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ChangedByUserId = table.Column<string>(type: "text", nullable: true),
                     Name = table.Column<string>(type: "text", nullable: true),
                     Image = table.Column<string>(type: "text", nullable: true),
                     CategoryId = table.Column<string>(type: "text", nullable: true),
-                    DateEndDiscount = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    DateEndDiscount = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Rating = table.Column<double>(type: "double precision", nullable: false),
                     StoreId = table.Column<string>(type: "text", nullable: false)
                 },
@@ -375,8 +464,7 @@ namespace PublicApi.Migrations
                         name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Products_Stores_StoreId",
                         column: x => x.StoreId,
@@ -392,6 +480,7 @@ namespace PublicApi.Migrations
                     Id = table.Column<string>(type: "text", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
                     ProductId = table.Column<string>(type: "text", nullable: false),
+                    SelectedProductPropertyItemIds = table.Column<List<string>>(type: "text[]", nullable: true),
                     BasketId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -411,22 +500,23 @@ namespace PublicApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Images",
+                name: "ChoosenProducts",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     ProductId = table.Column<string>(type: "text", nullable: true),
-                    Path = table.Column<string>(type: "text", nullable: true)
+                    Remain = table.Column<int>(type: "integer", nullable: false),
+                    Prices = table.Column<int[]>(type: "integer[]", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.PrimaryKey("PK_ChoosenProducts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Images_Products_ProductId",
+                        name: "FK_ChoosenProducts_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -434,10 +524,11 @@ namespace PublicApi.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
+                    OrderId = table.Column<string>(type: "text", nullable: true),
                     UnitPrice = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
                     ProductId = table.Column<string>(type: "text", nullable: true),
-                    OrderId = table.Column<string>(type: "text", nullable: true)
+                    SelectedProductPropertyItemIds = table.Column<List<string>>(type: "text[]", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -446,14 +537,31 @@ namespace PublicApi.Migrations
                         name: "FK_OrderItems_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_OrderItems_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductImages",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProductId = table.Column<string>(type: "text", nullable: true),
+                    Path = table.Column<string>(type: "text", nullable: true),
+                    UploadDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductImages_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -461,7 +569,7 @@ namespace PublicApi.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
-                    PublicationDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    PublicationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     ProductId = table.Column<string>(type: "text", nullable: true),
                     PropertyId = table.Column<string>(type: "text", nullable: true)
                 },
@@ -473,13 +581,31 @@ namespace PublicApi.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProductProperties_Properties_PropertyId",
                         column: x => x.PropertyId,
                         principalTable: "Properties",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PropertyItemTuple",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    PropertyId = table.Column<string>(type: "text", nullable: true),
+                    PropertyItemId = table.Column<string>(type: "text", nullable: true),
+                    ChoosenProductId = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PropertyItemTuple", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PropertyItemTuple_ChoosenProducts_ChoosenProductId",
+                        column: x => x.ChoosenProductId,
+                        principalTable: "ChoosenProducts",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -493,8 +619,8 @@ namespace PublicApi.Migrations
                     PriceNew = table.Column<double>(type: "double precision", nullable: false),
                     PriceOld = table.Column<double>(type: "double precision", nullable: true),
                     Caption = table.Column<string>(type: "text", nullable: true),
-                    PublicationDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    ChangedDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    PublicationDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ChangedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ChangedByUserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -505,13 +631,13 @@ namespace PublicApi.Migrations
                         column: x => x.ProductPropertyId,
                         principalTable: "ProductProperties",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProductPropertyItems_PropertyItems_PropertyItemId",
                         column: x => x.PropertyItemId,
                         principalTable: "PropertyItems",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -578,14 +704,14 @@ namespace PublicApi.Migrations
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ChoosenProducts_ProductId",
+                table: "ChoosenProducts",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CreditCards_UserId",
                 table: "CreditCards",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Images_ProductId",
-                table: "Images",
-                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OrderId",
@@ -603,9 +729,24 @@ namespace PublicApi.Migrations
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_CreditCardId",
+                table: "Orders",
+                column: "CreditCardId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_TransactionId",
+                table: "Orders",
+                column: "TransactionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_UserId",
                 table: "Orders",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductImages_ProductId",
+                table: "ProductImages",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductProperties_ProductId",
@@ -643,9 +784,34 @@ namespace PublicApi.Migrations
                 column: "PropertyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PropertyItemTuple_ChoosenProductId",
+                table: "PropertyItemTuple",
+                column: "ChoosenProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Stores_SellerId",
                 table: "Stores",
                 column: "SellerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAddresses_AddressId",
+                table: "UserAddresses",
+                column: "AddressId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAddresses_UserId",
+                table: "UserAddresses",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserCreditCards_CreditCardId",
+                table: "UserCreditCards",
+                column: "CreditCardId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserCreditCards_UserId",
+                table: "UserCreditCards",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -669,16 +835,22 @@ namespace PublicApi.Migrations
                 name: "BasketItems");
 
             migrationBuilder.DropTable(
-                name: "CreditCards");
-
-            migrationBuilder.DropTable(
-                name: "Images");
-
-            migrationBuilder.DropTable(
                 name: "OrderItems");
 
             migrationBuilder.DropTable(
+                name: "ProductImages");
+
+            migrationBuilder.DropTable(
                 name: "ProductPropertyItems");
+
+            migrationBuilder.DropTable(
+                name: "PropertyItemTuple");
+
+            migrationBuilder.DropTable(
+                name: "UserAddresses");
+
+            migrationBuilder.DropTable(
+                name: "UserCreditCards");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -699,13 +871,22 @@ namespace PublicApi.Migrations
                 name: "PropertyItems");
 
             migrationBuilder.DropTable(
+                name: "ChoosenProducts");
+
+            migrationBuilder.DropTable(
                 name: "Addresses");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "CreditCards");
+
+            migrationBuilder.DropTable(
+                name: "Transactions");
 
             migrationBuilder.DropTable(
                 name: "Properties");
+
+            migrationBuilder.DropTable(
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Categories");
