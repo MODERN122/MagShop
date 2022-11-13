@@ -131,8 +131,8 @@ namespace Infrastructure.Repositories
                    .ThenInclude(x => x.Items)
                    .FirstAsync(x => x.Id == userId);
                 var product = await context.Products
-                    .Include(x=>x.ProductProperties)
-                    .ThenInclude(x=>x.ProductPropertyItems)
+                    .Include(x => x.ProductProperties)
+                    .ThenInclude(x => x.ProductPropertyItems)
                     .FirstAsync(x => x.Id == productId);
                 if (product != null)
                 {
@@ -177,7 +177,7 @@ namespace Infrastructure.Repositories
                 var user = await context.Users.Include(x => x.Basket)
                    .ThenInclude(x => x.Items)
                    .FirstAsync(x => x.Id == userId);
-                var basketItem = await context.BasketItems.Include(x=>x.Product).FirstAsync(x => x.Id == basketItemId);
+                var basketItem = await context.BasketItems.Include(x => x.Product).FirstAsync(x => x.Id == basketItemId);
                 if (basketItem != null)
                 {
                     if (user.Basket != null)
@@ -317,6 +317,36 @@ namespace Infrastructure.Repositories
                     return user;
                 }
                 return default;
+            }
+        }
+
+        public async Task<Address> UpdateAddressAsync(Address address, string userId)
+        {
+            using (var context = this._contextFactory.CreateDbContext())
+            {
+                var addressOld = address.Id == "" ? null : await context.Set<Address>().FirstOrDefaultAsync(x => x.Id == address.Id);
+                if (addressOld != null)
+                {
+                    _mapper.Map(address, addressOld);
+                    context.Addresses.Update(addressOld);
+                    var userAddressOld = await context.Set<UserAddress>().FirstOrDefaultAsync(x => x.AddressId == address.Id && x.UserId == userId);
+                    if (userAddressOld == null)
+                    {
+                        await context.UserAddresses.AddAsync(new UserAddress(userId, addressOld.Id));
+                    }
+                    await context.SaveChangesAsync();
+                    addressOld = await context.Set<Address>().FirstOrDefaultAsync(x => x.Id == address.Id);
+                    return addressOld;
+                }
+                else
+                {
+                    address.Id = Guid.NewGuid().ToString();
+                    await context.Addresses.AddAsync(address);
+                    await context.UserAddresses.AddAsync(new UserAddress(userId, address.Id));
+                    await context.SaveChangesAsync();
+                    addressOld = await context.Set<Address>().FirstOrDefaultAsync(x => x.Id == address.Id);
+                    return addressOld;
+                }
             }
         }
     }

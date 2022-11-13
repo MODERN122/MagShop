@@ -26,5 +26,6 @@ namespace ApplicationCore.Interfaces
         Task<bool> AddProductToFavoriteAsync(string userId, string productId);
         Task<bool> RemoveProductFromFavoriteAsync(string userId, string productId);
         Task<User> EditUserAsync(EditUserInput userNew);
+        Task<Address> UpdateAddressAsync(Address address, string userId);
     }
 }

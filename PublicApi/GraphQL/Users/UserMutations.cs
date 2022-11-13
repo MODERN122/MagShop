@@ -88,5 +88,13 @@ namespace PublicApi.GraphQL.Users
             var result = await _userRepository.EditUserAsync(userNew);
             return result;
         }
+
+        [GraphQLDescription("If value in field equal null or doesnt including it will be ignore.")]
+        [Authorize(Roles = new string[] { ConstantsAPI.USERS, ConstantsAPI.SELLERS, ConstantsAPI.ADMINISTRATORS })]
+        public async Task<Address> UpdateAddressAsync(Address address, [GlobalState(nameof(ClaimsPrincipal))] ClaimsPrincipal currentUser)
+        {
+            var result = await _userRepository.UpdateAddressAsync(address, currentUser.Claims.First().Value);
+            return result;
+        }
     }
 }

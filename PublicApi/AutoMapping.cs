@@ -29,6 +29,11 @@ namespace ApplicationCore
             CreateMap<User, EditUserInput>(MemberList.Source)
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
+            CreateMap<Address, Address>(MemberList.Source)
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+            CreateMap<Address, Address>(MemberList.Source)
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
 
             CreateMap<PutProductRequest, CreateProductRequest>();
         }
